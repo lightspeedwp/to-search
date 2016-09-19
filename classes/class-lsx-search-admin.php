@@ -9,8 +9,23 @@ class LSX_Search_Admin extends LSX_Search{
 	 * Constructor
 	 */
 	public function __construct() {
+		add_action('admin_init', array($this,'admin_init'));
 		add_action('lsx_framework_dashboard_tab_content',array($this,'settings'),11);
 	}
+
+	/**
+	 * The Admin Init action, to setup variables before anything runs.
+	 *
+	 */
+	public function admin_init() {
+		if(class_exists('FacetWP')){
+			foreach($this->post_types as $pt){
+				add_action('lsx_framework_'.$pt.'_tab_single_settings_bottom', array($this,'search_settings'),50,1);
+				add_action('lsx_framework_'.$pt.'_tab_archive_settings_bottom', array($this,'archive_settings'),10,1);
+			}
+		}
+	}	
+
 	/**
 	 * Outputs the dashboard tabs settings
 	 */

@@ -45,7 +45,15 @@ if (!class_exists( 'LSX_Search' ) ) {
 		 *
 		 * @var      string
 		 */
-		public $layout = '2cr';			
+		public $layout = '2cr';	
+
+		/**
+		 * Holds the array of facets
+		 *
+		 * @var      array
+		 */
+		public $facet_data = false;	
+
 
 		/**
 		 * Constructor
@@ -73,11 +81,20 @@ if (!class_exists( 'LSX_Search' ) ) {
 						$this->post_type_slugs[strtolower($value)] = $key;
 					}
 				}
+
+				$facet_data = null;
+				if(class_exists('FacetWP')){
+					$facet_data = FWP()->helper->get_facets();
+				}
+				$this->facet_data['search_form'] = array('name'=>'search_form','label'=>__('Search Form',$this->plugin_slug));
+
+				if(is_array($facet_data) && !empty($facet_data)){
+					foreach($facet_data as $facet){
+						$this->facet_data[$facet['name']] = $facet;
+					}
+				}				
 			}
 		}		
-
-
-
 
 	}
 	new LSX_Search();
