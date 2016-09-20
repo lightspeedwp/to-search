@@ -29,6 +29,11 @@ function lsx_search_activate_plugin() {
 }
 register_activation_hook( __FILE__, 'lsx_search_activate_plugin' );
 
+/* ======================= The API Classes ========================= */
+if(!class_exists('LSX_API_Manager')){
+	require_once('classes/class-lsx-api-manager.php');
+}
+
 /* ======================= Below is the Plugin Class init ========================= */
 
 require_once( LSX_SEARCH_PATH . '/classes/class-lsx-search.php' );

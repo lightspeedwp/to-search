@@ -16,6 +16,8 @@ class LSX_Search_Frontend extends LSX_Search{
 	 * Constructor
 	 */
 	public function __construct() {
+		add_action('init',array($this,'init'));
+
 		add_action('wp_head', array($this,'wp_head'));
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 

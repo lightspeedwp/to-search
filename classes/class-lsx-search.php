@@ -61,8 +61,6 @@ if (!class_exists( 'LSX_Search' ) ) {
 		public function __construct() {
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-admin.php');
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-frontend.php');
-
-			add_action('init',array($this,'init'));
 		}
 
 		/**
@@ -72,7 +70,7 @@ if (!class_exists( 'LSX_Search' ) ) {
 			if(class_exists('LSX_Tour_Operators')){
 				$this->options = get_option('_lsx_lsx-settings',false);
 
-				$this->post_types = apply_filters('lsx_search_post_types',array('dashboard'=>'Dashboard'));
+				$this->post_types = apply_filters('lsx_search_post_types',array('general'=>__('General',$this->plugin_slug)));
 				$this->taxonomies = apply_filters('lsx_search_taxonomies',array());
 
 				$this->post_type_slugs = false;

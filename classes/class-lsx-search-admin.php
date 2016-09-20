@@ -9,6 +9,7 @@ class LSX_Search_Admin extends LSX_Search{
 	 * Constructor
 	 */
 	public function __construct() {
+		add_action('init',array($this,'init'));
 		add_action('admin_init', array($this,'admin_init'));
 	}
 
@@ -17,8 +18,9 @@ class LSX_Search_Admin extends LSX_Search{
 	 *
 	 */
 	public function admin_init() {
+		
 		if(class_exists('FacetWP')){
-			foreach($this->post_types as $pt){
+			foreach($this->post_types as $pt => $pv){
 				add_action('lsx_framework_'.$pt.'_tab_single_settings_bottom', array($this,'search_settings'),50,1);
 				add_action('lsx_framework_'.$pt.'_tab_archive_settings_bottom', array($this,'archive_settings'),10,1);
 			}
