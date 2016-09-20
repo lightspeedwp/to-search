@@ -22,6 +22,7 @@ class LSX_Search_Frontend extends LSX_Search{
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 
 		//Redirects
+		add_filter( 'template_include', array( $this, 'search_template_include'), 99 );
 		add_action( 'template_redirect', array($this,'pretty_search_redirect') ) ;
 		add_filter( 'pre_get_posts',  array($this,'pretty_search_parse_query') ) ;
 
@@ -101,6 +102,22 @@ class LSX_Search_Frontend extends LSX_Search{
 		));
 		wp_localize_script( 'lsx_search', 'lsx_search_params', $params );		
 	}
+
+	/**
+	 * Redirect wordpress to the search template located in the plugin
+	 *
+	 * @param	$template
+	 * @return	$template
+	 */
+	public function search_template_include( $template ) {
+		
+		if ( is_main_query() && is_search() ) {
+			if ( /*'' == locate_template( array( 'search.php' ) ) &&*/ file_exists( LSX_SEARCH_PATH.'templates/search.php' )) {
+				$template = LSX_SEARCH_PATH.'templates/search.php';
+			}
+		}
+		return $template;
+	}	
 
 	/**
 	 * Rewrite the search URL
