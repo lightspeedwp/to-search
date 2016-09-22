@@ -560,6 +560,7 @@ class LSX_Search_Frontend extends LSX_Search{
 		if(false !== $engine && '' !== $engine && 'default' !== $engine){
 			$keyword = $engine;
 		}
+		$keyword = str_replace( '+', ' ', $keyword );
 		return $keyword;
 	}			
 }
