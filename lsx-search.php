@@ -2,7 +2,7 @@
 /*
  * Plugin Name:	LSX Search
  * Plugin URI:	https://bitbucket.org/feedmycode/lsx-search
- * Description:	{plugin-description}
+ * Description:	A bridge between FacetWP, SearchWP, WordPress and LSX Tour Operators.
  * Author:		LightSpeed
  * Version: 	1.0.0
  * Author URI: 	https://www.lsdev.biz/products/
@@ -25,7 +25,10 @@ define('LSX_SEARCH_VER',  '1.0.0' );
  * Runs once when the plugin is activated.
  */
 function lsx_search_activate_plugin() {
-	//Insert code here
+    $lsx_to_password = get_option('lsx_api_instance',false);
+    if(false === $lsx_to_password){
+    	update_option('lsx_api_instance',LSX_API_Manager::generatePassword());
+    }
 }
 register_activation_hook( __FILE__, 'lsx_search_activate_plugin' );
 
@@ -64,7 +67,8 @@ function lsx_search_api_admin_init(){
 		'api_key'		=>		$data['api_key'],
 		'file'			=>		'lsx-search.php'
 	);
-	$lsx_to_api_manager = new LSX_API_Manager($api_array);
+
+	$lsx_search_api_manager = new LSX_API_Manager($api_array);
 }
 add_action('admin_init','lsx_search_api_admin_init');
 
