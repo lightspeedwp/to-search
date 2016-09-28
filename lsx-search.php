@@ -1,14 +1,15 @@
 <?php
 /*
- * Plugin Name:	LSX Search
- * Plugin URI:	https://bitbucket.org/feedmycode/lsx-search
- * Description:	A bridge between FacetWP, SearchWP, WordPress and LSX Tour Operators.
- * Author:		LightSpeed
- * Version: 	1.0.0
- * Author URI: 	https://www.lsdev.biz/products/
- * License: 	GPL2+
+ * Plugin Name: Tour Operator Search 
+ * Plugin URI:  https://www.lsdev.biz/product/tour-operator-search/
+ * Description: The Tour Operator Search extension adds robust search functionality to sites, allowing filterable search by post type, category and more.
+ * Version:     1.0
+ * Author:      LightSpeed WordPress Development
+ * Author URI:  https://www.lsdev.biz/
+ * License:     GPL3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: lsx-search
- * Domain Path: /languages/
+ * Domain Path: /languages
  */
 
 // If this file is called directly, abort.
