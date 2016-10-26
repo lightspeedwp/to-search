@@ -125,10 +125,10 @@ class LSX_API_Manager {
 			$button_url = '<a data-product="'.$this->product_slug.'" style="margin-top:-5px;" href="';
 			$button_label = '';
 			if('active' !== $this->status){
-				$button_url .= admin_url('options-general.php?page=lsx-lsx-settings&action=activate&product='.$this->product_slug);
+				$button_url .= admin_url('admin.php?page=to-settings&action=activate&product='.$this->product_slug);
 				$button_label = 'Activate';
 			}else{
-				$button_url .= admin_url('options-general.php?page=lsx-lsx-settings&action=deactivate&product='.$this->product_slug);
+				$button_url .= admin_url('admin.php?page=to-settings&action=deactivate&product='.$this->product_slug);
 				$button_label = 'Deactivate';
 			}
 			$button_url .= '" class="button-secondary activate">'.$button_label.'</a>';
@@ -138,7 +138,7 @@ class LSX_API_Manager {
 		add_filter('site_transient_update_plugins', array($this,'injectUpdate'));
 		add_action( "in_plugin_update_message-".$this->file,array($this,'plugin_update_message'),10,2);
 
-		add_action('lsx_framework_dashboard_tab_content_api',array($this,'dashboard_tabs'),1);
+		add_action('to_framework_dashboard_tab_content_api',array($this,'dashboard_tabs'),1);
 		
 		add_action('wp_ajax_wc_api_'.$this->product_slug,array($this,'activate_deactivate'));	
 		add_action('wp_ajax_nopriv_wc_api_'.$this->product_slug,array($this,'activate_deactivate'));
@@ -257,7 +257,7 @@ class LSX_API_Manager {
 			if(is_object($response) && isset($response->activated)){
 				update_option($this->product_slug.'_status','active');
 				//$this->messages[] = 'Activated';
-				header("Refresh:0; url=".admin_url('options-general.php?page=lsx-lsx-settings'));
+				header("Refresh:0; url=".admin_url('admin.php?page=to-settings'));
 			}
 		}
 
@@ -268,7 +268,7 @@ class LSX_API_Manager {
 
 			$response = $this->query('deactivation');
 			update_option($this->product_slug.'_status','inactive');
-			header("Refresh:0; url=".admin_url('options-general.php?page=lsx-lsx-settings'));
+			header("Refresh:0; url=".admin_url('admin.php?page=to-settings'));
 		}		
 	}
 
@@ -428,7 +428,7 @@ class LSX_API_Manager {
 	 */
 	public function add_action_links ( $links ) {
 		 $mylinks = array(
-		 	'<a href="' . admin_url( 'options-general.php?page=lsx-lsx-settings' ) . '">'.__('Settings',$this->plugin_slug).'</a>',
+		 	'<a href="' . admin_url( 'admin.php?page=to-settings' ) . '">'.__('Settings',$this->plugin_slug).'</a>',
 		 	'<a href="https://www.lsdev.biz/documentation/lsx-tour-operator-plugin/" target="_blank">'.__('Documentation',$this->plugin_slug).'</a>',
 		 	'<a href="https://feedmysupport.zendesk.com/home" target="_blank">'.__('Support',$this->plugin_slug).'</a>',
 		 );
