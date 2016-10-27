@@ -59,6 +59,7 @@ if (!class_exists( 'LSX_Search' ) ) {
 		 * Constructor
 		 */
 		public function __construct() {
+			add_action('init',array($this,'load_plugin_textdomain'));
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-admin.php');
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-frontend.php');
 		}
@@ -70,7 +71,7 @@ if (!class_exists( 'LSX_Search' ) ) {
 			if(class_exists('LSX_Tour_Operators')){
 				$this->options = get_option('_to_settings',false);
 
-				$this->post_types = apply_filters('lsx_search_post_types',array('dashboard'=>__('Dashboard',$this->plugin_slug)));
+				$this->post_types = apply_filters('lsx_search_post_types',array('dashboard'=>__('Dashboard','lsx-search')));
 				$this->taxonomies = apply_filters('lsx_search_taxonomies',array());
 
 				$this->post_type_slugs = false;
@@ -84,7 +85,7 @@ if (!class_exists( 'LSX_Search' ) ) {
 				if(class_exists('FacetWP')){
 					$facet_data = FWP()->helper->get_facets();
 				}
-				$this->facet_data['search_form'] = array('name'=>'search_form','label'=>__('Search Form',$this->plugin_slug));
+				$this->facet_data['search_form'] = array('name'=>'search_form','label'=>__('Search Form','lsx-search'));
 
 				if(is_array($facet_data) && !empty($facet_data)){
 					foreach($facet_data as $facet){
@@ -92,7 +93,14 @@ if (!class_exists( 'LSX_Search' ) ) {
 					}
 				}				
 			}
-		}		
+		}
+	
+		/**
+		 * Load the plugin text domain for translation.
+		 */
+		public function load_plugin_textdomain() {
+			load_plugin_textdomain( 'lsx-search', FALSE, basename( LSX_SEARCH_PATH ) . '/languages');
+		}
 
 	}
 	new LSX_Search();

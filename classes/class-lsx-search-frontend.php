@@ -373,7 +373,7 @@ class LSX_Search_Frontend extends LSX_Search{
 
 					<?php if(isset($this->options[$this->search_slug]['display_'.$option_slug.'result_count']) && 'on' === $this->options[$this->search_slug]['display_'.$option_slug.'result_count']) { ?>
 						<div class="col-sm-12 col-xs-12 facetwp-results">
-							<h3 class="title"><?php _e('Results',$this->plugin_slug); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h4>
+							<h3 class="title"><?php _e('Results','lsx-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h4>
 						</div>
 					<?php } ?>
 						
@@ -385,11 +385,11 @@ class LSX_Search_Frontend extends LSX_Search{
 								<div class="col-sm-12 col-xs-12 facetwp-form">
 									<form class="banner-form" action="/" method="get">
 										<div class="input-group">
-											<input class="search-field form-control" name="s" type="search" placeholder="<?php _e('Search',$this->plugin_slug); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
+											<input class="search-field form-control" name="s" type="search" placeholder="<?php _e('Search','lsx-search'); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
 											<?php if('general' !== $this->search_slug) { ?>
 												<input name="engine" type="hidden" value="<?php echo $this->search_slug; ?>">
 											<?php } ?>
-											<span class="input-group-btn"><button class="search-submit btn cta-btn" type="submit"><?php _e('Search',$this->plugin_slug); ?></button></span>
+											<span class="input-group-btn"><button class="search-submit btn cta-btn" type="submit"><?php _e('Search','lsx-search'); ?></button></span>
 										</div>
 									</form>	
 								</div>
@@ -404,7 +404,7 @@ class LSX_Search_Frontend extends LSX_Search{
 
 					<?php if(isset($this->options[$this->search_slug]['display_'.$option_slug.'result_count']) && 'on' === $this->options[$this->search_slug]['display_'.$option_slug.'result_count'] && $this->options[$this->search_slug]['search_layout'] != '1c') { ?>
 						<div class="col-sm-12 col-xs-12 facetwp-results">
-							<h3 class="title"><?php _e('Results',$this->plugin_slug); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h4>
+							<h3 class="title"><?php _e('Results','lsx-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h4>
 						</div>
 					<?php } ?>
 					</div>
@@ -422,7 +422,7 @@ class LSX_Search_Frontend extends LSX_Search{
 		$classes = 'search-form ';
 		if(isset($atts['class'])){ $classes .= $atts['class']; }
 
-		$placeholder = __('Where do you want to go?',$this->plugin_slug);
+		$placeholder = __('Where do you want to go?','lsx-search');
 		if(isset($atts['placeholder'])){ $placeholder = $atts['placeholder']; }	
 
 		$action = '/';
@@ -431,7 +431,7 @@ class LSX_Search_Frontend extends LSX_Search{
 		$method = 'get';
 		if(isset($atts['method'])){ $method = $atts['method']; }	
 
-		$button_label = __('Search',$this->plugin_slug);
+		$button_label = __('Search','lsx-search');
 		if(isset($atts['button_label'])){ $button_label = $atts['button_label']; }
 
 		$button_class = 'btn cta-btn ';

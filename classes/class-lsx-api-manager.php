@@ -428,9 +428,9 @@ class LSX_API_Manager {
 	 */
 	public function add_action_links ( $links ) {
 		 $mylinks = array(
-		 	'<a href="' . admin_url( 'admin.php?page=to-settings' ) . '">'.__('Settings',$this->plugin_slug).'</a>',
-		 	'<a href="https://www.lsdev.biz/documentation/lsx-tour-operator-plugin/" target="_blank">'.__('Documentation',$this->plugin_slug).'</a>',
-		 	'<a href="https://feedmysupport.zendesk.com/home" target="_blank">'.__('Support',$this->plugin_slug).'</a>',
+		 	'<a href="' . admin_url( 'admin.php?page=to-settings' ) . '">'.__('Settings','lsx-search').'</a>',
+		 	'<a href="https://www.lsdev.biz/documentation/lsx-tour-operator-plugin/" target="_blank">'.__('Documentation','lsx-search').'</a>',
+		 	'<a href="https://feedmysupport.zendesk.com/home" target="_blank">'.__('Support','lsx-search').'</a>',
 		 );
 		return array_merge( $links, $mylinks );
 	}	
