@@ -60,6 +60,10 @@ if (!class_exists( 'LSX_Search' ) ) {
 		 */
 		public function __construct() {
 			add_action('init',array($this,'load_plugin_textdomain'));
+
+			// Make TO last plugin to load + flush_rewrite_rules()
+			add_action( 'activated_plugin', array( $this, 'activated_plugin' ) );
+			
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-admin.php');
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-frontend.php');
 		}
@@ -100,6 +104,26 @@ if (!class_exists( 'LSX_Search' ) ) {
 		 */
 		public function load_plugin_textdomain() {
 			load_plugin_textdomain( 'lsx-search', FALSE, basename( LSX_SEARCH_PATH ) . '/languages');
+		}
+	
+		/**
+		 * Make TO last plugin to load + flush_rewrite_rules().
+		 */
+		public function activated_plugin() {
+			if ( $plugins = get_option( 'active_plugins' ) ) {
+				$search = preg_grep( '/.*\/tour-operator\.php/', $plugins );
+				$key = array_search( $search, $plugins );
+
+				if ( is_array( $search ) && count( $search ) ) {
+					foreach ( $search as $key => $path ) {
+						array_splice( $plugins, $key, 1 );
+						array_push( $plugins, $path );
+						update_option( 'active_plugins', $plugins );
+					}
+				}
+			}
+
+			flush_rewrite_rules();
 		}
 
 	}
