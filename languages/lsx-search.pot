@@ -88,10 +88,10 @@ msgstr ""
 msgid "Where do you want to go?"
 msgstr ""
 
-#: classes/class-lsx-search.php:78
+#: classes/class-lsx-search.php:82
 msgid "Dashboard"
 msgstr ""
 
-#: classes/class-lsx-search.php:92
+#: classes/class-lsx-search.php:96
 msgid "Search Form"
 msgstr ""

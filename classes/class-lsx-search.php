@@ -61,11 +61,15 @@ if (!class_exists( 'LSX_Search' ) ) {
 		public function __construct() {
 			add_action('init',array($this,'load_plugin_textdomain'));
 
-			// Make TO last plugin to load + flush_rewrite_rules()
+			// Make TO last plugin to load
 			add_action( 'activated_plugin', array( $this, 'activated_plugin' ) );
 			
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-admin.php');
 			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-frontend.php');
+
+			// flush_rewrite_rules()
+			register_activation_hook( LSX_SEARCH_CORE, array( $this, 'register_activation_hook' ) );
+			add_action( 'admin_init', array( $this, 'register_activation_hook_check' ) );
 		}
 
 		/**
@@ -107,7 +111,7 @@ if (!class_exists( 'LSX_Search' ) ) {
 		}
 	
 		/**
-		 * Make TO last plugin to load + flush_rewrite_rules().
+		 * Make TO last plugin to load.
 		 */
 		public function activated_plugin() {
 			if ( $plugins = get_option( 'active_plugins' ) ) {
@@ -122,7 +126,26 @@ if (!class_exists( 'LSX_Search' ) ) {
 					}
 				}
 			}
+		}
+	
+		/**
+		 * On plugin activation
+		 */
+		public function register_activation_hook() {
+			if ( ! is_network_admin() && ! isset( $_GET['activate-multi'] ) ) {
+				set_transient( '_tour_operators_search_flush_rewrite_rules', 1, 30 );
+			}
+		}
+		
+		/**
+		 * On plugin activation (check)
+		 */
+		public function register_activation_hook_check() {
+			if ( ! get_transient( '_tour_operators_search_flush_rewrite_rules' ) ) {
+				return;
+			}
 
+			delete_transient( '_tour_operators_search_flush_rewrite_rules' );
 			flush_rewrite_rules();
 		}
 
