@@ -16,18 +16,6 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: classes/class-lsx-api-manager.php:431
-msgid "Settings"
-msgstr ""
-
-#: classes/class-lsx-api-manager.php:432
-msgid "Documentation"
-msgstr ""
-
-#: classes/class-lsx-api-manager.php:433
-msgid "Support"
-msgstr ""
-
 #: classes/class-lsx-search-admin.php:36
 msgid "Search Settings"
 msgstr ""
