@@ -71,7 +71,8 @@ function to_search_api_admin_init(){
 		'instance'		=>		$instance,
 		'email'			=>		$data['email'],
 		'api_key'		=>		$data['api_key'],
-		'file'			=>		'to-search.php'
+		'file'			=>		'to-search.php',
+		'documentation' =>		'tour-operator-search'
 	);
 
 	$lsx_search_api_manager = new LSX_API_Manager($api_array);
