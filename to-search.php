@@ -47,16 +47,16 @@ function lsx_search_options_pages_filter($pages){
 }
 add_filter('lsx_api_manager_options_pages','lsx_search_options_pages_filter',10,1);
 
-function lsx_search_api_admin_init(){
+function to_search_api_admin_init(){
 	$options = get_option('_to_settings',false);
 	$data = array('api_key'=>'','email'=>'');
 
 	if(false !== $options && isset($options['general'])){
-		if(isset($options['general']['lsx-search_api_key']) && '' !== $options['general']['lsx-search_api_key']){
-			$data['api_key'] = $options['general']['lsx-search_api_key'];
+		if(isset($options['general']['to-search_api_key']) && '' !== $options['general']['to-search_api_key']){
+			$data['api_key'] = $options['general']['to-search_api_key'];
 		}
-		if(isset($options['general']['lsx-search_email']) && '' !== $options['general']['lsx-search_email']){
-			$data['email'] = $options['general']['lsx-search_email'];
+		if(isset($options['general']['to-search_email']) && '' !== $options['general']['to-search_email']){
+			$data['email'] = $options['general']['to-search_email'];
 		}		
 	}
 
@@ -66,17 +66,17 @@ function lsx_search_api_admin_init(){
 	}
 
 	$api_array = array(
-		'product_id'	=>		'LSX Search',
+		'product_id'	=>		'TO Search',
 		'version'		=>		'1.0.0',
 		'instance'		=>		$instance,
 		'email'			=>		$data['email'],
 		'api_key'		=>		$data['api_key'],
-		'file'			=>		'lsx-search.php'
+		'file'			=>		'to-search.php'
 	);
 
 	$lsx_search_api_manager = new LSX_API_Manager($api_array);
 }
-add_action('admin_init','lsx_search_api_admin_init');
+add_action('admin_init','to_search_api_admin_init');
 
 /* ======================= Below is the Plugin Class init ========================= */
 
