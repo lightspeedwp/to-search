@@ -6,7 +6,7 @@
  * Version:     1.0
  * Author:      LightSpeed WordPress Development
  * Author URI:  https://www.lsdev.biz/
- * License:     GPL3
+ * License:     GPL3+
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: lsx-search
  * Domain Path: /languages
