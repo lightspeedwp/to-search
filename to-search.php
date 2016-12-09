@@ -3,7 +3,7 @@
  * Plugin Name: Tour Operator Search 
  * Plugin URI:  https://www.lsdev.biz/product/tour-operator-search/
  * Description: The Tour Operator Search extension adds robust search functionality to sites, allowing filterable search by post type, category and more.
- * Version:     1.0
+ * Version:     1.0.1
  * Author:      LightSpeed
  * Author URI:  https://www.lsdev.biz/
  * License:     GPL3+
@@ -20,7 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 define('LSX_SEARCH_PATH',  plugin_dir_path( __FILE__ ) );
 define('LSX_SEARCH_CORE',  __FILE__ );
 define('LSX_SEARCH_URL',  plugin_dir_url( __FILE__ ) );
-define('LSX_SEARCH_VER',  '1.0.0' );
+define('LSX_SEARCH_VER',  '1.0.1' );
 
 /**
  * Runs once when the plugin is activated.
@@ -67,7 +67,7 @@ function to_search_api_admin_init(){
 
 	$api_array = array(
 		'product_id'	=>		'TO Search',
-		'version'		=>		'1.0.0',
+		'version'		=>		'1.0.1',
 		'instance'		=>		$instance,
 		'email'			=>		$data['email'],
 		'api_key'		=>		$data['api_key'],
