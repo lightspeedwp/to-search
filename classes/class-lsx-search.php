@@ -77,7 +77,7 @@ if (!class_exists( 'LSX_Search' ) ) {
 		 */
 		public function init(){
 			if(class_exists('LSX_Tour_Operators')){
-				$this->options = get_option('_to_settings',false);
+				$this->options = get_option('_lsx-to_settings',false);
 
 				$this->post_types = apply_filters('lsx_search_post_types',array('dashboard'=>__('Dashboard','lsx-search')));
 				$this->taxonomies = apply_filters('lsx_search_taxonomies',array());
