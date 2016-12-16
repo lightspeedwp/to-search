@@ -21,8 +21,8 @@ class LSX_Search_Admin extends LSX_Search{
 		
 		if(class_exists('FacetWP')){
 			foreach($this->post_types as $pt => $pv){
-				add_action('to_framework_'.$pt.'_tab_single_settings_bottom', array($this,'search_settings'),50,1);
-				add_action('to_framework_'.$pt.'_tab_archive_settings_bottom', array($this,'archive_settings'),10,1);
+				add_action('lsx_to_framework_'.$pt.'_tab_single_settings_bottom', array($this,'search_settings'),50,1);
+				add_action('lsx_to_framework_'.$pt.'_tab_archive_settings_bottom', array($this,'archive_settings'),10,1);
 			}
 		}
 	}	

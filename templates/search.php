@@ -34,7 +34,7 @@ get_header();
 						<div class="row">
 							<?php while ( have_posts() ) : the_post(); ?>
 								<div class="panel col-sm-12">
-									<?php if ( function_exists( 'to_content' ) ) { to_content( 'content', get_post_type() ); } ?>
+									<?php if ( function_exists( 'lsx_to_content' ) ) { lsx_to_content( 'content', get_post_type() ); } ?>
 								</div>
 							<?php endwhile; ?>
 						</div>
@@ -49,7 +49,7 @@ get_header();
 
 				<?php lsx_content_bottom(); ?>
 				
-				<?php to_sharing(); ?>
+				<?php lsx_to_sharing(); ?>
 
 			</main><!-- #main -->
 

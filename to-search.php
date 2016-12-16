@@ -3,7 +3,7 @@
  * Plugin Name: Tour Operator Search 
  * Plugin URI:  https://www.lsdev.biz/product/tour-operator-search/
  * Description: The Tour Operator Search extension adds robust search functionality to sites, allowing filterable search by post type, category and more.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      LightSpeed
  * Author URI:  https://www.lsdev.biz/
  * License:     GPL3+
@@ -20,7 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 define('LSX_SEARCH_PATH',  plugin_dir_path( __FILE__ ) );
 define('LSX_SEARCH_CORE',  __FILE__ );
 define('LSX_SEARCH_URL',  plugin_dir_url( __FILE__ ) );
-define('LSX_SEARCH_VER',  '1.0.1' );
+define('LSX_SEARCH_VER',  '1.0.2' );
 
 /**
  * Runs once when the plugin is activated.
@@ -47,7 +47,7 @@ function lsx_search_options_pages_filter($pages){
 }
 add_filter('lsx_api_manager_options_pages','lsx_search_options_pages_filter',10,1);
 
-function to_search_api_admin_init(){
+function lsx_to_search_api_admin_init(){
 	$options = get_option('_to_settings',false);
 	$data = array('api_key'=>'','email'=>'');
 
@@ -67,7 +67,7 @@ function to_search_api_admin_init(){
 
 	$api_array = array(
 		'product_id'	=>		'TO Search',
-		'version'		=>		'1.0.1',
+		'version'		=>		'1.0.2',
 		'instance'		=>		$instance,
 		'email'			=>		$data['email'],
 		'api_key'		=>		$data['api_key'],
@@ -77,7 +77,7 @@ function to_search_api_admin_init(){
 
 	$lsx_search_api_manager = new LSX_API_Manager($api_array);
 }
-add_action('admin_init','to_search_api_admin_init');
+add_action('admin_init','lsx_to_search_api_admin_init');
 
 /* ======================= Below is the Plugin Class init ========================= */
 
