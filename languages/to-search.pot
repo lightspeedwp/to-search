@@ -1,0 +1,81 @@
+# Copyright (C) 2017 to-search
+# This file is distributed under the same license as the to-search package.
+msgid ""
+msgstr ""
+"Project-Id-Version: to-search\n"
+"Report-Msgid-Bugs-To: https://www.lsdev.biz/product/tour-operator-search/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"Language-Team: LightSpeed <webmaster@lsdev.biz>\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: classes/class-to-search-admin.php:40, classes/class-to-search-admin.php:124
+msgid "Search Settings"
+msgstr ""
+
+#: classes/class-to-search-admin.php:44
+msgid "Enable Search"
+msgstr ""
+
+#: classes/class-to-search-admin.php:49
+msgid "This adds the facet shortcodes to the search results template."
+msgstr ""
+
+#: classes/class-to-search-admin.php:51, classes/class-to-search-admin.php:132
+msgid "This adds the facet shortcodes to the post type archive and taxonomy templates."
+msgstr ""
+
+#: classes/class-to-search-admin.php:57, classes/class-to-search-admin.php:137
+msgid "Layout"
+msgstr ""
+
+#: classes/class-to-search-admin.php:61, classes/class-to-search-admin.php:141
+msgid "Follow the theme layout"
+msgstr ""
+
+#: classes/class-to-search-admin.php:70, classes/class-to-search-admin.php:150
+msgid "Enable Price Sorting"
+msgstr ""
+
+#: classes/class-to-search-admin.php:74, classes/class-to-search-admin.php:154
+msgid "WARNING, any item that doesnt have a price will not show. "
+msgstr ""
+
+#: classes/class-to-search-admin.php:79, classes/class-to-search-admin.php:159
+msgid "Display Result Count"
+msgstr ""
+
+#: classes/class-to-search-admin.php:87, classes/class-to-search-admin.php:167
+msgid "Facets"
+msgstr ""
+
+#: classes/class-to-search-admin.php:106, classes/class-to-search-admin.php:186
+msgid "You have no Facets setup."
+msgstr ""
+
+#: classes/class-to-search-admin.php:128
+msgid "Enable Filtering"
+msgstr ""
+
+#: classes/class-to-search-frontend.php:377, classes/class-to-search-frontend.php:408
+msgid "Results"
+msgstr ""
+
+#: classes/class-to-search-frontend.php:389, classes/class-to-search-frontend.php:393, classes/class-to-search-frontend.php:435
+msgid "Search"
+msgstr ""
+
+#: classes/class-to-search-frontend.php:426
+msgid "Where do you want to go?"
+msgstr ""
+
+#: classes/class-to-search.php:103
+msgid "Search Form"
+msgstr ""

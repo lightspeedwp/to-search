@@ -1,16 +1,16 @@
 <?php
-if (!class_exists( 'LSX_Search' ) ) {
+if (!class_exists( 'LSX_TO_Search' ) ) {
 	/**
 	 * LSX Search Main Class
 	 */
-	class LSX_Search {
+	class LSX_TO_Search {
 		
 		/**
 		 * The plugins slug, used for the text domain
 		 *
 		 * @var      string
 		 */
-		public $plugin_slug = 'lsx-search';
+		public $plugin_slug = 'to-search';
 
 		/**
 		 * Holds the options
@@ -59,47 +59,53 @@ if (!class_exists( 'LSX_Search' ) ) {
 		 * Constructor
 		 */
 		public function __construct() {
-			add_action('init',array($this,'load_plugin_textdomain'));
+			add_action('init',array($this,'set_vars'));
+			add_action('init',array($this,'set_facetwp_vars'));
 
 			// Make TO last plugin to load
 			add_action( 'activated_plugin', array( $this, 'activated_plugin' ) );
+
+			add_action('init',array($this,'load_plugin_textdomain'));
 			
-			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-admin.php');
-			require_once(LSX_SEARCH_PATH . '/classes/class-lsx-search-frontend.php');
+			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-admin.php');
+			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-frontend.php');
 
 			// flush_rewrite_rules()
-			register_activation_hook( LSX_SEARCH_CORE, array( $this, 'register_activation_hook' ) );
+			register_activation_hook( LSX_TO_SEARCH_CORE, array( $this, 'register_activation_hook' ) );
 			add_action( 'admin_init', array( $this, 'register_activation_hook_check' ) );
 		}
-
+		
 		/**
-		 * Runs on the init action
+		 * sets the variables
 		 */
-		public function init(){
-			if(class_exists('LSX_Tour_Operators')){
-				$this->options = get_option('_lsx-to_settings',false);
+		public function set_vars(){
+			$this->options = get_option('_lsx-to_settings',false);
 
-				$this->post_types = apply_filters('lsx_search_post_types',array('dashboard'=>__('Dashboard','lsx-search')));
-				$this->taxonomies = apply_filters('lsx_search_taxonomies',array());
+			$this->post_types = apply_filters('lsx_to_search_post_types',array());
+			$this->taxonomies = apply_filters('lsx_to_search_taxonomies',array());
 
-				$this->post_type_slugs = false;
-				if(!empty($this->post_types)){
-					foreach($this->post_types as $key => $value){
-						$this->post_type_slugs[strtolower($value)] = $key;
-					}
+			$this->post_type_slugs = false;
+			if(!empty($this->post_types)){
+				foreach($this->post_types as $key => $value){
+					$this->post_type_slugs[strtolower($value)] = $key;
 				}
+			}
+		}
+		
+		/**
+		 * sets the facetwp variable
+		 */
+		public function set_facetwp_vars(){
+			$facet_data = null;
+			if(class_exists('FacetWP')){
+				$facet_data = FWP()->helper->get_facets();
+			}
+			$this->facet_data['search_form'] = array('name'=>'search_form','label'=>__('Search Form','to-search'));
 
-				$facet_data = null;
-				if(class_exists('FacetWP')){
-					$facet_data = FWP()->helper->get_facets();
+			if(is_array($facet_data) && !empty($facet_data)){
+				foreach($facet_data as $facet){
+					$this->facet_data[$facet['name']] = $facet;
 				}
-				$this->facet_data['search_form'] = array('name'=>'search_form','label'=>__('Search Form','lsx-search'));
-
-				if(is_array($facet_data) && !empty($facet_data)){
-					foreach($facet_data as $facet){
-						$this->facet_data[$facet['name']] = $facet;
-					}
-				}				
 			}
 		}
 	
@@ -107,7 +113,7 @@ if (!class_exists( 'LSX_Search' ) ) {
 		 * Load the plugin text domain for translation.
 		 */
 		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'lsx-search', FALSE, basename( LSX_SEARCH_PATH ) . '/languages');
+			load_plugin_textdomain( 'to-search', FALSE, basename( LSX_TO_SEARCH_PATH ) . '/languages');
 		}
 	
 		/**
@@ -150,5 +156,5 @@ if (!class_exists( 'LSX_Search' ) ) {
 		}
 
 	}
-	new LSX_Search();
+	new LSX_TO_Search();
 }

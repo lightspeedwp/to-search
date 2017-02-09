@@ -1,4 +1,4 @@
-LSX_Search = {
+LSX_TO_Search = {
 	initThis: function() {
 		this.firstFunction();
 	},
@@ -8,5 +8,5 @@ LSX_Search = {
 };
 
 jQuery(document).ready( function() {
-	LSX_Search.initThis();
+	LSX_TO_Search.initThis();
 });

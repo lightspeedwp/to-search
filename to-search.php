@@ -3,13 +3,13 @@
  * Plugin Name: Tour Operator Search 
  * Plugin URI:  https://www.lsdev.biz/product/tour-operator-search/
  * Description: The Tour Operator Search extension adds robust search functionality to sites, allowing filterable search by post type, category and more.
- * Version:     1.0.2
+ * Version:     1.0.3
  * Author:      LightSpeed
  * Author URI:  https://www.lsdev.biz/
  * License:     GPL3+
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: lsx-search
- * Domain Path: /languages
+ * Text Domain: to-search
+ * Domain Path: /languages/
  */
 
 // If this file is called directly, abort.
@@ -17,10 +17,10 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define('LSX_SEARCH_PATH',  plugin_dir_path( __FILE__ ) );
-define('LSX_SEARCH_CORE',  __FILE__ );
-define('LSX_SEARCH_URL',  plugin_dir_url( __FILE__ ) );
-define('LSX_SEARCH_VER',  '1.0.2' );
+define('LSX_TO_SEARCH_PATH',  plugin_dir_path( __FILE__ ) );
+define('LSX_TO_SEARCH_CORE',  __FILE__ );
+define('LSX_TO_SEARCH_URL',  plugin_dir_url( __FILE__ ) );
+define('LSX_TO_SEARCH_VER',  '1.0.3' );
 
 /**
  * Runs once when the plugin is activated.
@@ -41,22 +41,22 @@ if(!class_exists('LSX_API_Manager')){
 /** 
  *	Grabs the email and api key from the LSX Search Settings.
  */ 
-function lsx_search_options_pages_filter($pages){
+function lsx_to_search_options_pages_filter($pages){
 	$pages[] = 'lsx-to-settings';
 	return $pages;
 }
-add_filter('lsx_api_manager_options_pages','lsx_search_options_pages_filter',10,1);
+add_filter('lsx_api_manager_options_pages','lsx_to_search_options_pages_filter',10,1);
 
 function lsx_to_search_api_admin_init(){
 	$options = get_option('_lsx-to_settings',false);
 	$data = array('api_key'=>'','email'=>'');
 
-	if(false !== $options && isset($options['general'])){
-		if(isset($options['general']['to-search_api_key']) && '' !== $options['general']['to-search_api_key']){
-			$data['api_key'] = $options['general']['to-search_api_key'];
+	if(false !== $options && isset($options['api'])){
+		if(isset($options['api']['to-search_api_key']) && '' !== $options['api']['to-search_api_key']){
+			$data['api_key'] = $options['api']['to-search_api_key'];
 		}
-		if(isset($options['general']['to-search_email']) && '' !== $options['general']['to-search_email']){
-			$data['email'] = $options['general']['to-search_email'];
+		if(isset($options['api']['to-search_email']) && '' !== $options['api']['to-search_email']){
+			$data['email'] = $options['api']['to-search_email'];
 		}		
 	}
 
@@ -67,7 +67,7 @@ function lsx_to_search_api_admin_init(){
 
 	$api_array = array(
 		'product_id'	=>		'TO Search',
-		'version'		=>		'1.0.2',
+		'version'		=>		'1.0.3',
 		'instance'		=>		$instance,
 		'email'			=>		$data['email'],
 		'api_key'		=>		$data['api_key'],
@@ -81,4 +81,4 @@ add_action('admin_init','lsx_to_search_api_admin_init');
 
 /* ======================= Below is the Plugin Class init ========================= */
 
-require_once( LSX_SEARCH_PATH . '/classes/class-lsx-search.php' );
+require_once( LSX_TO_SEARCH_PATH . '/classes/class-to-search.php' );

@@ -3,13 +3,15 @@
  * LSX Search Main Class
  */
 
-class LSX_Search_Admin extends LSX_Search{	
+class LSX_TO_Search_Admin extends LSX_TO_Search{	
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action('init',array($this,'init'));
+		add_action('init',array($this,'set_vars'));
+		add_action('init',array($this,'set_facetwp_vars'));
+		
 		add_action('admin_init', array($this,'admin_init'));
 	}
 
@@ -18,10 +20,11 @@ class LSX_Search_Admin extends LSX_Search{
 	 *
 	 */
 	public function admin_init() {
-		
 		if(class_exists('FacetWP')){
+			add_action('lsx_to_framework_dashboard_tab_content', array($this,'general_settings'),50,1);
+
 			foreach($this->post_types as $pt => $pv){
-				add_action('lsx_to_framework_'.$pt.'_tab_single_settings_bottom', array($this,'search_settings'),50,1);
+				add_action('lsx_to_framework_'.$pt.'_tab_general_settings_bottom', array($this,'general_settings'),50,1);
 				add_action('lsx_to_framework_'.$pt.'_tab_archive_settings_bottom', array($this,'archive_settings'),10,1);
 			}
 		}
@@ -31,30 +34,31 @@ class LSX_Search_Admin extends LSX_Search{
 	 * A filter to set the layout to 2 column
 	 *
 	 */
-	public function search_settings($tab='general') { ?>
+	public function general_settings($tab='general') {
+		?>
 		<tr class="form-field">
-			<th scope="row" colspan="2"><label><h3><?php _e('Search Settings','lsx-search'); ?></h3></label></th>
-		</tr>		
+			<th scope="row" colspan="2"><label><h3><?php _e('Search Settings','to-search'); ?></h3></label></th>
+		</tr>
 		<tr class="form-field">
 			<th scope="row">
-				<label for="enable_search"><?php _e('Enable Search','lsx-search'); ?></label>
+				<label for="enable_search"><?php _e('Enable Search','to-search'); ?></label>
 			</th>
 			<td>
 				<input type="checkbox" {{#if enable_search}} checked="checked" {{/if}} name="enable_search" />
 				<?php if('general' === $tab) { ?>
-					<small><?php _e('This adds the facet shortcodes to the search results template.','lsx-search'); ?></small>
+					<small><?php _e('This adds the facet shortcodes to the search results template.','to-search'); ?></small>
 				<?php }else{ ?>
-					<small><?php _e('This adds the facet shortcodes to the post type archive and taxonomy templates.','lsx-search'); ?></small>
+					<small><?php _e('This adds the facet shortcodes to the post type archive and taxonomy templates.','to-search'); ?></small>
 				<?php } ?>
 			</td>
 		</tr>
 		<tr class="form-field-wrap">
 			<th scope="row">
-				<label for="search_layout"><?php _e('Layout','lsx-search'); ?></label>
+				<label for="search_layout"><?php _e('Layout','to-search'); ?></label>
 			</th>
 			<td>
 				<select value="{{search_layout}}" name="search_layout">
-					<option value="" {{#is search_layout value=""}}selected="selected"{{/is}}><?php _e('Follow the theme layout','lsx-search'); ?></option>
+					<option value="" {{#is search_layout value=""}}selected="selected"{{/is}}><?php _e('Follow the theme layout','to-search'); ?></option>
 					<option value="1c" {{#is search_layout value="1c"}} selected="selected"{{/is}}>1 column</option>
 					<option value="2cr" {{#is search_layout value="2cr"}} selected="selected"{{/is}}>2 columns / Content on right</option>
 					<option value="2cl" {{#is search_layout value="2cl"}} selected="selected"{{/is}}>2 columns / Content on left</option>
@@ -63,16 +67,16 @@ class LSX_Search_Admin extends LSX_Search{
 		</tr>
 		<tr class="form-field">
 			<th scope="row">
-				<label for="enable_price_sorting"><?php _e('Enable Price Sorting','lsx-search'); ?></label>
+				<label for="enable_price_sorting"><?php _e('Enable Price Sorting','to-search'); ?></label>
 			</th>
 			<td>
 				<input type="checkbox" {{#if enable_price_sorting}} checked="checked" {{/if}} name="enable_price_sorting" />
-				<small><?php _e('WARNING, any item that doesnt have a price will not show. ','lsx-search'); ?></small>
+				<small><?php _e('WARNING, any item that doesnt have a price will not show. ','to-search'); ?></small>
 			</td>
 		</tr>		
 		<tr class="form-field">
 			<th scope="row">
-				<label for="display_result_count"><?php _e('Display Result Count','lsx-search'); ?></label>
+				<label for="display_result_count"><?php _e('Display Result Count','to-search'); ?></label>
 			</th>
 			<td>
 				<input type="checkbox" {{#if display_result_count}} checked="checked" {{/if}} name="display_result_count" />
@@ -80,7 +84,7 @@ class LSX_Search_Admin extends LSX_Search{
 		</tr>			
 		<tr class="form-field-wrap">
 			<th scope="row">
-				<label for="facets"><?php _e('Facets','lsx-search'); ?></label>
+				<label for="facets"><?php _e('Facets','to-search'); ?></label>
 			</th>
 			<td><ul>
 			<?php 	
@@ -99,7 +103,7 @@ class LSX_Search_Admin extends LSX_Search{
 				<?php }
 			}else{
 				?>
-					<li><?php _e('You have no Facets setup.','lsx-search'); ?></li>
+					<li><?php _e('You have no Facets setup.','to-search'); ?></li>
 				<?php
 			}
 			?>
@@ -117,21 +121,24 @@ class LSX_Search_Admin extends LSX_Search{
 		if('general' !== $tab){
 		?>		
 		<tr class="form-field">
+			<th scope="row" colspan="2"><label><h3><?php _e('Search Settings','to-search'); ?></h3></label></th>
+		</tr>		
+		<tr class="form-field">
 			<th scope="row">
-				<label for="enable_facets"><?php _e('Enable Filtering','lsx-search'); ?></label>
+				<label for="enable_facets"><?php _e('Enable Filtering','to-search'); ?></label>
 			</th>
 			<td>
 				<input type="checkbox" {{#if enable_facets}} checked="checked" {{/if}} name="enable_facets" />
-				<small><?php _e('This adds the facet shortcodes to the post type archive and taxonomy templates.','lsx-search'); ?></small>
+				<small><?php _e('This adds the facet shortcodes to the post type archive and taxonomy templates.','to-search'); ?></small>
 			</td>
 		</tr>
 		<tr class="form-field-wrap">
 			<th scope="row">
-				<label for="archive_layout"><?php _e('Layout','lsx-search'); ?></label>
+				<label for="archive_layout"><?php _e('Layout','to-search'); ?></label>
 			</th>
 			<td>
 				<select value="{{archive_layout}}" name="archive_layout">
-					<option value="" {{#is archive_layout value=""}}selected="selected"{{/is}}><?php _e('Follow the theme layout','lsx-search'); ?></option>
+					<option value="" {{#is archive_layout value=""}}selected="selected"{{/is}}><?php _e('Follow the theme layout','to-search'); ?></option>
 					<option value="1c" {{#is archive_layout value="1c"}} selected="selected"{{/is}}>1 column</option>
 					<option value="2cr" {{#is archive_layout value="2cr"}} selected="selected"{{/is}}>2 columns / Content on right</option>
 					<option value="2cl" {{#is archive_layout value="2cl"}} selected="selected"{{/is}}>2 columns / Content on left</option>
@@ -140,16 +147,16 @@ class LSX_Search_Admin extends LSX_Search{
 		</tr>
 		<tr class="form-field">
 			<th scope="row">
-				<label for="enable_archive_price_sorting"><?php _e('Enable Price Sorting','lsx-search'); ?></label>
+				<label for="enable_archive_price_sorting"><?php _e('Enable Price Sorting','to-search'); ?></label>
 			</th>
 			<td>
 				<input type="checkbox" {{#if enable_archive_price_sorting}} checked="checked" {{/if}} name="enable_archive_price_sorting" />
-				<small><?php _e('WARNING, any item that doesnt have a price will not show. ','lsx-search'); ?></small>
+				<small><?php _e('WARNING, any item that doesnt have a price will not show. ','to-search'); ?></small>
 			</td>
 		</tr>		
 		<tr class="form-field">
 			<th scope="row">
-				<label for="display_archive_result_count"><?php _e('Display Result Count','lsx-search'); ?></label>
+				<label for="display_archive_result_count"><?php _e('Display Result Count','to-search'); ?></label>
 			</th>
 			<td>
 				<input type="checkbox" {{#if display_archive_result_count}} checked="checked" {{/if}} name="display_archive_result_count" />
@@ -157,7 +164,7 @@ class LSX_Search_Admin extends LSX_Search{
 		</tr>			
 		<tr class="form-field-wrap">
 			<th scope="row">
-				<label for="facets"><?php _e('Facets','lsx-search'); ?></label>
+				<label for="facets"><?php _e('Facets','to-search'); ?></label>
 			</th>
 			<td><ul>
 			<?php 	
@@ -176,7 +183,7 @@ class LSX_Search_Admin extends LSX_Search{
 				<?php }
 			}else{
 				?>
-					<li><?php _e('You have no Facets setup.','lsx-search'); ?></li>
+					<li><?php _e('You have no Facets setup.','to-search'); ?></li>
 				<?php
 			}
 			?>
@@ -186,4 +193,4 @@ class LSX_Search_Admin extends LSX_Search{
 		}
 	}		
 }
-new LSX_Search_Admin();
+new LSX_TO_Search_Admin();
