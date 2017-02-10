@@ -103,16 +103,6 @@
 
 	#facetwp-top {
 		margin-bottom: 30px;
-
-		& + .nav-tabs {
-			margin-bottom: 30px;
-
-			& + .tab-content {
-				#to-search-map {
-					margin-bottom: 30px;
-				}
-			}
-		}
 	}
 
 	#facetwp-top,
@@ -166,6 +156,18 @@
 				.extend {
 					margin-bottom: 0;
 				}
+			}
+		}
+	}
+
+	.facetwp-template {
+		.nav-tabs {
+			margin-bottom: 30px;
+		}
+
+		.tab-content {
+			#to-search-map {
+				margin-bottom: 30px;
 			}
 		}
 	}

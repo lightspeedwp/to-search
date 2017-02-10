@@ -348,6 +348,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 				</div>
 			</div>
 		</div>
+		<div class="facetwp-template">
 
 		<?php
 		if ( true === $show_map ) {
@@ -356,9 +357,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			echo '<li><a data-toggle="tab" href="#to-search-map"><i class="fa fa-map-marker" aria-hidden="true"></i> ' . esc_html__( 'Map', 'to-search' ) . '</a></li>';
 			echo '</ul>';
 			echo '<div class="tab-content">';
-			echo '<div id="to-search-list" class="facetwp-template tab-pane fade in active">';
-		} else {
-			echo '<div class="facetwp-template">';
+			echo '<div id="to-search-list" class="tab-pane fade in active">';
 		}
 	}
 
@@ -385,11 +384,10 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			$this->display_map();
 			echo '</div>';
 			echo '</div>';
-		} else {
-			echo '</div>';
 		}
 		?>
 
+		</div>
 		<div id="facetwp-bottom">
 			<div class="row facetwp-bottom-row-1">
 				<div class="col-md-8">

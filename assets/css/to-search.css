@@ -40,10 +40,6 @@ body.archive-tour-operator #facetwp-sidebar, body.archive-tour-operator #seconda
 
 body.archive-tour-operator #facetwp-top {
   margin-bottom: 30px; }
-  body.archive-tour-operator #facetwp-top + .nav-tabs {
-    margin-bottom: 30px; }
-    body.archive-tour-operator #facetwp-top + .nav-tabs + .tab-content #to-search-map {
-      margin-bottom: 30px; }
 
 body.archive-tour-operator #facetwp-top .facetwp-sort, body.archive-tour-operator #facetwp-top .facetwp-per-page, body.archive-tour-operator #facetwp-bottom .facetwp-sort, body.archive-tour-operator #facetwp-bottom .facetwp-per-page {
   display: inline-block;
@@ -71,6 +67,12 @@ body.archive-tour-operator #facetwp-top .wp-pagenavi-wrapper.facetwp-custom, bod
     margin-right: 0; }
     body.archive-tour-operator #facetwp-top .wp-pagenavi-wrapper.facetwp-custom .wp-pagenavi a, body.archive-tour-operator #facetwp-top .wp-pagenavi-wrapper.facetwp-custom .wp-pagenavi .current, body.archive-tour-operator #facetwp-top .wp-pagenavi-wrapper.facetwp-custom .wp-pagenavi .extend, body.archive-tour-operator #facetwp-bottom .wp-pagenavi-wrapper.facetwp-custom .wp-pagenavi a, body.archive-tour-operator #facetwp-bottom .wp-pagenavi-wrapper.facetwp-custom .wp-pagenavi .current, body.archive-tour-operator #facetwp-bottom .wp-pagenavi-wrapper.facetwp-custom .wp-pagenavi .extend {
       margin-bottom: 0; }
+
+body.archive-tour-operator .facetwp-template .nav-tabs {
+  margin-bottom: 30px; }
+
+body.archive-tour-operator .facetwp-template .tab-content #to-search-map {
+  margin-bottom: 30px; }
 
 body.archive-tour-operator .wrap #primary .wp-pagenavi-wrapper {
   margin: 50px 0 0 0; }
