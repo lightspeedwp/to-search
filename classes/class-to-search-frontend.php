@@ -82,26 +82,27 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 				add_action('lsx_content_wrap_before', array($this,'search_sidebar'));
 			}	
 		}
-	}					
+	}
 
 	/**
-	 * Enques the assets
+	 * Enques the assets.
 	 */
 	public function assets() {
-
-		if(defined('WP_DEBUG') && true === WP_DEBUG){
-			$min='';
-		}else{
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			$min = '';
+		} else {
 			$min = '.min';
 		}
-		wp_enqueue_script( 'lsx_search', LSX_TO_SEARCH_URL.'/assets/js/to-search'.$min.'.js', array(
-			'jquery',
-		), '1.0.0', true );
 
-		$params = apply_filters( 'lsx_search_js_params', array(
-			'ajax_url'		=>		admin_url('admin-ajax.php'),
+		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/to-search' . $min . '.js', array( 'jquery' ), LSX_TO_SEARCH_VER, true );
+
+		$params = apply_filters( 'lsx_to_search_js_params', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
 		));
-		wp_localize_script( 'lsx_search', 'lsx_search_params', $params );		
+
+		wp_localize_script( 'lsx_to_search', 'lsx_to_search_params', $params );
+
+		wp_enqueue_style( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/css/to-search.css', array(), LSX_TO_SEARCH_VER );
 	}
 
 	/**
@@ -324,31 +325,79 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
 			$option_slug = 'archive_';
 		}
+
+		$show_map = false;
+
+		if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) && ! empty( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) ) {
+			$show_map = true;
+		}
 		?>
-		<div class="row" id="facetwp-top">
-			<div class="col-sm-12">
-				<?php echo do_shortcode('[facetwp pager="true"]'); ?>
-			</div>		
-			<div class="col-sm-12">
-				<?php echo do_shortcode('[facetwp sort="true"]'); ?>
-				<?php if(isset($this->options[$this->search_slug][$option_slug.'facets']) && is_array($this->options[$this->search_slug][$option_slug.'facets']) && array_key_exists('a_z',$this->options[$this->search_slug][$option_slug.'facets'])) {echo do_shortcode('[facetwp facet="a_z"]');} ?>
+		<div id="facetwp-top">
+			<div class="row facetwp-top-row-1">
+				<div class="col-md-12">
+					<?php echo do_shortcode('[facetwp sort="true"]'); ?>
+					<?php echo do_shortcode('[facetwp per_page="true"]'); ?>
+				</div>
+			</div>
+			<div class="row facetwp-top-row-2">
+				<div class="col-md-8">
+					<?php if(isset($this->options[$this->search_slug][$option_slug.'facets']) && is_array($this->options[$this->search_slug][$option_slug.'facets']) && array_key_exists('a_z',$this->options[$this->search_slug][$option_slug.'facets'])) {echo do_shortcode('[facetwp facet="a_z"]');} ?>
+				</div>
+				<div class="col-md-4">
+					<?php echo do_shortcode('[facetwp pager="true"]'); ?>
+				</div>
 			</div>
 		</div>
 
-		<div class="facetwp-template">
-
-	<?php 
+		<?php
+		if ( true === $show_map ) {
+			echo '<ul class="nav nav-tabs">';
+			echo '<li class="active"><a data-toggle="tab" href="#to-search-list"><i class="fa fa-list" aria-hidden="true"></i> ' . esc_html__( 'List', 'to-search' ) . '</a></li>';
+			echo '<li><a data-toggle="tab" href="#to-search-map"><i class="fa fa-map-marker" aria-hidden="true"></i> ' . esc_html__( 'Map', 'to-search' ) . '</a></li>';
+			echo '</ul>';
+			echo '<div class="tab-content">';
+			echo '<div id="to-search-list" class="facetwp-template tab-pane fade in active">';
+		} else {
+			echo '<div class="facetwp-template">';
+		}
 	}
 
 	/**
 	 * Outputs Search Sidebar.
 	 *
 	 */
-	public function lsx_content_bottom() { ?>
-		</div>
-		<div class="row" id="facetwp-bottom">
-			<div class="col-sm-12">
-				<?php echo do_shortcode('[facetwp pager="true"]'); ?>
+	public function lsx_content_bottom() {
+		if(is_search()){
+			$option_slug = '';
+		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
+			$option_slug = 'archive_';
+		}
+
+		$show_map = false;
+
+		if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) && ! empty( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) ) {
+			$show_map = true;
+		}
+
+		if ( true === $show_map ) {
+			echo '</div>';
+			echo '<div id="to-search-map" class="tab-pane fade in">';
+			echo 'MAP';
+			echo '</div>';
+			echo '</div>';
+		} else {
+			echo '</div>';
+		}
+		?>
+
+		<div id="facetwp-bottom">
+			<div class="row facetwp-bottom-row-1">
+				<div class="col-md-8">
+					<?php if(isset($this->options[$this->search_slug][$option_slug.'facets']) && is_array($this->options[$this->search_slug][$option_slug.'facets']) && array_key_exists('a_z',$this->options[$this->search_slug][$option_slug.'facets'])) {echo do_shortcode('[facetwp facet="a_z"]');} ?>
+				</div>
+				<div class="col-md-4">
+					<?php echo do_shortcode('[facetwp pager="true"]'); ?>
+				</div>
 			</div>
 		</div>
 	<?php 
@@ -505,14 +554,14 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	        for ( $i = 1; $i <= $total_pages; $i++ ) {
 	            if ( $i == $page ) {
 	                $output .= '<span class="current">'. $i .'</span>';
-	            } elseif ( ( $page - 5 ) < $i && ( $page + 5 ) > $i ) {
+	            } elseif ( ( $page - 3 ) < $i && ( $page + 3 ) > $i ) {
 	                $output .= '<a class="page larger facetwp-page" data-page="'. $i .'">'. $i .'</a>';
-	            } elseif ( ( $page - 5 ) >= $i && $page > 5 ) {
+	            } elseif ( ( $page - 3 ) >= $i && $page > 3 ) {
 	                if ( ! $temp ) {
 	                    $output .= '<span>...</span>';
 	                    $temp = true;
 	                }
-	            } elseif ( ( $page + 5 ) <= $i && ( $page + 5 ) <= $total_pages ) {
+	            } elseif ( ( $page + 3 ) <= $i && ( $page + 3 ) <= $total_pages ) {
 	                $output .= '<span>...</span>';
 	                break;
 	            }

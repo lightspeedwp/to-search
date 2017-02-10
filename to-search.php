@@ -25,13 +25,13 @@ define('LSX_TO_SEARCH_VER',  '1.0.3' );
 /**
  * Runs once when the plugin is activated.
  */
-function lsx_search_activate_plugin() {
+function lsx_to_search_activate_plugin() {
     $lsx_to_password = get_option('lsx_api_instance',false);
     if(false === $lsx_to_password){
     	update_option('lsx_api_instance',LSX_API_Manager::generatePassword());
     }
 }
-register_activation_hook( __FILE__, 'lsx_search_activate_plugin' );
+register_activation_hook( __FILE__, 'lsx_to_search_activate_plugin' );
 
 /* ======================= The API Classes ========================= */
 if(!class_exists('LSX_API_Manager')){
@@ -75,7 +75,7 @@ function lsx_to_search_api_admin_init(){
 		'documentation' =>		'tour-operator-search'
 	);
 
-	$lsx_search_api_manager = new LSX_API_Manager($api_array);
+	$lsx_to_search_api_manager = new LSX_API_Manager($api_array);
 }
 add_action('admin_init','lsx_to_search_api_admin_init');
 

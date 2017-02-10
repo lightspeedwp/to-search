@@ -1,0 +1,202 @@
+/*
+ * TO Search
+ */
+
+
+// ---------- Mixins ----------
+
+
+@mixin box-shadow($args) {
+	-webkit-box-shadow: $args;
+	-moz-box-shadow: $args;
+	-o-box-shadow: $args;
+	box-shadow: $args;
+}
+
+@mixin text-shadow($args) {
+	-webkit-text-shadow: $args;
+	-moz-text-shadow: $args;
+	-o-text-shadow: $args;
+	text-shadow: $args;
+}
+
+@mixin border-radius($args) {
+	-webkit-border-radius: $args;
+	-moz-border-radius: $args;
+	-o-border-radius: $args;
+	border-radius: $args;
+}
+
+
+// ---------- Placeholders ----------
+
+
+%filters {
+	#facetwp-sidebar,
+	#secondary.facetwp-sidebar {
+		font-size: 13px;
+		margin-top: 50px !important;
+
+		@media only screen and (min-width: 768px) {
+			margin-top: 0 !important;
+		}
+
+		.title {
+			margin-top: 0;
+		}
+
+		.facetwp-type-checkboxes {
+			margin-bottom: 30px;
+
+			.facetwp-checkbox {
+				text-decoration: underline;
+
+				&.checked {
+					font-weight: bold;
+				}
+			}
+		}
+
+		.facetwp-results {
+			.title {
+				margin-bottom: 30px;
+			}
+
+			.facetwp-counts {
+				display: inline-block;
+			}
+
+			.btn {
+				font-size: 15px;
+				margin-left: 5px;
+				line-height: 18px;
+
+				padding: {
+					right: 10px !important;
+					left: 10px !important;
+				}
+
+				&:after {
+					display: none;
+				}
+			}
+		}
+
+		.facetwp-form {
+			margin-bottom: 30px;
+
+			.search-field {
+				line-height: 22px;
+			}
+
+			.btn {
+				font-size: 15px;
+				padding: 9px 10px !important;
+				line-height: 26px;
+
+				&:after {
+					display: none;
+				}
+			}
+		}
+	}
+
+	#facetwp-top {
+		margin-bottom: 30px;
+
+		& + .nav-tabs {
+			margin-bottom: 30px;
+		}
+	}
+
+	#facetwp-top,
+	#facetwp-bottom {
+		.facetwp-sort,
+		.facetwp-per-page {
+			display: inline-block;
+			margin: {
+				bottom: 10px;
+				right: 10px;
+			}
+
+			.facetwp-sort-select {
+
+			}
+		}
+
+		.facetwp-facet-a_z {
+			display: inline-block;
+			font-size: 13px;
+			margin-bottom: 10px;
+
+			@media only screen and (min-width: 992px) {
+				margin-bottom: 0;
+			}
+
+			.facetwp-alpha {
+				&.available,
+				&.selected {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.wp-pagenavi-wrapper.facetwp-custom {
+			margin-top: 0 !important;
+			text-align: left;
+
+			@media only screen and (min-width: 992px) {
+				text-align: right;
+			}
+			
+			.wp-pagenavi {
+				margin: {
+					left: 0;
+					right: 0;
+				}
+
+				a,
+				.current,
+				.extend {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+%module-pagenavi {
+	margin: 50px 0 0 0;
+
+	.lsx-breaker,
+	.pages {
+		display: none;
+	}
+
+	.wp-pagenavi {
+		font-size: 15px;
+
+		span.current {
+			background-color: #333;
+			color: #fff;
+			border-radius: 3px;
+			border: 2px solid transparent !important;
+		}
+	}
+}
+
+
+// ---------- Archive (Page) Styles ----------
+
+
+body.archive-tour-operator {
+	@extend %filters;
+
+	.wrap {
+		#primary {
+			.wp-pagenavi-wrapper {
+				@extend %module-pagenavi; // copied from LSX
+			}
+		}
+	}
+}

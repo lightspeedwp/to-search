@@ -61,9 +61,20 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 			<td>
 				<select value="{{search_layout}}" name="search_layout">
 					<option value="" {{#is search_layout value=""}}selected="selected"{{/is}}><?php _e('Follow the theme layout','to-search'); ?></option>
-					<option value="1c" {{#is search_layout value="1c"}} selected="selected"{{/is}}>1 column</option>
-					<option value="2cr" {{#is search_layout value="2cr"}} selected="selected"{{/is}}>2 columns / Content on right</option>
-					<option value="2cl" {{#is search_layout value="2cl"}} selected="selected"{{/is}}>2 columns / Content on left</option>
+					<option value="1c" {{#is search_layout value="1c"}} selected="selected"{{/is}}><?php _e('1 column','to-search'); ?></option>
+					<option value="2cr" {{#is search_layout value="2cr"}} selected="selected"{{/is}}><?php _e('2 columns / Content on right','to-search'); ?></option>
+					<option value="2cl" {{#is search_layout value="2cl"}} selected="selected"{{/is}}><?php _e('2 columns / Content on left','to-search'); ?></option>
+				?>
+			</td>
+		</tr>
+		<tr class="form-field-wrap">
+			<th scope="row">
+				<label for="search_layout_map"><?php _e('Inner Layout (Results)','to-search'); ?></label>
+			</th>
+			<td>
+				<select value="{{search_layout_map}}" name="search_layout_map">
+					<option value="" {{#is search_layout_map value=""}}selected="selected"{{/is}}><?php _e('Only List','to-search'); ?></option>
+					<option value="list_and_map" {{#is search_layout_map value="list_and_map"}} selected="selected"{{/is}}><?php _e('List and Map','to-search'); ?></option>
 				?>
 			</td>
 		</tr>
@@ -139,9 +150,20 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 			<td>
 				<select value="{{archive_layout}}" name="archive_layout">
 					<option value="" {{#is archive_layout value=""}}selected="selected"{{/is}}><?php _e('Follow the theme layout','to-search'); ?></option>
-					<option value="1c" {{#is archive_layout value="1c"}} selected="selected"{{/is}}>1 column</option>
-					<option value="2cr" {{#is archive_layout value="2cr"}} selected="selected"{{/is}}>2 columns / Content on right</option>
-					<option value="2cl" {{#is archive_layout value="2cl"}} selected="selected"{{/is}}>2 columns / Content on left</option>
+					<option value="1c" {{#is archive_layout value="1c"}} selected="selected"{{/is}}><?php _e('1 column','to-search'); ?></option>
+					<option value="2cr" {{#is archive_layout value="2cr"}} selected="selected"{{/is}}><?php _e('2 columns / Content on right','to-search'); ?></option>
+					<option value="2cl" {{#is archive_layout value="2cl"}} selected="selected"{{/is}}><?php _e('2 columns / Content on left','to-search'); ?></option>
+				?>
+			</td>
+		</tr>
+		<tr class="form-field-wrap">
+			<th scope="row">
+				<label for="archive_layout_map"><?php _e('Inner Layout (Results)','to-search'); ?></label>
+			</th>
+			<td>
+				<select value="{{archive_layout_map}}" name="archive_layout_map">
+					<option value="" {{#is archive_layout_map value=""}}selected="selected"{{/is}}><?php _e('Only List','to-search'); ?></option>
+					<option value="list_and_map" {{#is archive_layout_map value="list_and_map"}} selected="selected"{{/is}}><?php _e('List and Map','to-search'); ?></option>
 				?>
 			</td>
 		</tr>
