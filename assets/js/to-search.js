@@ -8,7 +8,8 @@ LSX_TO_Search = {
 	},
 
 	onChangeTab_Map: function() {
-		jQuery('a[data-toggle="tab"][href="#to-search-map"]').on('shown.bs.tab', LSX_TO_Search.fixMapVisual);
+		//jQuery('a[data-toggle="tab"][href="#to-search-map"]').on('shown.bs.tab', LSX_TO_Search.fixMapVisual);
+		jQuery('a[data-toggle="tab"][href="#to-search-map"]').on('shown.bs.tab', LSX_TO_Search.reloadMap);
 	},
 
 	onFacetWpLoad: function() {
@@ -41,12 +42,12 @@ LSX_TO_Search = {
 		});
 	},
 
-	fixMapVisual: function() {
-		if (undefined !== LSX_TO_Maps) {
-			LSX_TO_Maps.resizeThis();
-			LSX_TO_Maps.setBounds();
-		}
-	},
+	//fixMapVisual: function() {
+	//	if (undefined !== LSX_TO_Maps) {
+	//		LSX_TO_Maps.resizeThis();
+	//		LSX_TO_Maps.setBounds();
+	//	}
+	//},
 
 	reloadMap: function() {
 		if (undefined !== LSX_TO_Maps) {
