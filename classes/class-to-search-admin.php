@@ -21,10 +21,10 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 	 */
 	public function admin_init() {
 		if(class_exists('FacetWP')){
-			add_action('lsx_to_framework_dashboard_tab_content', array($this,'general_settings'),50,1);
+			add_action('lsx_to_framework_display_tab_content', array($this,'display_settings'),50,1);
 
 			foreach($this->post_types as $pt => $pv){
-				add_action('lsx_to_framework_'.$pt.'_tab_general_settings_bottom', array($this,'general_settings'),50,1);
+				add_action('lsx_to_framework_'.$pt.'_tab_content', array($this,'display_settings'),50,2);
 				add_action('lsx_to_framework_'.$pt.'_tab_archive_settings_bottom', array($this,'archive_settings'),10,1);
 			}
 		}
@@ -34,11 +34,13 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 	 * A filter to set the layout to 2 column
 	 *
 	 */
-	public function general_settings($tab='general') {
+	public function display_settings($post_type='',$tab=null) {
+		if ( null === $tab ) {
+			$tab = $post_type;
+			$post_type = 'display';
+		}
+		if('search' === $tab) :
 		?>
-		<tr class="form-field">
-			<th scope="row" colspan="2"><label><h3><?php _e('Search Settings','to-search'); ?></h3></label></th>
-		</tr>
 		<tr class="form-field">
 			<th scope="row">
 				<label for="enable_search"><?php _e('Enable Search','to-search'); ?></label>
@@ -87,12 +89,11 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 				<label for="facets"><?php _e('Facets','to-search'); ?></label>
 			</th>
 			<td><ul>
-			<?php 	
+			<?php
 			if(is_array($this->facet_data) && !empty($this->facet_data)){
-
 				$active_facets = array();
-				if(isset($this->options[$tab]['facets']) && is_array($this->options[$tab]['facets'])){
-					$active_facets = $this->options[$tab]['facets'];
+				if(isset($this->options[$post_type]['facets']) && is_array($this->options[$post_type]['facets'])){
+					$active_facets = $this->options[$post_type]['facets'];
 				}
 
 				foreach( $this->facet_data as $facet){
@@ -109,16 +110,15 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 			?>
 			</ul></td>
 		</tr>
-
 		<?php
+		endif;
 	}
 
 	/**
 	 * A filter to set the layout to 2 column
 	 *
 	 */
-	public function archive_settings($tab='general') { 
-		if('general' !== $tab){
+	public function archive_settings($post_type) { 
 		?>		
 		<tr class="form-field">
 			<th scope="row" colspan="2"><label><h3><?php _e('Search Settings','to-search'); ?></h3></label></th>
@@ -171,8 +171,8 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 			if(is_array($this->facet_data) && !empty($this->facet_data)){
 
 				$active_facets = array();
-				if(isset($this->options[$tab]['archive_facets']) && is_array($this->options[$tab]['archive_facets'])){
-					$active_facets = $this->options[$tab]['archive_facets'];
+				if(isset($this->options[$post_type]['archive_facets']) && is_array($this->options[$post_type]['archive_facets'])){
+					$active_facets = $this->options[$post_type]['archive_facets'];
 				}
 
 				foreach( $this->facet_data as $facet){
@@ -189,8 +189,8 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 			?>
 			</ul></td>
 		</tr>
-		<?php 
-		}
-	}		
+		<?php
+	}
+
 }
 new LSX_TO_Search_Admin();

@@ -16,48 +16,48 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: classes/class-to-search-admin.php:40, classes/class-to-search-admin.php:124
-msgid "Search Settings"
-msgstr ""
-
-#: classes/class-to-search-admin.php:44
+#: classes/class-to-search-admin.php:46
 msgid "Enable Search"
 msgstr ""
 
-#: classes/class-to-search-admin.php:49
+#: classes/class-to-search-admin.php:51
 msgid "This adds the facet shortcodes to the search results template."
 msgstr ""
 
-#: classes/class-to-search-admin.php:51, classes/class-to-search-admin.php:132
+#: classes/class-to-search-admin.php:53, classes/class-to-search-admin.php:132
 msgid "This adds the facet shortcodes to the post type archive and taxonomy templates."
 msgstr ""
 
-#: classes/class-to-search-admin.php:57, classes/class-to-search-admin.php:137
+#: classes/class-to-search-admin.php:59, classes/class-to-search-admin.php:137
 msgid "Layout"
 msgstr ""
 
-#: classes/class-to-search-admin.php:61, classes/class-to-search-admin.php:141
+#: classes/class-to-search-admin.php:63, classes/class-to-search-admin.php:141
 msgid "Follow the theme layout"
 msgstr ""
 
-#: classes/class-to-search-admin.php:70, classes/class-to-search-admin.php:150
+#: classes/class-to-search-admin.php:72, classes/class-to-search-admin.php:150
 msgid "Enable Price Sorting"
 msgstr ""
 
-#: classes/class-to-search-admin.php:74, classes/class-to-search-admin.php:154
+#: classes/class-to-search-admin.php:76, classes/class-to-search-admin.php:154
 msgid "WARNING, any item that doesnt have a price will not show. "
 msgstr ""
 
-#: classes/class-to-search-admin.php:79, classes/class-to-search-admin.php:159
+#: classes/class-to-search-admin.php:81, classes/class-to-search-admin.php:159
 msgid "Display Result Count"
 msgstr ""
 
-#: classes/class-to-search-admin.php:87, classes/class-to-search-admin.php:167
+#: classes/class-to-search-admin.php:89, classes/class-to-search-admin.php:167
 msgid "Facets"
 msgstr ""
 
-#: classes/class-to-search-admin.php:106, classes/class-to-search-admin.php:186
+#: classes/class-to-search-admin.php:107, classes/class-to-search-admin.php:186
 msgid "You have no Facets setup."
+msgstr ""
+
+#: classes/class-to-search-admin.php:124
+msgid "Search Settings"
 msgstr ""
 
 #: classes/class-to-search-admin.php:128

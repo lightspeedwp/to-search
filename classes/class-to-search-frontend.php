@@ -53,7 +53,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 		$search_slug = false;
 		if(is_search()){
-			$search_slug = 'general';
+			$search_slug = 'display';
 
 			$engine = get_query_var('engine');
 			if(false !== $engine && 'default' !== $engine && '' !== $engine){
@@ -62,7 +62,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 			$option_slug_1 = $option_slug_2 = 'search';
 
-		}elseif(is_post_type_archive($this->post_types) || is_tax($this->taxonomies)){
+		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
 			$search_slug = get_post_type();
 
 			$option_slug_1 = 'facets';
@@ -226,9 +226,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 		$search_slug = false;
 		if(is_search()){
-			$search_slug = 'general';
+			$search_slug = 'display';
 			$option_slug = '';
-		}elseif(is_post_type_archive($this->post_types)||is_tax($this->taxonomies)){
+		}elseif(is_post_type_archive(array_keys($this->post_types))||is_tax(array_keys($this->taxonomies))){
 			$search_slug = get_post_type();
 			$option_slug = 'archive_';
 		}		
@@ -282,9 +282,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 		$search_slug = false;
 		if($query->is_search()){
-			$search_slug = 'general';
+			$search_slug = 'display';
 			$option_slug = '';
-		}elseif($query->is_post_type_archive($this->post_types)||$query->is_tax($this->taxonomies)){
+		}elseif($query->is_post_type_archive(array_keys($this->post_types))||$query->is_tax(array_keys($this->taxonomies))){
 			$search_slug = get_query_var('post_type');
 			$option_slug = 'archive_';
 		}
@@ -321,7 +321,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	public function lsx_content_top() { 
 		if(is_search()){
 			$option_slug = '';
-		}elseif(is_post_type_archive($this->post_types) || is_tax($this->taxonomies)){
+		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
 			$option_slug = 'archive_';
 		}
 		?>
@@ -364,7 +364,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			if(is_search()){
 				$option_slug = '';
 				$facet_slug = '';
-			}elseif(is_post_type_archive($this->post_types) || is_tax($this->taxonomies)){
+			}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
 				$option_slug = 'archive_';
 			}		
 			?>
@@ -387,7 +387,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 									<form class="banner-form" action="/" method="get">
 										<div class="input-group">
 											<input class="search-field form-control" name="s" type="search" placeholder="<?php _e('Search','to-search'); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
-											<?php if('general' !== $this->search_slug) { ?>
+											<?php if('display' !== $this->search_slug) { ?>
 												<input name="engine" type="hidden" value="<?php echo $this->search_slug; ?>">
 											<?php } ?>
 											<span class="input-group-btn"><button class="search-submit btn cta-btn" type="submit"><?php _e('Search','to-search'); ?></button></span>
