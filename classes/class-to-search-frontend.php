@@ -382,7 +382,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		if ( true === $show_map ) {
 			echo '</div>';
 			echo '<div id="to-search-map" class="tab-pane fade in">';
-			echo 'MAP';
+			$this->display_map();
 			echo '</div>';
 			echo '</div>';
 		} else {
@@ -402,6 +402,28 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		</div>
 	<?php 
 	}	
+
+	/**
+	 * Outputs Map.
+	 */
+	public function display_map() {
+		global $lsx_to_maps_frontend;
+		global $wp_query;
+		
+		if ( ! empty( $lsx_to_maps_frontend ) && count( $wp_query->posts ) > 0 ) {
+			$ids = wp_list_pluck( $wp_query->posts, 'ID' );
+
+			if ( ! empty( $ids ) ) {
+				$args = array(
+					'connections' => $ids,
+					'type'        => 'cluster',
+					'content'     => 'excerpt',
+				);
+
+				echo wp_kses_post( $lsx_to_maps_frontend->map_output( false, $args ) );
+			}
+		}
+	}
 
 	/**
 	 * Outputs Search Sidebar.

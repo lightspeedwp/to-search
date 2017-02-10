@@ -42,6 +42,8 @@ body.archive-tour-operator #facetwp-top {
   margin-bottom: 30px; }
   body.archive-tour-operator #facetwp-top + .nav-tabs {
     margin-bottom: 30px; }
+    body.archive-tour-operator #facetwp-top + .nav-tabs + .tab-content #to-search-map {
+      margin-bottom: 30px; }
 
 body.archive-tour-operator #facetwp-top .facetwp-sort, body.archive-tour-operator #facetwp-top .facetwp-per-page, body.archive-tour-operator #facetwp-bottom .facetwp-sort, body.archive-tour-operator #facetwp-bottom .facetwp-per-page {
   display: inline-block;

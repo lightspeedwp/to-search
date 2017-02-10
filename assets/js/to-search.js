@@ -1,9 +1,15 @@
 LSX_TO_Search = {
 	initThis: function() {
-		this.firstFunction();
+		this.fixMapVisual();
 	},
 
-	firstFunction: function() {
+	fixMapVisual: function() {
+		jQuery('a[data-toggle="tab"][href="#to-search-map"]').on('shown.bs.tab', function(e) {
+			if (undefined !== LSX_TO_Maps) {
+				LSX_TO_Maps.resizeThis();
+				LSX_TO_Maps.setBounds();
+			}
+		});
 	},
 };
 

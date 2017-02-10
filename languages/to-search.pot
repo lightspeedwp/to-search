@@ -96,15 +96,15 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:426, classes/class-to-search-frontend.php:457
+#: classes/class-to-search-frontend.php:448, classes/class-to-search-frontend.php:479
 msgid "Results"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:438, classes/class-to-search-frontend.php:442, classes/class-to-search-frontend.php:484
+#: classes/class-to-search-frontend.php:460, classes/class-to-search-frontend.php:464, classes/class-to-search-frontend.php:506
 msgid "Search"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:475
+#: classes/class-to-search-frontend.php:497
 msgid "Where do you want to go?"
 msgstr ""
 
