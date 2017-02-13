@@ -69,12 +69,12 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 		</tr>
 		<tr class="form-field-wrap">
 			<th scope="row">
-				<label for="search_layout_map"><?php _e('Inner Layout (Results)','to-search'); ?></label>
+				<label for="layout_map"><?php _e('Inner Layout (Results)','to-search'); ?></label>
 			</th>
 			<td>
-				<select value="{{search_layout_map}}" name="search_layout_map">
-					<option value="" {{#is search_layout_map value=""}}selected="selected"{{/is}}><?php _e('Only List','to-search'); ?></option>
-					<option value="list_and_map" {{#is search_layout_map value="list_and_map"}} selected="selected"{{/is}}><?php _e('List and Map','to-search'); ?></option>
+				<select value="{{layout_map}}" name="layout_map">
+					<option value="" {{#is layout_map value=""}}selected="selected"{{/is}}><?php _e('Only List','to-search'); ?></option>
+					<option value="list_and_map" {{#is layout_map value="list_and_map"}} selected="selected"{{/is}}><?php _e('List and Map','to-search'); ?></option>
 				?>
 			</td>
 		</tr>
