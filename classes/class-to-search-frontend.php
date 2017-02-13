@@ -220,29 +220,31 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 */	
 	public function facet_sort_options( $options, $params ) {
 		global $wp_query;
-
-		unset($options['date_desc']);
-		unset($options['date_asc']);
+		
 		unset($options['distance']);	
 
 		$search_slug = false;
+		$option_slug = false;
+		
 		if(is_search()){
-			$search_slug = 'display';
 			$option_slug = '';
+			$engine = get_query_var('engine');
+			
+			if(false !== $engine && 'default' !== $engine && '' !== $engine){
+				$search_slug = $engine;	
+			} else {
+				$search_slug = 'display';
+			}
 		}elseif(is_post_type_archive(array_keys($this->post_types))||is_tax(array_keys($this->taxonomies))){
 			$search_slug = get_post_type();
 			$option_slug = 'archive_';
-		}		
+		}
 
 		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
 			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug.'price_sorting']) 
 			&& 'on' === $this->options[$search_slug]['enable_'.$option_slug.'price_sorting']) {
 
-			unset($options['default']);
-			
-			$new_options = array();
-			
-			$new_options['default'] = array(
+			$options['price_asc'] = array(
 					'label' => __( 'Price (Highest)', 'lsx' ),
 					'query_args' => array(
 							'orderby' => 'meta_value_num',
@@ -251,7 +253,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 					)
 			);
 		
-			$new_options['price_desc'] = array(
+			$options['price_desc'] = array(
 					'label' => __( 'Price (Lowest)', 'lsx' ),
 					'query_args' => array(
 							'orderby' => 'meta_value_num',
@@ -259,20 +261,21 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 							'order' => 'ASC',
 					)
 			);
-			
-			if(is_array($options) && !empty($options)){
-				foreach($options as $option_key => $options_array){
-					$new_options[$option_key] = $options_array;
-				}
-			}
-		
-			return $new_options;
 		 
-		}else{
-			return $options;	
 		}
 
+		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
+			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug.'date_sorting']) 
+			&& 'on' === $this->options[$search_slug]['enable_'.$option_slug.'date_sorting']) {
 
+			// Do nothing
+		 
+		} else {
+			unset($options['date_desc']);
+			unset($options['date_asc']);
+		}
+
+		return $options;
 	}		
 
 	/**
@@ -280,13 +283,20 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 *
 	 */
 	public function price_sorting($query) {
-
 		$search_slug = false;
-		if($query->is_search()){
-			$search_slug = 'display';
+		$option_slug = false;
+		
+		if(is_search()){
 			$option_slug = '';
-		}elseif($query->is_post_type_archive(array_keys($this->post_types))||$query->is_tax(array_keys($this->taxonomies))){
-			$search_slug = get_query_var('post_type');
+			$engine = get_query_var('engine');
+			
+			if(false !== $engine && 'default' !== $engine && '' !== $engine){
+				$search_slug = $engine;	
+			} else {
+				$search_slug = 'display';
+			}
+		}elseif(is_post_type_archive(array_keys($this->post_types))||is_tax(array_keys($this->taxonomies))){
+			$search_slug = get_post_type();
 			$option_slug = 'archive_';
 		}
 

@@ -80,6 +80,14 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 		</tr>
 		<tr class="form-field">
 			<th scope="row">
+				<label for="enable_date_sorting"><?php _e('Enable Date Sorting','to-search'); ?></label>
+			</th>
+			<td>
+				<input type="checkbox" {{#if enable_date_sorting}} checked="checked" {{/if}} name="enable_date_sorting" />
+			</td>
+		</tr>
+		<tr class="form-field">
+			<th scope="row">
 				<label for="enable_price_sorting"><?php _e('Enable Price Sorting','to-search'); ?></label>
 			</th>
 			<td>
@@ -165,6 +173,14 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 					<option value="" {{#is archive_layout_map value=""}}selected="selected"{{/is}}><?php _e('Only List','to-search'); ?></option>
 					<option value="list_and_map" {{#is archive_layout_map value="list_and_map"}} selected="selected"{{/is}}><?php _e('List and Map','to-search'); ?></option>
 				?>
+			</td>
+		</tr>
+		<tr class="form-field">
+			<th scope="row">
+				<label for="enable_archive_date_sorting"><?php _e('Enable Date Sorting','to-search'); ?></label>
+			</th>
+			<td>
+				<input type="checkbox" {{#if enable_archive_date_sorting}} checked="checked" {{/if}} name="enable_archive_date_sorting" />
 			</td>
 		</tr>
 		<tr class="form-field">
