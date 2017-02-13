@@ -328,7 +328,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 		$show_map = false;
 
-		if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) && ! empty( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) ) {
+		if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'layout_map' ] ) && ! empty( $this->options[ $this->search_slug ][ $option_slug . 'layout_map' ] ) ) {
 			$show_map = true;
 		}
 		?>
@@ -374,7 +374,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 		$show_map = false;
 
-		if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) && ! empty( $this->options[ $this->search_slug ][ $option_slug . 'search_layout_map' ] ) ) {
+		if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'layout_map' ] ) && ! empty( $this->options[ $this->search_slug ][ $option_slug . 'layout_map' ] ) ) {
 			$show_map = true;
 		}
 
