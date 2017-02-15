@@ -92,23 +92,23 @@ msgstr ""
 msgid "Enable Filtering"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:366
+#: classes/class-to-search-frontend.php:407
 msgid "List"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:367
+#: classes/class-to-search-frontend.php:408
 msgid "Map"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:456, classes/class-to-search-frontend.php:487
+#: classes/class-to-search-frontend.php:497, classes/class-to-search-frontend.php:528
 msgid "Results"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:468, classes/class-to-search-frontend.php:472, classes/class-to-search-frontend.php:514
+#: classes/class-to-search-frontend.php:509, classes/class-to-search-frontend.php:513, classes/class-to-search-frontend.php:555
 msgid "Search"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:505
+#: classes/class-to-search-frontend.php:546
 msgid "Where do you want to go?"
 msgstr ""
 

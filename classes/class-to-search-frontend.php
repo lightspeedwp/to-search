@@ -26,6 +26,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		add_filter( 'template_include', array( $this, 'search_template_include'), 99 );
 		add_action( 'template_redirect', array($this,'pretty_search_redirect') ) ;
 		add_filter( 'pre_get_posts',  array($this,'pretty_search_parse_query') ) ;
+		add_filter( 'request', array( $this, 'force_search_parameter' ) );
 
 		//Layout Filter
 		add_filter('lsx_layout', array($this,'lsx_layout'), 20,1);	
@@ -175,8 +176,48 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 					$query->set('post__in',$additional_posts->posts);
 				}
 			}
+
+			$filter_1_type  = $query->get( 'ft1' );
+			$filter_1_key   = $query->get( 'fk1' );
+			$filter_1_value = $query->get( 'fv1' );
+
+			if ( ! empty( $filter_1_type ) && ! empty( $filter_1_key ) && ! empty( $filter_1_value ) ) {
+				if ( 'post-type' === $filter_1_type ) {
+					// @TODO
+					var_dump( $filter_1_type );
+					var_dump( $filter_1_key );
+					var_dump( $filter_1_value );
+					die();
+				} elseif ( 'taxonomy' === $filter_1_type ) {
+					// @TODO
+					// @TODO
+					var_dump( $filter_1_type );
+					var_dump( $filter_1_key );
+					var_dump( $filter_1_value );
+					die();
+				}
+			}
 		}
 		return $query;
+	}
+
+	/**
+	 * Force search parameter (to empty) to display the search page without the "s="
+	 */
+	public function force_search_parameter( $query_vars ) {
+		$search_query   = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
+		$filter_1_type  = sanitize_text_field( wp_unslash( $_REQUEST['ft1'] ) );
+		$filter_1_key   = sanitize_text_field( wp_unslash( $_REQUEST['fk1'] ) );
+		$filter_1_value = sanitize_text_field( wp_unslash( $_REQUEST['fv1'] ) );
+
+		if ( empty( $search_query ) && ! empty( $filter_1_type ) && ! empty( $filter_1_key ) && ! empty( $filter_1_value ) ) {
+			$query_vars['s']   = '';
+			$query_vars['ft1'] = $filter_1_type;
+			$query_vars['fk1'] = $filter_1_key;
+			$query_vars['fv1'] = $filter_1_value;
+		}
+
+		return $query_vars;
 	}
 
 	/**
@@ -520,6 +561,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		$engine = false;
 		if(isset($atts['engine'])){ $engine = $atts['engine']; }				
 
+		$display_search_field = true;
+		if(isset($atts['search_field'])){ $display_search_field = (boolean) $atts['search_field']; }
+
+		$select_1_field = false;
+		if(isset($atts['select_1_field'])){ $select_1_field = $atts['select_1_field']; }
+
 		$return = '';
 
 		ob_start(); ?>
@@ -531,10 +578,73 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			<?php do_action('lsx_search_form_top'); ?>
 
 				<div class="input-group">
-					<input class="search-field form-control" name="s" type="search" placeholder="<?php echo $placeholder; ?>" autocomplete="off">
-					<?php if(false !== $engine && 'default' !== $engine){ ?>
+					<?php if ( true === $display_search_field ) : ?>
+						<input class="search-field form-control" name="s" type="search" placeholder="<?php echo $placeholder; ?>" autocomplete="off">
+					<?php endif; ?>
+					<?php
+						if ( false !== $select_1_field ) {
+							$content_type = false;
+
+							if ( in_array( $select_1_field, array( 'travel-style', 'accommodation-type' ) ) ) {
+								$content_type = 'taxonomy';
+							} elseif ( in_array( $select_1_field, array( 'destination' ) ) ) {
+								$content_type = 'post-type';
+							}
+
+							if ( false !== $content_type ) {
+								if ( 'taxonomy' === $content_type ) {
+									$args = array(
+										'taxonomy'                   => $select_1_field,
+										'hide_empty'                 => false,
+										'update_term_meta_cache'     => false,
+										'disabled_custom_post_order' => true,
+									);
+
+									$terms = get_terms( $args );
+
+									if ( count( $terms ) > 0 ) {
+										?><input type="hidden" name="ft1" value="<?php echo esc_attr( $content_type ); ?>"><?php
+										?><input type="hidden" name="fk1" value="<?php echo esc_attr( $select_1_field ); ?>"><?php
+										?><select name="fv1"><?php
+
+										foreach ( $terms as $term ) {
+											?><option value="<?php echo esc_attr( $term->term_id ); ?>"><?php echo esc_html( $term->name ); ?></option><?php
+										}
+
+										?></select><?php
+									}
+								} else {
+									$args = array(
+										'post_type'              => $select_1_field,
+										'post_parent'            => 0,
+										'no_found_rows'          => true,
+										'ignore_sticky_posts'    => 1,
+										'update_post_meta_cache' => false,
+										'update_post_term_cache' => false,
+										'orderby'                => 'title',
+										'order'                  => 'ASC',
+									);
+
+									$custom_posts = new \WP_Query( $args );
+
+									if ( $custom_posts->have_posts() ) {
+										?><input type="hidden" name="ft1" value="<?php echo esc_attr( $content_type ); ?>"><?php
+										?><input type="hidden" name="fk1" value="<?php echo esc_attr( $select_1_field ); ?>"><?php
+										?><select name="fv1"><?php
+
+										foreach ( $custom_posts->posts as $custom_post ) {
+											?><option value="<?php echo esc_attr( $custom_post->ID ); ?>"><?php echo esc_html( $custom_post->post_title ); ?></option><?php
+										}
+
+										?></select><?php
+									}
+								}
+							}
+						}
+					?>
+					<?php if ( false !== $engine && 'default' !== $engine ) : ?>
 						<input name="engine" type="hidden" value="<?php echo $engine; ?>">
-					<?php } ?>
+					<?php endif; ?>
 					<span class="input-group-btn"><button class="<?php echo $button_class; ?>" type="submit"><?php echo $button_label; ?></button></span>
 				</div>
 
