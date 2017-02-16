@@ -643,6 +643,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 				$values[$re->facet_value] = $re->facet_display_value;
             }
         }
+        asort($values);
         return $values;
 	}
 
