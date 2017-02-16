@@ -170,39 +170,42 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			$search_query = $query->get('s');
 
 			$keyword_test = explode('/',$search_query);
-			$engine = $this->post_type_slugs[$keyword_test[0]];
 
-			if(count($keyword_test) > 1){
+			if(isset($this->post_type_slugs[$keyword_test[0]])) {
+				$engine = $this->post_type_slugs[$keyword_test[0]];
 
-				$query->set('s',$keyword_test[1]);
-				$query->set('engine',$engine);
+				if (count($keyword_test) > 1) {
+
+					$query->set('s', $keyword_test[1]);
+					$query->set('engine', $engine);
 
 
-				if(class_exists('SWP_Query')) {
-					$additional_posts = new SWP_Query(
-						array(
-							's' => $keyword_test[1], // search query
-							'engine' => $engine,
-							'fields' => 'ids'
-						)
-					);
+					if (class_exists('SWP_Query')) {
+						$additional_posts = new SWP_Query(
+							array(
+								's' => $keyword_test[1], // search query
+								'engine' => $engine,
+								'fields' => 'ids'
+							)
+						);
 
-					if (!empty($additional_posts->posts)) {
-						$query->set('s', '');
-						$query->set('engine_keyword', $keyword_test[1]);
-						$query->set('post__in', $additional_posts->posts);
+						if (!empty($additional_posts->posts)) {
+							$query->set('s', '');
+							$query->set('engine_keyword', $keyword_test[1]);
+							$query->set('post__in', $additional_posts->posts);
+						}
+					} else {
+						if ('default' !== $engine) {
+							$query->set('post_type', $engine);
+						}
 					}
-				}else{
-				    if('default' !== $engine){
-						$query->set('post_type',$engine);
-					}
-                }
-			}elseif(post_type_exists($engine)){
-				$query->set('post_type',$engine);
-				$query->set('engine',$engine);
-				$query->set('s', '');
+				} elseif (post_type_exists($engine)) {
+					$query->set('post_type', $engine);
+					$query->set('engine', $engine);
+					$query->set('s', '');
 
-            }
+				}
+			}
 		}
 		return $query;
 	}
