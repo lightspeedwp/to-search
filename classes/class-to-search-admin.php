@@ -251,6 +251,10 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 				$params['facet_display_value'] = $title;
 			}
 
+			if('' === $title && !empty($meta_key)){
+				$params = false;
+            }
+
 		}
 		return $params;
 	}
