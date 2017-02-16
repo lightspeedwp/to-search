@@ -89,7 +89,9 @@ var LSX_TO_Search = {
 		var currentForm = this.currentForm;
         jQuery(this.currentForm).on('submit',function(event){
 
+        	var has_facets = false;
 			if(undefined != jQuery(this).find('.btn-dropdown')){
+                has_facets = true;
                 jQuery(this).find('.btn-dropdown').each(function(){
                 	var value = jQuery(this).attr('data-selection');
 
@@ -105,7 +107,7 @@ var LSX_TO_Search = {
 			}
 
 			//Check if there is a keyword.
-			if(undefined != jQuery(this).find('.search-field') && '' == jQuery(this).find('.search-field').val()){
+			if(false == has_facets && undefined != jQuery(this).find('.search-field') && '' == jQuery(this).find('.search-field').val()){
                 jQuery(this).find('.search-field').addClass('error');
                 event.preventDefault();
 			}

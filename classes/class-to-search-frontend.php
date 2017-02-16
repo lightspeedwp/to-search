@@ -166,13 +166,13 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 * Parse the Query and trigger a search
 	 */
 	public function pretty_search_parse_query( $query ) {
-		if ( is_search() && !is_admin() ) {
+		if ( is_search() && !is_admin() && $query->is_main_query() ) {
 			$search_query = $query->get('s');
 
 			$keyword_test = explode('/',$search_query);
-			if(count($keyword_test) > 1){
+			$engine = $this->post_type_slugs[$keyword_test[0]];
 
-				$engine = $this->post_type_slugs[$keyword_test[0]];
+			if(count($keyword_test) > 1){
 
 				$query->set('s',$keyword_test[1]);
 				$query->set('engine',$engine);
@@ -197,7 +197,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 						$query->set('post_type',$engine);
 					}
                 }
-			}
+			}elseif(post_type_exists($engine)){
+				$query->set('post_type',$engine);
+				$query->set('engine',$engine);
+				$query->set('s', '');
+
+            }
 		}
 		return $query;
 	}
