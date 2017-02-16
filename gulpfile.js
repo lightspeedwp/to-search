@@ -33,6 +33,7 @@ gulp.task('compile-js', (['js']));
 
 gulp.task('watch', function() {
 	gulp.watch('assets/js/to-search.js', ['js']);
+    gulp.watch('assets/css/to-search.scss', ['compile-sass']);
 });
 
 gulp.task('wordpress-pot', function () {

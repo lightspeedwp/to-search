@@ -140,7 +140,23 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 				$engine = array_search($engine,$this->post_type_slugs).'/';
 			}
 
-			wp_redirect( home_url( "/{$search_base}/". $engine . urlencode($search_query )) );
+			$get_array = $_GET;
+			if(is_array($get_array) && !empty($get_array)){
+
+			    $vars_to_maintain = array();
+			    foreach($get_array as $ga_key => $ga_value){
+                    if(false !== strpos( $ga_key, 'fwp_' )){
+						$vars_to_maintain[] = $ga_key.'='.$ga_value;
+                    }
+                }
+            }
+
+            $redirect_url = home_url( "/{$search_base}/". $engine . urlencode($search_query ));
+            if(!empty($vars_to_maintain)){
+                $redirect_url .= '?'.implode('&',$vars_to_maintain);
+            }
+
+			wp_redirect($redirect_url);
 			exit();
 		}
 	}
@@ -505,7 +521,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 */
 	public function search_form( $atts = array() ){
 		
-		$classes = 'search-form ';
+		$classes = 'search-form to-search-form ';
 		if(isset($atts['class'])){ $classes .= $atts['class']; }
 
 		$placeholder = __('Where do you want to go?','to-search');
@@ -529,6 +545,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		$display_search_field = true;
 		if(isset($atts['search_field'])){ $display_search_field = (boolean) $atts['search_field']; }
 
+		$facet = false;
+		if(isset($atts['facet'])){ $facet = $atts['facet']; }
+
 		$return = '';
 
 		ob_start(); ?>
@@ -540,13 +559,31 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			<?php do_action('lsx_search_form_top'); ?>
 
 				<div class="input-group">
-					<?php if ( true === $display_search_field ) : ?>
-						<input class="search-field form-control" name="s" type="search" placeholder="<?php echo $placeholder; ?>" autocomplete="off">
-					<?php endif; ?>
+
+                    <?php if ( true === $display_search_field ) : ?>
+                        <div class="field">
+                            <input class="search-field form-control" name="s" type="search" placeholder="<?php echo $placeholder; ?>" autocomplete="off">
+                        </div>
+                    <?php endif; ?>
+
+					<?php if(false !== $facet) { ?>
+                        <div class="field">
+                            <?php
+                            $facet = FWP()->helper->get_facet_by_name( $facet );
+                            $values = $this->get_form_facet($facet['source']);
+                            $this->display_form_field('select',$facet,$values);
+                            ?>
+                        </div>
+					<?php } ?>
+
+                    <div class="field">
+                        <button class="<?php echo $button_class; ?>" type="submit"><?php echo $button_label; ?></button>
+                    </div>
+
 					<?php if ( false !== $engine && 'default' !== $engine ) : ?>
 						<input name="engine" type="hidden" value="<?php echo $engine; ?>">
 					<?php endif; ?>
-					<span class="input-group-btn"><button class="<?php echo $button_class; ?>" type="submit"><?php echo $button_label; ?></button></span>
+
 				</div>
 
 			<?php do_action('lsx_search_form_bottom'); ?>	
@@ -570,6 +607,67 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		}
 		return $return;
 	}
+
+	/**
+	 * Grabs the Values for the Facet in Question.
+	 */
+	protected function get_form_facet( $facet_source = false) {
+	    global $wpdb;
+	    $values = array();
+		$response = $wpdb->get_results("
+        SELECT  facet_value,facet_display_value
+        FROM    {$wpdb->prefix}facetwp_index
+        WHERE   facet_source = '{$facet_source}'
+        ");
+
+        if(!empty($response)){
+            foreach($response as $re){
+				$values[$re->facet_value] = $re->facet_display_value;
+            }
+        }
+        return $values;
+	}
+
+
+	/**
+	 * Change FaceWP pagination HTML to be equal main pagination (WP-PageNavi)
+	 */
+	public function display_form_field( $type='select',$facet=array(), $values = array() ) {
+
+	    if(empty($facet)){
+	        return;
+        }
+
+		$source = 'fwp_'.$facet['name'];
+
+	    switch($type){
+
+            case 'select':?>
+                <div class="dropdown">
+                    <button data-selection="0" class="btn btn-dropdown dropdown-toggle" type="button" id="<?php echo wp_kses_post($source); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<?php esc_attr_e('Select','to-search'); ?> <?php echo wp_kses_post($facet['label']); ?>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="<?php echo wp_kses_post($source); ?>">
+                        <?php if(!empty($values)) { ?>
+
+                            <li style="display: none;"><a class="default" data-value="0" href="#"><?php esc_attr_e('Select ','to-search'); ?> <?php echo wp_kses_post($facet['label']); ?></a></li>
+
+                            <?php foreach($values as $key => $value) { ?>
+                                <li><a data-value="<?php echo wp_kses_post($key); ?>" href="#"><?php echo wp_kses_post($value); ?></a></li>
+                            <?php } ?>
+                        <?php }else{ ?>
+                            <li><a data-value="0" href="#"><?php esc_attr_e('Please re-index your facets.','to-search'); ?></a></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+	        <?php
+                break;
+        }
+
+	    ?>
+
+	<?php }
 
 	/**
 	 * Change FaceWP pagination HTML to be equal main pagination (WP-PageNavi)
@@ -627,7 +725,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		$output = $params['total'];
 		return $output;
 	}	
-
 
 
 	/**

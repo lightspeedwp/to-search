@@ -1,10 +1,30 @@
 LSX_TO_Search = {
 
 	facetWpLoadFirstTime: false,
+
+	currentForm:false,
 	
 	initThis: function() {
+
+		currentForm = jQuery('.to-search-form');
+
 		this.onChangeTab_Map();
 		this.onFacetWpLoad();
+
+        console.log(currentForm);
+		if(undefined != currentForm){
+
+            this.watchSubmit();
+
+            if(undefined != currentForm.find('.search-field')){
+                this.watchSearchInput();
+            }
+
+            if(undefined != currentForm.find('.btn-dropdown')){
+                this.watchDropdown();
+            }
+
+		}
 	},
 
 	onChangeTab_Map: function() {
@@ -56,6 +76,52 @@ LSX_TO_Search = {
 		}
 	},
 
+    watchDropdown: function() {
+		jQuery(currentForm).find('.dropdown-menu').on('click','a',function(event){
+			event.preventDefault();
+			jQuery(this).parents('.dropdown').find('.btn-dropdown').attr('data-selection',jQuery(this).attr('data-value'));
+            jQuery(this).parents('.dropdown').find('.btn-dropdown').html(jQuery(this).html()+' <span class="caret"></span>');
+
+            if(jQuery(this).hasClass('default')){
+                jQuery(this).parent('li').hide();
+			}else{
+                jQuery(this).parents('ul').find('.default').parent('li').show();
+			}
+		});
+    },
+
+    watchSubmit: function() {
+        jQuery(currentForm).on('submit',function(event){
+
+			if(undefined != jQuery(this).find('.btn-dropdown')){
+                jQuery(this).find('.btn-dropdown').each(function(){
+                	var value = jQuery(this).attr('data-selection');
+
+                	if(0 != value || '0' != value){
+                        var input = jQuery("<input>")
+                            .attr("type", "hidden")
+                            .attr("name", jQuery(this).attr('id'))
+                            .val(value);
+
+                        jQuery(currentForm).append(jQuery(input));
+					}
+				});
+			}
+
+			//Check if there is a keyword.
+			if(undefined != jQuery(this).find('.search-field') && '' == jQuery(this).find('.search-field').val()){
+                jQuery(this).find('.search-field').addClass('error');
+                event.preventDefault();
+			}
+        });
+    },
+    watchSearchInput: function() {
+        jQuery(currentForm).find('.search-field').on('keyup',function(event){
+        	if(jQuery(this).hasClass('error')){
+                jQuery(this).removeClass('error');
+			}
+        });
+    }
 };
 
 jQuery(function() {

@@ -85,3 +85,18 @@ body.archive-tour-operator .wrap #primary .wp-pagenavi-wrapper {
       color: #fff;
       border-radius: 3px;
       border: 2px solid transparent !important; }
+
+.to-search-form .input-group .field {
+  display: inline-block;
+  margin-right: 10px; }
+  .to-search-form .input-group .field .search-field {
+    min-width: 300px;
+    float: none;
+    padding: 8px 14px 10px; }
+    .to-search-form .input-group .field .search-field.error {
+      border-color: red; }
+  .to-search-form .input-group .field .btn-dropdown {
+    background: #fff !important;
+    padding: 4px 24px;
+    color: #555;
+    border: 3px solid #ddd; }

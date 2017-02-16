@@ -208,3 +208,30 @@ body.archive-tour-operator {
 		}
 	}
 }
+
+// ---------- Search Form Styles ----------
+.to-search-form {
+	.input-group {
+		.field {
+			display: inline-block;
+			margin-right:10px;
+
+			.search-field {
+				min-width: 300px;
+				float: none;
+				padding: 8px 14px 10px;
+
+				&.error {
+					border-color: red;
+				}
+			}
+
+			.btn-dropdown {
+				background: #fff !important;
+				padding: 4px 24px;
+				color: #555;
+				border: 3px solid #ddd;
+			}
+		}
+	}
+}
