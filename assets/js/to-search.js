@@ -112,6 +112,7 @@ var LSX_TO_Search = {
                 event.preventDefault();
 			}*/
 
+
         });
     },
     watchSearchInput: function() {
