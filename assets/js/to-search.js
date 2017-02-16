@@ -107,10 +107,10 @@ var LSX_TO_Search = {
 			}
 
 			//Check if there is a keyword.
-			if(false == has_facets && undefined != jQuery(this).find('.search-field') && '' == jQuery(this).find('.search-field').val()){
+			/*if(false == has_facets && undefined != jQuery(this).find('.search-field') && '' == jQuery(this).find('.search-field').val()){
                 jQuery(this).find('.search-field').addClass('error');
                 event.preventDefault();
-			}
+			}*/
 
         });
     },
