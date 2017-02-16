@@ -26,7 +26,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		add_filter( 'template_include', array( $this, 'search_template_include'), 99 );
 		add_action( 'template_redirect', array($this,'pretty_search_redirect') ) ;
 		add_filter( 'pre_get_posts',  array($this,'pretty_search_parse_query') ) ;
-		add_filter( 'request', array( $this, 'force_search_parameter' ) );
 
 		//Layout Filter
 		add_filter('lsx_layout', array($this,'lsx_layout'), 20,1);	
@@ -37,7 +36,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		
 		add_filter( 'facetwp_pager_html', array($this,'facetwp_pager_html'), 10, 2 );
 		add_filter( 'facetwp_result_count', array($this,'facetwp_result_count'), 10, 2 );
-		add_filter( 'facetwp_index_row', array($this,'facetwp_index_row'), 10, 2 );
 
 		add_shortcode( 'lsx_search_form', array($this,'search_form') );
 
@@ -160,64 +158,31 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 				$engine = $this->post_type_slugs[$keyword_test[0]];
 
 				$query->set('s',$keyword_test[1]);
-				$query->set('engine',$engine);	
+				$query->set('engine',$engine);
 
-				$additional_posts = new SWP_Query(
-					array(
-						's' => $keyword_test[1], // search query
-						'engine' => $engine,
-						'fields' => 'ids' 
-					)
-				);	
 
-				if ( ! empty( $additional_posts->posts ) ) {
-					$query->set('s','');
-					$query->set('engine_keyword',$keyword_test[1]);
-					$query->set('post__in',$additional_posts->posts);
-				}
-			}
+				if(class_exists('SWP_Query')) {
+					$additional_posts = new SWP_Query(
+						array(
+							's' => $keyword_test[1], // search query
+							'engine' => $engine,
+							'fields' => 'ids'
+						)
+					);
 
-			$filter_1_type  = $query->get( 'ft1' );
-			$filter_1_key   = $query->get( 'fk1' );
-			$filter_1_value = $query->get( 'fv1' );
-
-			if ( ! empty( $filter_1_type ) && ! empty( $filter_1_key ) && ! empty( $filter_1_value ) ) {
-				if ( 'post-type' === $filter_1_type ) {
-					// @TODO
-					var_dump( $filter_1_type );
-					var_dump( $filter_1_key );
-					var_dump( $filter_1_value );
-					die();
-				} elseif ( 'taxonomy' === $filter_1_type ) {
-					// @TODO
-					// @TODO
-					var_dump( $filter_1_type );
-					var_dump( $filter_1_key );
-					var_dump( $filter_1_value );
-					die();
-				}
+					if (!empty($additional_posts->posts)) {
+						$query->set('s', '');
+						$query->set('engine_keyword', $keyword_test[1]);
+						$query->set('post__in', $additional_posts->posts);
+					}
+				}else{
+				    if('default' !== $engine){
+						$query->set('post_type',$engine);
+					}
+                }
 			}
 		}
 		return $query;
-	}
-
-	/**
-	 * Force search parameter (to empty) to display the search page without the "s="
-	 */
-	public function force_search_parameter( $query_vars ) {
-		$search_query   = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
-		$filter_1_type  = sanitize_text_field( wp_unslash( $_REQUEST['ft1'] ) );
-		$filter_1_key   = sanitize_text_field( wp_unslash( $_REQUEST['fk1'] ) );
-		$filter_1_value = sanitize_text_field( wp_unslash( $_REQUEST['fv1'] ) );
-
-		if ( empty( $search_query ) && ! empty( $filter_1_type ) && ! empty( $filter_1_key ) && ! empty( $filter_1_value ) ) {
-			$query_vars['s']   = '';
-			$query_vars['ft1'] = $filter_1_type;
-			$query_vars['fk1'] = $filter_1_key;
-			$query_vars['fv1'] = $filter_1_value;
-		}
-
-		return $query_vars;
 	}
 
 	/**
@@ -514,7 +479,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 										</div>
 									</form>	
 								</div>
-							<?php }else{ ?>
+							<?php }elseif(isset($this->facet_data[$facet])){ ?>
 								<div class="col-sm-12 col-xs-6">
 									<h3 class="title"><?php echo $this->facet_data[$facet]['label']; ?></h3>
 									<?php echo do_shortcode('[facetwp facet="'.$facet.'"]'); ?>
@@ -564,9 +529,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		$display_search_field = true;
 		if(isset($atts['search_field'])){ $display_search_field = (boolean) $atts['search_field']; }
 
-		$select_1_field = false;
-		if(isset($atts['select_1_field'])){ $select_1_field = $atts['select_1_field']; }
-
 		$return = '';
 
 		ob_start(); ?>
@@ -581,67 +543,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 					<?php if ( true === $display_search_field ) : ?>
 						<input class="search-field form-control" name="s" type="search" placeholder="<?php echo $placeholder; ?>" autocomplete="off">
 					<?php endif; ?>
-					<?php
-						if ( false !== $select_1_field ) {
-							$content_type = false;
-
-							if ( in_array( $select_1_field, array( 'travel-style', 'accommodation-type' ) ) ) {
-								$content_type = 'taxonomy';
-							} elseif ( in_array( $select_1_field, array( 'destination' ) ) ) {
-								$content_type = 'post-type';
-							}
-
-							if ( false !== $content_type ) {
-								if ( 'taxonomy' === $content_type ) {
-									$args = array(
-										'taxonomy'                   => $select_1_field,
-										'hide_empty'                 => false,
-										'update_term_meta_cache'     => false,
-										'disabled_custom_post_order' => true,
-									);
-
-									$terms = get_terms( $args );
-
-									if ( count( $terms ) > 0 ) {
-										?><input type="hidden" name="ft1" value="<?php echo esc_attr( $content_type ); ?>"><?php
-										?><input type="hidden" name="fk1" value="<?php echo esc_attr( $select_1_field ); ?>"><?php
-										?><select name="fv1"><?php
-
-										foreach ( $terms as $term ) {
-											?><option value="<?php echo esc_attr( $term->term_id ); ?>"><?php echo esc_html( $term->name ); ?></option><?php
-										}
-
-										?></select><?php
-									}
-								} else {
-									$args = array(
-										'post_type'              => $select_1_field,
-										'post_parent'            => 0,
-										'no_found_rows'          => true,
-										'ignore_sticky_posts'    => 1,
-										'update_post_meta_cache' => false,
-										'update_post_term_cache' => false,
-										'orderby'                => 'title',
-										'order'                  => 'ASC',
-									);
-
-									$custom_posts = new \WP_Query( $args );
-
-									if ( $custom_posts->have_posts() ) {
-										?><input type="hidden" name="ft1" value="<?php echo esc_attr( $content_type ); ?>"><?php
-										?><input type="hidden" name="fk1" value="<?php echo esc_attr( $select_1_field ); ?>"><?php
-										?><select name="fv1"><?php
-
-										foreach ( $custom_posts->posts as $custom_post ) {
-											?><option value="<?php echo esc_attr( $custom_post->ID ); ?>"><?php echo esc_html( $custom_post->post_title ); ?></option><?php
-										}
-
-										?></select><?php
-									}
-								}
-							}
-						}
-					?>
 					<?php if ( false !== $engine && 'default' !== $engine ) : ?>
 						<input name="engine" type="hidden" value="<?php echo $engine; ?>">
 					<?php endif; ?>
@@ -727,20 +628,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		return $output;
 	}	
 
-	/**
-	 * Displays the destination specific settings
-	 */
-	public function facetwp_index_row( $params, $class ) {
 
-		$custom_field = $meta_key = false;
-		preg_match("/cf\//", $class->facet['source'], $custom_field);
-		preg_match("/_to_/", $class->facet['source'], $meta_key);
-
-		if(!empty($custom_field) && !empty($meta_key)){
-	        $params['facet_display_value'] = get_the_title($params['facet_value']);
-	    }
-	    return $params;
-	}	
 
 	/**
 	 * Change FaceWP result count HTML

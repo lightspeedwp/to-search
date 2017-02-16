@@ -13,6 +13,8 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 		add_action('init',array($this,'set_facetwp_vars'));
 		
 		add_action('admin_init', array($this,'admin_init'));
+
+		add_filter( 'facetwp_index_row', array($this,'facetwp_index_row'), 10, 2 );
 	}
 
 	/**
@@ -228,6 +230,24 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 			</ul></td>
 		</tr>
 		<?php
+	}
+
+	/**
+	 * Displays the destination specific settings
+	 */
+	public function facetwp_index_row( $params, $class ) {
+		$custom_field = $meta_key = false;
+
+		if(strpos($class->facet['source'],'cf/') && strpos($class->facet['source'],'_to_')){
+			$params['facet_display_value'] = get_the_title($params['facet_value']);
+		}
+		preg_match("/cf\//", $class->facet['source'], $custom_field);
+		preg_match("/_to_/", $class->facet['source'], $meta_key);
+
+		if(!empty($custom_field) && !empty($meta_key)){
+			$params['facet_display_value'] = get_the_title($params['facet_value']);
+		}
+		return $params;
 	}
 
 }

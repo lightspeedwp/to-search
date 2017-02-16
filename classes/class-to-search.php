@@ -68,7 +68,9 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 			add_action('init',array($this,'load_plugin_textdomain'));
 			
 			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-admin.php');
-			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-frontend.php');
+			if(!is_admin()) {
+				require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-frontend.php');
+			}
 
 			// flush_rewrite_rules()
 			register_activation_hook( LSX_TO_SEARCH_CORE, array( $this, 'register_activation_hook' ) );

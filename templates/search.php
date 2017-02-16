@@ -28,7 +28,6 @@ get_header();
 					global $lsx_archive;
 					$lsx_archive = 1;
 					?>
-
 					<?php if ( have_posts() ) : ?>
 
 						<div class="row">
