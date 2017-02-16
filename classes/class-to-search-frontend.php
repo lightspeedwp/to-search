@@ -141,6 +141,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			}
 
 			$get_array = $_GET;
+
 			if(is_array($get_array) && !empty($get_array)){
 
 			    $vars_to_maintain = array();
@@ -545,8 +546,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		$display_search_field = true;
 		if(isset($atts['search_field'])){ $display_search_field = (boolean) $atts['search_field']; }
 
-		$facet = false;
-		if(isset($atts['facet'])){ $facet = $atts['facet']; }
+		$facets = false;
+		if(isset($atts['facets'])){ $facets = $atts['facets']; }
 
 		$return = '';
 
@@ -566,15 +567,24 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
                         </div>
                     <?php endif; ?>
 
-					<?php if(false !== $facet) { ?>
-                        <div class="field">
-                            <?php
-                            $facet = FWP()->helper->get_facet_by_name( $facet );
-                            $values = $this->get_form_facet($facet['source']);
-                            $this->display_form_field('select',$facet,$values);
-                            ?>
-                        </div>
-					<?php } ?>
+					<?php if(false !== $facets) {
+
+					    $facets = explode("|",$facets);
+                        if(!is_array($facets)){
+							$facets = array($facets);
+                        }
+                        foreach($facets as $facet){
+							?>
+                            <div class="field">
+								<?php
+								$facet = FWP()->helper->get_facet_by_name( $facet );
+								$values = $this->get_form_facet($facet['source']);
+								$this->display_form_field('select',$facet,$values);
+								?>
+                            </div>
+							<?php
+                        }
+                    } ?>
 
                     <div class="field">
                         <button class="<?php echo $button_class; ?>" type="submit"><?php echo $button_label; ?></button>

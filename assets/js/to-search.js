@@ -8,21 +8,21 @@ var LSX_TO_Search = {
 	
 	initThis: function() {
 
-		currentForm = jQuery('.to-search-form');
+		this.currentForm = jQuery('.to-search-form');
 
 		this.onChangeTab_Map();
 		this.onFacetWpLoad();
 
-        console.log(currentForm);
-		if(undefined != currentForm){
+        console.log(this.currentForm);
+		if(undefined != this.currentForm){
 
             this.watchSubmit();
 
-            if(undefined != currentForm.find('.search-field')){
+            if(undefined != this.currentForm.find('.search-field')){
                 this.watchSearchInput();
             }
 
-            if(undefined != currentForm.find('.btn-dropdown')){
+            if(undefined != this.currentForm.find('.btn-dropdown')){
                 this.watchDropdown();
             }
 
@@ -71,7 +71,7 @@ var LSX_TO_Search = {
 	},
 
     watchDropdown: function() {
-		jQuery(currentForm).find('.dropdown-menu').on('click','a',function(event){
+		jQuery(this.currentForm).find('.dropdown-menu').on('click','a',function(event){
 			event.preventDefault();
 			jQuery(this).parents('.dropdown').find('.btn-dropdown').attr('data-selection',jQuery(this).attr('data-value'));
             jQuery(this).parents('.dropdown').find('.btn-dropdown').html(jQuery(this).html()+' <span class="caret"></span>');
@@ -85,7 +85,9 @@ var LSX_TO_Search = {
     },
 
     watchSubmit: function() {
-        jQuery(currentForm).on('submit',function(event){
+
+		var currentForm = this.currentForm;
+        jQuery(this.currentForm).on('submit',function(event){
 
 			if(undefined != jQuery(this).find('.btn-dropdown')){
                 jQuery(this).find('.btn-dropdown').each(function(){
@@ -107,10 +109,11 @@ var LSX_TO_Search = {
                 jQuery(this).find('.search-field').addClass('error');
                 event.preventDefault();
 			}
+
         });
     },
     watchSearchInput: function() {
-        jQuery(currentForm).find('.search-field').on('keyup',function(event){
+        jQuery(this.currentForm).find('.search-field').on('keyup',function(event){
         	if(jQuery(this).hasClass('error')){
                 jQuery(this).removeClass('error');
 			}
