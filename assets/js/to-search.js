@@ -1,4 +1,6 @@
-LSX_TO_Search = {
+'use strict';
+
+var LSX_TO_Search = {
 
 	facetWpLoadFirstTime: false,
 	
@@ -8,7 +10,6 @@ LSX_TO_Search = {
 	},
 
 	onChangeTab_Map: function() {
-		//jQuery('a[data-toggle="tab"][href="#to-search-map"]').on('shown.bs.tab', LSX_TO_Search.fixMapVisual);
 		jQuery('a[data-toggle="tab"][href="#to-search-map"]').on('shown.bs.tab', LSX_TO_Search.reloadMap);
 	},
 
@@ -42,17 +43,10 @@ LSX_TO_Search = {
 		});
 	},
 
-	//fixMapVisual: function() {
-	//	if (undefined !== LSX_TO_Maps) {
-	//		LSX_TO_Maps.resizeThis();
-	//		LSX_TO_Maps.setBounds();
-	//	}
-	//},
-
 	reloadMap: function() {
 		if (undefined !== LSX_TO_Maps) {
 			LSX_TO_Maps.initThis();
-			LSX_TO_Maps_Styles.changeMapColors();
+			LSX_TO_Maps_Styles.changeMapStyles();
 		}
 	},
 
