@@ -245,7 +245,12 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 		preg_match("/_to_/", $class->facet['source'], $meta_key);
 
 		if(!empty($custom_field) && !empty($meta_key)){
-			$params['facet_display_value'] = get_the_title($params['facet_value']);
+
+		    $title = get_the_title($params['facet_value']);
+		    if('' !== $title) {
+				$params['facet_display_value'] = $title;
+			}
+
 		}
 		return $params;
 	}
