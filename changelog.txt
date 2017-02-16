@@ -11,6 +11,7 @@
 * Fix - Styles from TO Search addon moved to it (removed from TO plugin)
 * Dev - New option on FacetWP results: map
 * Dev - New option for sorting: Date (ASC and DESC)
+* Dev - Enabled integration with Snazzy Maps plugin
 
 ### 1.0.2
 * Fix - Fixed all prefixes replaces (to_ > lsx_to_, TO_ > LSX_TO_)
