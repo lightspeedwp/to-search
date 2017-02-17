@@ -25,7 +25,6 @@ var LSX_TO_Search = {
             if(undefined != this.currentForm.find('.btn-dropdown')){
                 this.watchDropdown();
             }
-
 		}
 	},
 
@@ -71,6 +70,8 @@ var LSX_TO_Search = {
 	},
 
     watchDropdown: function() {
+	    var $this = this;
+
 		jQuery(this.currentForm).find('.dropdown-menu').on('click','a',function(event){
 			event.preventDefault();
 			jQuery(this).parents('.dropdown').find('.btn-dropdown').attr('data-selection',jQuery(this).attr('data-value'));
@@ -81,6 +82,11 @@ var LSX_TO_Search = {
 			}else{
                 jQuery(this).parents('ul').find('.default').parent('li').show();
 			}
+
+            if(jQuery(this).parents('.field').hasClass('combination-dropdown')){
+                console.log('switching');
+                $this.switchDropDown(jQuery(this).parents('.dropdown'));
+            }
 		});
     },
 
@@ -90,9 +96,9 @@ var LSX_TO_Search = {
         jQuery(this.currentForm).on('submit',function(event){
 
         	var has_facets = false;
-			if(undefined != jQuery(this).find('.btn-dropdown')){
+			if(undefined != jQuery(this).find('.btn-dropdown:not(.btn-combination)')){
                 has_facets = true;
-                jQuery(this).find('.btn-dropdown').each(function(){
+                jQuery(this).find('.btn-dropdown:not(.btn-combination)').each(function(){
                 	var value = jQuery(this).attr('data-selection');
 
                 	if(0 != value || '0' != value){
@@ -112,7 +118,7 @@ var LSX_TO_Search = {
                 event.preventDefault();
 			}*/
 
-
+            event.preventDefault();
         });
     },
     watchSearchInput: function() {
@@ -121,7 +127,19 @@ var LSX_TO_Search = {
                 jQuery(this).removeClass('error');
 			}
         });
+    },
+    switchDropDown: function(dropdown) {
+        var id = dropdown.find('button').attr('data-selection');
+        console.log(dropdown.parents('form').find('#'+id));
+        if(0 < dropdown.parents('form').find('.combination-toggle.selected').length ) {
+            dropdown.parents('form').find('.combination-toggle.selected button').attr('data-selection','0');
+            var default_title = dropdown.parents('form').find('.combination-toggle.selected a.default').html();
+            dropdown.parents('form').find('.combination-toggle.selected button').html(default_title+' <span class="caret"></span>');
+            dropdown.parents('form').find('.combination-toggle.selected').removeClass('selected').addClass('hidden');
+        }
+        dropdown.parents('form').find('#'+id).parents('.combination-toggle').removeClass('hidden').addClass('selected');
     }
+
 };
 
 jQuery(function() {

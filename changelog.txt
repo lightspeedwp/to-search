@@ -4,6 +4,8 @@
 * Dev - Added in the ability to call a facet on your search form, as a drop down.
 * Dev - Added in Javascript form validation so you can never submit an empty keyword
 * Dev - Styled the form so it can handle the drop downs, and a more fluid layout.
+* Dev - Made the facets shortcode attribute able to handle multiple faces
+* Dev - Added in a combination box option
 
 ### 1.0.3
 * Fix - Make the addon compatible with the latest version from TO plugin

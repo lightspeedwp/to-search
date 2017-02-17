@@ -89,14 +89,16 @@ body.archive-tour-operator .wrap #primary .wp-pagenavi-wrapper {
 .to-search-form .input-group .field {
   display: inline-block;
   margin-right: 10px; }
+  .to-search-form .input-group .field.combination-toggle.hidden {
+    display: none; }
+  .to-search-form .input-group .field .btn-dropdown {
+    background: #fff !important;
+    padding: 4px 24px;
+    color: #555;
+    border: 3px solid #ddd; }
   .to-search-form .input-group .field .search-field {
     min-width: 300px;
     float: none;
     padding: 8px 14px 10px; }
     .to-search-form .input-group .field .search-field.error {
       border-color: red; }
-  .to-search-form .input-group .field .btn-dropdown {
-    background: #fff !important;
-    padding: 4px 24px;
-    color: #555;
-    border: 3px solid #ddd; }

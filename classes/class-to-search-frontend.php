@@ -557,6 +557,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		$facets = false;
 		if(isset($atts['facets'])){ $facets = $atts['facets']; }
 
+		$combo_box = false;
+		if(isset($atts['combo_box'])){ $combo_box = true; }
+
 		$return = '';
 
 		ob_start(); ?>
@@ -581,13 +584,20 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
                         if(!is_array($facets)){
 							$facets = array($facets);
                         }
+
+                        $field_class = 'field';
+
+						if(false !== $combo_box){
+							$this->combo_box($facets);
+							$field_class .= ' combination-toggle hidden';
+						}
                         foreach($facets as $facet){
 							?>
-                            <div class="field">
+                            <div class="<?php echo wp_kses_post($field_class); ?>">
 								<?php
 								$facet = FWP()->helper->get_facet_by_name( $facet );
 								$values = $this->get_form_facet($facet['source']);
-								$this->display_form_field('select',$facet,$values);
+								$this->display_form_field('select',$facet,$values,$combo_box);
 								?>
                             </div>
 							<?php
@@ -651,7 +661,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	/**
 	 * Change FaceWP pagination HTML to be equal main pagination (WP-PageNavi)
 	 */
-	public function display_form_field( $type='select',$facet=array(), $values = array() ) {
+	public function display_form_field( $type='select',$facet=array(), $values = array(), $combo = false ) {
 
 	    if(empty($facet)){
 	        return;
@@ -662,7 +672,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	    switch($type){
 
             case 'select':?>
-                <div class="dropdown">
+                <div class="dropdown <?php if(true === $combo) { echo 'combination-dropdown'; } ?>">
                     <button data-selection="0" class="btn btn-dropdown dropdown-toggle" type="button" id="<?php echo wp_kses_post($source); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 						<?php esc_attr_e('Select','to-search'); ?> <?php echo wp_kses_post($facet['label']); ?>
                         <span class="caret"></span>
@@ -687,6 +697,32 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	    ?>
 
 	<?php }
+
+	/**
+	 * Outputs the combination selector
+	 */
+	public function combo_box( $facets ) {
+        ?>
+        <div class="field combination-dropdown">
+            <div class="dropdown">
+                <button data-selection="0" class="btn btn-dropdown dropdown-toggle btn-combination" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <?php esc_attr_e('Select','to-search'); ?>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+
+                    <li style="display: none;"><a class="default" data-value="0" href="#"><?php esc_attr_e('Select ','to-search'); ?></a></li>
+
+                    <?php foreach($facets as $facet) {
+                        $facet = FWP()->helper->get_facet_by_name( $facet );
+                        ?>
+                        <li><a data-value="fwp_<?php echo wp_kses_post($facet['name']); ?>" href="#"><?php echo wp_kses_post($facet['label']); ?></a></li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+        <?php
+	}
 
 	/**
 	 * Change FaceWP pagination HTML to be equal main pagination (WP-PageNavi)

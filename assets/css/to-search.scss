@@ -216,6 +216,18 @@ body.archive-tour-operator {
 			display: inline-block;
 			margin-right:10px;
 
+			&.combination-toggle.hidden{
+				display:none;
+			}
+
+			.btn-dropdown {
+				background: #fff !important;
+				padding: 4px 24px;
+				color: #555;
+				border: 3px solid #ddd;
+			}
+
+
 			.search-field {
 				min-width: 300px;
 				float: none;
@@ -224,13 +236,6 @@ body.archive-tour-operator {
 				&.error {
 					border-color: red;
 				}
-			}
-
-			.btn-dropdown {
-				background: #fff !important;
-				padding: 4px 24px;
-				color: #555;
-				border: 3px solid #ddd;
 			}
 		}
 	}
