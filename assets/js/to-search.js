@@ -117,8 +117,6 @@ var LSX_TO_Search = {
                 jQuery(this).find('.search-field').addClass('error');
                 event.preventDefault();
 			}*/
-
-            event.preventDefault();
         });
     },
     watchSearchInput: function() {
