@@ -6,6 +6,7 @@
 * Dev - Styled the form so it can handle the drop downs, and a more fluid layout.
 * Dev - Made the facets shortcode attribute able to handle multiple faces
 * Dev - Added in a combination box option
+* Fix - Fixed the default pagination from LSX
 
 ### 1.0.3
 * Fix - Make the addon compatible with the latest version from TO plugin

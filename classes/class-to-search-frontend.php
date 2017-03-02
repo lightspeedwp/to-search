@@ -19,7 +19,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		add_action('init',array($this,'set_vars'));
 		add_action('init',array($this,'set_facetwp_vars'));
 
-		add_action('wp_head', array($this,'wp_head'));
+		add_action('wp_head', array($this,'wp_head'), 11);
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 
 		//Redirects
@@ -70,6 +70,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 		if(false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug_1])){
 			$this->search_slug = $search_slug;
+
+			remove_action( 'lsx_content_bottom', array( 'LSX_TO_Frontend', 'lsx_default_pagination' ) );
 
 			add_action('lsx_content_top', array($this,'lsx_content_top'));
 			add_action('lsx_content_bottom', array($this,'lsx_content_bottom'));
