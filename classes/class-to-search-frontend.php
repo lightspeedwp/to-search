@@ -750,14 +750,14 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	        for ( $i = 1; $i <= $total_pages; $i++ ) {
 	            if ( $i == $page ) {
 	                $output .= '<span class="current">'. $i .'</span>';
-	            } elseif ( ( $page - 3 ) < $i && ( $page + 3 ) > $i ) {
+	            } elseif ( ( $page - 2 ) < $i && ( $page + 2 ) > $i ) {
 	                $output .= '<a class="page larger facetwp-page" data-page="'. $i .'">'. $i .'</a>';
-	            } elseif ( ( $page - 3 ) >= $i && $page > 3 ) {
+	            } elseif ( ( $page - 2 ) >= $i && $page > 2 ) {
 	                if ( ! $temp ) {
 	                    $output .= '<span>...</span>';
 	                    $temp = true;
 	                }
-	            } elseif ( ( $page + 3 ) <= $i && ( $page + 3 ) <= $total_pages ) {
+	            } elseif ( ( $page + 2 ) <= $i && ( $page + 2 ) <= $total_pages ) {
 	                $output .= '<span>...</span>';
 	                break;
 	            }
