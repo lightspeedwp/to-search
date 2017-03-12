@@ -507,7 +507,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 									</form>	
 								</div>
 							<?php }elseif(isset($this->facet_data[$facet])){ ?>
-								<div class="col-sm-12 col-xs-6">
+								<div class="col-sm-12 col-xs-12">
 									<h3 class="title"><?php echo $this->facet_data[$facet]['label']; ?></h3>
 									<?php echo do_shortcode('[facetwp facet="'.$facet.'"]'); ?>
 								</div>
