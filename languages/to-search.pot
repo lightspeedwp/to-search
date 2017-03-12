@@ -92,35 +92,35 @@ msgstr ""
 msgid "Enable Filtering"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:399
+#: classes/class-to-search-frontend.php:410
 msgid "List"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:400
+#: classes/class-to-search-frontend.php:411
 msgid "Map"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:489, classes/class-to-search-frontend.php:520
+#: classes/class-to-search-frontend.php:500, classes/class-to-search-frontend.php:531
 msgid "Results"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:501, classes/class-to-search-frontend.php:505, classes/class-to-search-frontend.php:547
+#: classes/class-to-search-frontend.php:512, classes/class-to-search-frontend.php:516, classes/class-to-search-frontend.php:558
 msgid "Search"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:538
+#: classes/class-to-search-frontend.php:549
 msgid "Where do you want to go?"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:679, classes/class-to-search-frontend.php:711
+#: classes/class-to-search-frontend.php:690, classes/class-to-search-frontend.php:722
 msgid "Select"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:685, classes/class-to-search-frontend.php:716
+#: classes/class-to-search-frontend.php:696, classes/class-to-search-frontend.php:727
 msgid "Select "
 msgstr ""
 
-#: classes/class-to-search-frontend.php:691
+#: classes/class-to-search-frontend.php:702
 msgid "Please re-index your facets."
 msgstr ""
 

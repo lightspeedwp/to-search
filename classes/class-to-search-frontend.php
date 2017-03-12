@@ -18,6 +18,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	public function __construct() {
 		add_action('init',array($this,'set_vars'));
 		add_action('init',array($this,'set_facetwp_vars'));
+		add_action('init',array($this,'remove_posts_and_pages_from_search'),99);
 
 		add_action('wp_head', array($this,'wp_head'), 11);
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
@@ -42,6 +43,16 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		add_filter( 'searchwp_short_circuit', array($this,'searchwp_short_circuit'), 10, 2 );
 
 		add_filter( 'get_search_query', array($this,'get_search_query') );				
+	}
+
+	/**
+	 * Remove posts and pages from search
+	 *
+	 */
+	public function remove_posts_and_pages_from_search() {
+		global $wp_post_types;
+		$wp_post_types['post']->exclude_from_search = true;
+		$wp_post_types['page']->exclude_from_search = true;
 	}
 
 	/**
