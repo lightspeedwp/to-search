@@ -77,7 +77,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			add_action('lsx_content_bottom', array($this,'lsx_content_bottom'));
 
 			if(isset($this->options[$this->search_slug][$option_slug_2.'_layout']) && '1c' !== $this->options[$this->search_slug][$option_slug_2.'_layout']){
-				add_action('lsx_content_wrap_after', array($this,'search_sidebar'));		
+				add_action('lsx_content_wrap_before', array($this,'search_sidebar'));		
 				add_filter('lsx_sidebar_enable', array($this,'lsx_sidebar_enable'), 10, 1);		
 			}elseif('1c' === $this->options[$this->search_slug][$option_slug_2.'_layout']){
 				add_action('lsx_content_wrap_before', array($this,'search_sidebar'));
