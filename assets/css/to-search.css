@@ -15,6 +15,8 @@ body.archive-tour-operator #facetwp-sidebar, body.archive-tour-operator #seconda
       text-decoration: underline; }
       body.archive-tour-operator #facetwp-sidebar .facetwp-type-checkboxes .facetwp-checkbox.checked, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-type-checkboxes .facetwp-checkbox.checked {
         font-weight: bold; }
+      body.archive-tour-operator #facetwp-sidebar .facetwp-type-checkboxes .facetwp-checkbox.region, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-type-checkboxes .facetwp-checkbox.region {
+        padding-left: 35px; }
   body.archive-tour-operator #facetwp-sidebar .facetwp-results .title, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-results .title {
     margin-bottom: 30px; }
   body.archive-tour-operator #facetwp-sidebar .facetwp-results .facetwp-counts, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-results .facetwp-counts {

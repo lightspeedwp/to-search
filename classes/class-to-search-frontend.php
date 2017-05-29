@@ -38,6 +38,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		add_filter( 'facetwp_pager_html', array($this,'facetwp_pager_html'), 10, 2 );
 		add_filter( 'facetwp_result_count', array($this,'facetwp_result_count'), 10, 2 );
 
+		add_filter( 'facetwp_facet_html', array($this,'destination_facet_html'), 10, 2 );
+
 		add_shortcode( 'lsx_search_form', array($this,'search_form') );
 
 		add_filter( 'searchwp_short_circuit', array($this,'searchwp_short_circuit'), 10, 2 );
@@ -784,7 +786,95 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		}
 		$keyword = str_replace( '+', ' ', $keyword );
 		return $keyword;
-	}			
+	}
+
+	public function destination_facet_html( $output, $params ) {
+	    $possible_keys = array('destination_to_accommodation','destination_to_tour','destination_to_special','destination_to_activity','destination','destinations','destination_to_review','destination_to_vehicle');
+
+		if ( in_array($params['facet']['name'],$possible_keys) ) {
+			$output = $this->destination_facet_render($params);
+		}
+		return $output;
+	}
+
+	/**
+	 * Generate the facet HTML
+	 */
+	function destination_facet_render( $params ) {
+		$facet = $params['facet'];
+
+		$output = '';
+		$values = (array) $params['values'];
+		$selected_values = (array) $params['selected_values'];
+		$soft_limit = empty( $facet['soft_limit'] ) ? 0 : (int) $facet['soft_limit'];
+
+		$destination_ids = array();
+		foreach($values as $key => $result){
+			$destination_ids[] = $result['facet_value'];
+        }
+        $countries = apply_filters('lsx_to_parents_only',$destination_ids);
+
+        $options = array();
+        $sorted_values = array();
+
+		/*if(!empty($selected_values)) {
+			//sort the options so
+			foreach ($values as $key => $result) {
+				$sorted_values[$key] = $result;
+		    }
+			$values = $sorted_values;
+		}*/
+
+		$regions = $values;
+
+		$key = 0;
+		foreach ( $values as $key => $result ) {
+
+			//Check to see if we should display the countries
+			if (!in_array($result['facet_value'], $countries)) {
+				continue;
+			}
+
+			$options[] = $this->format_single_facet($key,$result,$selected_values,$soft_limit);
+
+			//if a country is selected, then run through and add in the regions.
+			if(!empty($selected_values)){
+                foreach($regions as $region_key => $region_value){
+                    /*print_r(wp_get_post_parent_id($region_value['facet_value']));
+					print_r(' - '.$result['facet_value']);
+                    print_r('<br />');*/
+					if((String)wp_get_post_parent_id($region_value['facet_value']) === (String)$result['facet_value']){
+						$options[] = $this->format_single_facet($region_key,$region_value,$selected_values,$soft_limit,true);
+                    }
+                }
+            }
+		}
+
+		if ( 0 < $soft_limit && $soft_limit <= $key ) {
+			$output .= '</div>';
+			$output .= '<a class="facetwp-toggle">' . __( 'See {num} more', 'fwp' ) . '</a>';
+			$output .= '<a class="facetwp-toggle facetwp-hidden">' . __( 'See less', 'fwp' ) . '</a>';
+		}
+
+		$output = implode('',$options);
+
+		return $output;
+	}
+
+	function format_single_facet($key,$result,$selected_values,$soft_limit,$region = false){
+		$temp_html = '';
+		if ( 0 < $soft_limit && $key == $soft_limit ) {
+			$temp_html .= '<div class="facetwp-overflow facetwp-hidden">';
+		}
+		$selected = in_array( $result['facet_value'], $selected_values ) ? ' checked' : '';
+		$selected .= ( 0 == $result['counter'] && '' == $selected ) ? ' disabled' : '';
+		$selected .= $region ? ' region' : '';
+
+		$temp_html .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . $result['facet_value'] . '">';
+		$temp_html .= $result['facet_display_value'] . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
+		$temp_html .= '</div>';
+		return $temp_html;
+    }
 }
 global $lsx_to_search;
 $lsx_to_search = new LSX_TO_Search_Frontend();
