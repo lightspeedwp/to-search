@@ -82,3 +82,4 @@ add_action('admin_init','lsx_to_search_api_admin_init');
 /* ======================= Below is the Plugin Class init ========================= */
 
 require_once( LSX_TO_SEARCH_PATH . '/classes/class-to-search.php' );
+require_once( LSX_TO_SEARCH_PATH . '/includes/pluggable.php' );

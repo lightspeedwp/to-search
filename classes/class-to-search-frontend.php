@@ -386,22 +386,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			$show_map = true;
 		}
 		?>
-		<div id="facetwp-top">
-			<div class="row facetwp-top-row-1">
-				<div class="col-md-12">
-					<?php echo do_shortcode('[facetwp sort="true"]'); ?>
-					<?php echo do_shortcode('[facetwp per_page="true"]'); ?>
-				</div>
-			</div>
-			<div class="row facetwp-top-row-2">
-				<div class="col-md-8">
-					<?php if(isset($this->options[$this->search_slug][$option_slug.'facets']) && is_array($this->options[$this->search_slug][$option_slug.'facets']) && array_key_exists('a_z',$this->options[$this->search_slug][$option_slug.'facets'])) {echo do_shortcode('[facetwp facet="a_z"]');} ?>
-				</div>
-				<div class="col-md-4">
-					<?php echo do_shortcode('[facetwp pager="true"]'); ?>
-				</div>
-			</div>
-		</div>
+
+        <?php do_action('lsx_to_search_top'); ?>
+
 		<div class="facetwp-template">
 
 		<?php
@@ -442,16 +429,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		?>
 
 		</div>
-		<div id="facetwp-bottom">
-			<div class="row facetwp-bottom-row-1">
-				<div class="col-md-8">
-					<?php if(isset($this->options[$this->search_slug][$option_slug.'facets']) && is_array($this->options[$this->search_slug][$option_slug.'facets']) && array_key_exists('a_z',$this->options[$this->search_slug][$option_slug.'facets'])) {echo do_shortcode('[facetwp facet="a_z"]');} ?>
-				</div>
-				<div class="col-md-4">
-					<?php echo do_shortcode('[facetwp pager="true"]'); ?>
-				</div>
-			</div>
-		</div>
+
+		<?php do_action('lsx_to_search_bottom'); ?>
 	<?php 
 	}	
 
@@ -497,7 +476,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 					<?php if(isset($this->options[$this->search_slug]['display_'.$option_slug.'result_count']) && 'on' === $this->options[$this->search_slug]['display_'.$option_slug.'result_count']) { ?>
 						<div class="col-sm-12 col-xs-12 facetwp-results">
-							<h3 class="title"><?php _e('Results','to-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h4>
+							<h3 class="title"><?php _e('Results','to-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h3>
 						</div>
 					<?php } ?>
 						
@@ -528,7 +507,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 					<?php if(isset($this->options[$this->search_slug]['display_'.$option_slug.'result_count']) && 'on' === $this->options[$this->search_slug]['display_'.$option_slug.'result_count'] && $this->options[$this->search_slug]['search_layout'] != '1c') { ?>
 						<div class="col-sm-12 col-xs-12 facetwp-results">
-							<h3 class="title"><?php _e('Results','to-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h4>
+							<h3 class="title"><?php _e('Results','to-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h3>
 						</div>
 					<?php } ?>
 					</div>
@@ -807,4 +786,5 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		return $keyword;
 	}			
 }
-new LSX_TO_Search_Frontend();
+global $lsx_to_search;
+$lsx_to_search = new LSX_TO_Search_Frontend();
