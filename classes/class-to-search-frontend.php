@@ -838,7 +838,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			$options[] = $this->format_single_facet($key,$result,$selected_values,$soft_limit);
 
 			//if a country is selected, then run through and add in the regions.
-			if(!empty($selected_values)){
+			if(!empty($selected_values) && in_array( $result['facet_value'], $selected_values )){
                 foreach($regions as $region_key => $region_value){
                     /*print_r(wp_get_post_parent_id($region_value['facet_value']));
 					print_r(' - '.$result['facet_value']);
