@@ -583,7 +583,10 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
                                 <ul class="dropdown-menu">
 									<?php
 									foreach($engines as $engine){
-										echo '<li><a data-value="'.$engine.'" href="#">'.ucwords(str_replace('_',' ',$engine)).'</a></li>';
+
+									    $plural = 's';
+									    if('accommodation' === $engine){$plural = '';}
+										echo '<li><a data-value="'.$engine.'" href="#">'.ucfirst(str_replace('_',' ',$engine)).$plural.'</a></li>';
 									}
 									?>
                                 </ul>
