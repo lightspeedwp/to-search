@@ -543,7 +543,10 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		if(isset($atts['button_class'])){ $button_class .= $atts['button_class']; }	
 
 		$engine = false;
-		if(isset($atts['engine'])){ $engine = $atts['engine']; }				
+		if(isset($atts['engine'])){ $engine = $atts['engine']; }
+
+		$engine_select = false;
+		if(isset($atts['engine_select'])){ $engine_select = true; }
 
 		$display_search_field = true;
 		if(isset($atts['search_field'])){ $display_search_field = (boolean) $atts['search_field']; }
@@ -571,6 +574,22 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
                             <input class="search-field form-control" name="s" type="search" placeholder="<?php echo $placeholder; ?>" autocomplete="off">
                         </div>
                     <?php endif; ?>
+
+					<?php if (false !== $engine_select && false !== $engine && 'default' !== $engine ) :
+						$engines = explode('|',$engine); ?>
+                        <div class="field engine-select">
+                            <div class="dropdown">
+                                <button data-selection="<?php $engines[0]; ?>" class="btn btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo ucwords(str_replace('_',' ',$engines[0])); ?> <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+									<?php
+									foreach($engines as $engine){
+										echo '<li><a data-value="'.$engine.'" href="#">'.ucwords(str_replace('_',' ',$engine)).'</a></li>';
+									}
+									?>
+                                </ul>
+                            </div>
+                        </div>
+					<?php endif; ?>
 
 					<?php if(false !== $facets) {
 
@@ -602,10 +621,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
                         <button class="<?php echo $button_class; ?>" type="submit"><?php echo $button_label; ?></button>
                     </div>
 
-					<?php if ( false !== $engine && 'default' !== $engine ) : ?>
+					<?php if (false === $engine_select && false !== $engine && 'default' !== $engine ) : ?>
 						<input name="engine" type="hidden" value="<?php echo $engine; ?>">
 					<?php endif; ?>
-
 				</div>
 
 			<?php do_action('lsx_search_form_bottom'); ?>	

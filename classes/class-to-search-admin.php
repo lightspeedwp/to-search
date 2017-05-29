@@ -66,7 +66,7 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 					<option value="1c" {{#is search_layout value="1c"}} selected="selected"{{/is}}><?php _e('1 column','to-search'); ?></option>
 					<option value="2cr" {{#is search_layout value="2cr"}} selected="selected"{{/is}}><?php _e('2 columns / Content on right','to-search'); ?></option>
 					<option value="2cl" {{#is search_layout value="2cl"}} selected="selected"{{/is}}><?php _e('2 columns / Content on left','to-search'); ?></option>
-				?>
+                </select>
 			</td>
 		</tr>
 		<tr class="form-field-wrap">
@@ -77,7 +77,7 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 				<select value="{{layout_map}}" name="layout_map">
 					<option value="" {{#is layout_map value=""}}selected="selected"{{/is}}><?php _e('Only List','to-search'); ?></option>
 					<option value="list_and_map" {{#is layout_map value="list_and_map"}} selected="selected"{{/is}}><?php _e('List and Map','to-search'); ?></option>
-				?>
+                </select>
 			</td>
 		</tr>
 		<tr class="form-field">
@@ -163,7 +163,7 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 					<option value="1c" {{#is archive_layout value="1c"}} selected="selected"{{/is}}><?php _e('1 column','to-search'); ?></option>
 					<option value="2cr" {{#is archive_layout value="2cr"}} selected="selected"{{/is}}><?php _e('2 columns / Content on right','to-search'); ?></option>
 					<option value="2cl" {{#is archive_layout value="2cl"}} selected="selected"{{/is}}><?php _e('2 columns / Content on left','to-search'); ?></option>
-				?>
+                </select>
 			</td>
 		</tr>
 		<tr class="form-field-wrap">
@@ -174,7 +174,7 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 				<select value="{{archive_layout_map}}" name="archive_layout_map">
 					<option value="" {{#is archive_layout_map value=""}}selected="selected"{{/is}}><?php _e('Only List','to-search'); ?></option>
 					<option value="list_and_map" {{#is archive_layout_map value="list_and_map"}} selected="selected"{{/is}}><?php _e('List and Map','to-search'); ?></option>
-				?>
+                </select>
 			</td>
 		</tr>
 		<tr class="form-field">
@@ -256,6 +256,10 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
             }
 
 		}
+		//if its a price, save the value as a standard number
+		if('cf/price' === $class->facet['source']){
+			$params['facet_value'] = str_replace(',','',$params['facet_value']);
+        }
 		return $params;
 	}
 
