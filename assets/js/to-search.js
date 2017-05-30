@@ -84,9 +84,14 @@ var LSX_TO_Search = {
 			}
 
             if(jQuery(this).parents('.field').hasClass('combination-dropdown')){
-                console.log('switching');
                 $this.switchDropDown(jQuery(this).parents('.dropdown'));
             }
+
+            if(jQuery(this).parents('.field').hasClass('engine-select')){
+                $this.switchEngine(jQuery(this).parents('.dropdown'));
+            }
+
+
 		});
     },
 
@@ -136,6 +141,19 @@ var LSX_TO_Search = {
             dropdown.parents('form').find('.combination-toggle.selected').removeClass('selected').addClass('hidden');
         }
         dropdown.parents('form').find('#'+id).parents('.combination-toggle').removeClass('hidden').addClass('selected');
+    },
+
+    switchEngine: function(dropdown) {
+        var id = dropdown.find('button').attr('data-selection');
+
+        console.log(dropdown.parents('form').find('#'+id));
+        if(0 < dropdown.parents('form').find('.combination-toggle.selected').length ) {
+            dropdown.parents('form').find('.combination-toggle.selected button').attr('data-selection','0');
+            var default_title = dropdown.parents('form').find('.combination-toggle.selected a.default').html();
+            dropdown.parents('form').find('.combination-toggle.selected button').html(default_title+' <span class="caret"></span>');
+            dropdown.parents('form').find('.combination-toggle.selected').removeClass('selected').addClass('hidden');
+        }
+        dropdown.parents('form').attr('engine');
     }
 
 };
