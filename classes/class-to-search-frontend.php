@@ -579,7 +579,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 						$engines = explode('|',$engine); ?>
                         <div class="field engine-select">
                             <div class="dropdown">
-                                <button id="engine" data-selection="<?php $engines[0]; ?>" class="btn btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo ucwords(str_replace('_',' ',$engines[0])); ?> <span class="caret"></span></button>
+                                <button id="engine" data-selection="<?php echo $engines[0]; ?>" class="btn btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo ucwords(str_replace('_',' ',$engines[0])); ?> <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
 									<?php
 									foreach($engines as $engine){
