@@ -321,6 +321,17 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			unset($options['date_asc']);
 		}
 
+		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
+			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug.'az_sorting'])
+			&& 'on' === $this->options[$search_slug]['enable_'.$option_slug.'az_sorting']) {
+
+			// Do nothing
+
+		} else {
+			unset($options['title_desc']);
+			unset($options['title_asc']);
+		}
+
 		return $options;
 	}		
 
