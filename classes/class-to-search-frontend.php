@@ -493,7 +493,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 						</div>
 					<?php } ?>
 						
-					<?php if(isset($this->options[$this->search_slug][$option_slug.'facets']) && is_array($this->options[$this->search_slug][$option_slug.'facets'])) { 
+					<?php if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) && is_array( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) { 
 						// Search
 						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
 							if ( 'search_form' === $facet ) {
@@ -502,13 +502,13 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 						}
 						// Slider
 						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-							if ( 'slider' === $facet && isset( $this->facet_data[ $facet ] ) ) {
+							if ( isset( $this->facet_data[ $facet ] ) && 'slider' === $this->facet_data[ $facet ]['type'] ) {
 								$this->display_facet_default( $facet );
 							}
 						}
 						// Others
 						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-							if ( 'a_z' !== $facet && 'search_form' !== $facet && 'slider' !== $facet && isset( $this->facet_data[ $facet ] ) ) {
+							if ( isset( $this->facet_data[ $facet ] ) && 'search_form' !== $facet && ! in_array( $this->facet_data[ $facet ]['type'], array( 'alpha', 'slider' ) ) ) {
 								$this->display_facet_default( $facet );
 							}
 						}
