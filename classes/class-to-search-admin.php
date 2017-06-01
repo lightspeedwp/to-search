@@ -257,16 +257,18 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
 		if ( 'cf/price' === $class->facet['source'] ) {
 			$params['facet_value'] = preg_replace( '/[^0-9.]/', '', $params['facet_value'] );
 			$params['facet_value'] = ltrim( $params['facet_value'], '.' );
-			$params['facet_value'] = number_format( (int) $params['facet_value'], 2 );
+			#$params['facet_value'] = number_format( (int) $params['facet_value'], 2 );
+			$params['facet_display_value'] = $params['facet_value'];
 		}
 
 		// If its a duration, save the value as a standard number
 		if ( 'cf/duration' === $class->facet['source'] ) {
-			$params['facet_value'] = explode( '/', $params['facet_value'] );
+			$params['facet_value'] = preg_replace( '/[^0-9 ]/', '', $params['facet_value'] );
+			$params['facet_value'] = trim( $params['facet_value'] );
+			$params['facet_value'] = explode( ' ', $params['facet_value'] );
 			$params['facet_value'] = $params['facet_value'][0];
-
-			$params['facet_value'] = preg_replace( '/[^0-9]/', '', $params['facet_value'] );
-			$params['facet_value'] = (int) $params['facet_value'];
+			#$params['facet_value'] = (int) $params['facet_value'];
+			$params['facet_display_value'] = $params['facet_value'];
 		}
 
 
