@@ -494,27 +494,23 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 					<?php } ?>
 						
 					<?php if(isset($this->options[$this->search_slug][$option_slug.'facets']) && is_array($this->options[$this->search_slug][$option_slug.'facets'])) { 
-
-						foreach($this->options[$this->search_slug][$option_slug.'facets'] as $facet => $facet_useless) {
-							if('a_z' === $facet) {continue; }
-							if('search_form' === $facet){ ?>
-								<div class="col-sm-12 col-xs-12 facetwp-form">
-									<form class="banner-form" action="/" method="get">
-										<div class="input-group">
-											<input class="search-field form-control" name="s" type="search" placeholder="<?php _e('Search','to-search'); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
-											<?php if('display' !== $this->search_slug) { ?>
-												<input name="engine" type="hidden" value="<?php echo $this->search_slug; ?>">
-											<?php } ?>
-											<span class="input-group-btn"><button class="search-submit btn cta-btn" type="submit"><?php _e('Search','to-search'); ?></button></span>
-										</div>
-									</form>	
-								</div>
-							<?php }elseif(isset($this->facet_data[$facet])){ ?>
-								<div class="col-sm-12 col-xs-12">
-									<h3 class="title"><?php echo $this->facet_data[$facet]['label']; ?></h3>
-									<?php echo do_shortcode('[facetwp facet="'.$facet.'"]'); ?>
-								</div>
-							<?php }
+						// Search
+						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+							if ( 'search_form' === $facet ) {
+								$this->display_facet_search();
+							}
+						}
+						// Slider
+						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+							if ( 'slider' === $facet && isset( $this->facet_data[ $facet ] ) ) {
+								$this->display_facet_default( $facet );
+							}
+						}
+						// Others
+						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+							if ( 'a_z' !== $facet && 'search_form' !== $facet && 'slider' !== $facet && isset( $this->facet_data[ $facet ] ) ) {
+								$this->display_facet_default( $facet );
+							}
 						}
 					} ?>	
 
@@ -528,6 +524,37 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 			<?php
 		}
+	}
+
+	/**
+	 * Display facet search.
+	 */
+	public function display_facet_search() {
+		?>
+		<div class="col-sm-12 col-xs-12 facetwp-form">
+			<form class="banner-form" action="/" method="get">
+				<div class="input-group">
+					<input class="search-field form-control" name="s" type="search" placeholder="<?php _e('Search','to-search'); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
+					<?php if('display' !== $this->search_slug) { ?>
+						<input name="engine" type="hidden" value="<?php echo $this->search_slug; ?>">
+					<?php } ?>
+					<span class="input-group-btn"><button class="search-submit btn cta-btn" type="submit"><?php _e('Search','to-search'); ?></button></span>
+				</div>
+			</form>	
+		</div>
+		<?php
+	}
+
+	/**
+	 * Display facet default.
+	 */
+	public function display_facet_default( $facet ) {
+		?>
+		<div class="col-sm-12 col-xs-12">
+			<h3 class="title"><?php echo $this->facet_data[$facet]['label']; ?></h3>
+			<?php echo do_shortcode('[facetwp facet="'.$facet.'"]'); ?>
+		</div>
+		<?php
 	}
 
 	/**
