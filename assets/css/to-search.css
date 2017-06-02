@@ -39,6 +39,9 @@ body.archive-tour-operator #facetwp-sidebar, body.archive-tour-operator #seconda
       line-height: 26px; }
       body.archive-tour-operator #facetwp-sidebar .facetwp-form .btn:after, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-form .btn:after {
         display: none; }
+  body.archive-tour-operator #facetwp-sidebar .facetwp-type-slider .noUi-connect, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-type-slider .noUi-connect {
+    background: #eaeaea;
+    box-shadow: none; }
 
 body.archive-tour-operator #facetwp-top {
   margin-bottom: 30px; }

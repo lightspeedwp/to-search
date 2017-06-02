@@ -24,72 +24,92 @@ msgstr ""
 msgid "This adds the facet shortcodes to the search results template."
 msgstr ""
 
-#: classes/class-to-search-admin.php:55, classes/class-to-search-admin.php:153
+#: classes/class-to-search-admin.php:55, classes/class-to-search-admin.php:150
 msgid "This adds the facet shortcodes to the post type archive and taxonomy templates."
 msgstr ""
 
-#: classes/class-to-search-admin.php:61, classes/class-to-search-admin.php:158
+#: classes/class-to-search-admin.php:61, classes/class-to-search-admin.php:155
 msgid "Layout"
 msgstr ""
 
-#: classes/class-to-search-admin.php:65, classes/class-to-search-admin.php:162
+#: classes/class-to-search-admin.php:65, classes/class-to-search-admin.php:159
 msgid "Follow the theme layout"
 msgstr ""
 
-#: classes/class-to-search-admin.php:66, classes/class-to-search-admin.php:163
+#: classes/class-to-search-admin.php:66, classes/class-to-search-admin.php:160
 msgid "1 column"
 msgstr ""
 
-#: classes/class-to-search-admin.php:67, classes/class-to-search-admin.php:164
+#: classes/class-to-search-admin.php:67, classes/class-to-search-admin.php:161
 msgid "2 columns / Content on right"
 msgstr ""
 
-#: classes/class-to-search-admin.php:68, classes/class-to-search-admin.php:165
+#: classes/class-to-search-admin.php:68, classes/class-to-search-admin.php:162
 msgid "2 columns / Content on left"
 msgstr ""
 
-#: classes/class-to-search-admin.php:74, classes/class-to-search-admin.php:171
+#: classes/class-to-search-admin.php:74, classes/class-to-search-admin.php:168
 msgid "Inner Layout (Results)"
 msgstr ""
 
-#: classes/class-to-search-admin.php:78, classes/class-to-search-admin.php:175
+#: classes/class-to-search-admin.php:78, classes/class-to-search-admin.php:172
 msgid "Only List"
 msgstr ""
 
-#: classes/class-to-search-admin.php:79, classes/class-to-search-admin.php:176
+#: classes/class-to-search-admin.php:79, classes/class-to-search-admin.php:173
 msgid "List and Map"
 msgstr ""
 
-#: classes/class-to-search-admin.php:85, classes/class-to-search-admin.php:182
-msgid "Enable Date Sorting"
+#: classes/class-to-search-admin.php:85
+msgid "Sorting"
 msgstr ""
 
-#: classes/class-to-search-admin.php:93, classes/class-to-search-admin.php:190
-msgid "Enable Price Sorting"
+#: classes/class-to-search-admin.php:89
+msgid "Disable Sorting"
 msgstr ""
 
-#: classes/class-to-search-admin.php:97, classes/class-to-search-admin.php:194
-msgid "WARNING, any item that doesnt have a price will not show. "
+#: classes/class-to-search-admin.php:90
+msgid "Enable A - Z"
 msgstr ""
 
-#: classes/class-to-search-admin.php:102, classes/class-to-search-admin.php:199
+#: classes/class-to-search-admin.php:91
+msgid "Enable Date"
+msgstr ""
+
+#: classes/class-to-search-admin.php:92
+msgid "Enable Price"
+msgstr ""
+
+#: classes/class-to-search-admin.php:99, classes/class-to-search-admin.php:196
 msgid "Display Result Count"
 msgstr ""
 
-#: classes/class-to-search-admin.php:110, classes/class-to-search-admin.php:207
+#: classes/class-to-search-admin.php:107, classes/class-to-search-admin.php:204
 msgid "Facets"
 msgstr ""
 
-#: classes/class-to-search-admin.php:128, classes/class-to-search-admin.php:226
+#: classes/class-to-search-admin.php:125, classes/class-to-search-admin.php:223
 msgid "You have no Facets setup."
 msgstr ""
 
-#: classes/class-to-search-admin.php:145
+#: classes/class-to-search-admin.php:142
 msgid "Search Settings"
 msgstr ""
 
-#: classes/class-to-search-admin.php:149
+#: classes/class-to-search-admin.php:146
 msgid "Enable Filtering"
+msgstr ""
+
+#: classes/class-to-search-admin.php:179
+msgid "Enable Date Sorting"
+msgstr ""
+
+#: classes/class-to-search-admin.php:187
+msgid "Enable Price Sorting"
+msgstr ""
+
+#: classes/class-to-search-admin.php:191
+msgid "WARNING, any item that doesnt have a price will not show. "
 msgstr ""
 
 #: classes/class-to-search-frontend.php:410
@@ -100,27 +120,27 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:500, classes/class-to-search-frontend.php:531
+#: classes/class-to-search-frontend.php:492, classes/class-to-search-frontend.php:519
 msgid "Results"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:512, classes/class-to-search-frontend.php:516, classes/class-to-search-frontend.php:558
+#: classes/class-to-search-frontend.php:537, classes/class-to-search-frontend.php:541, classes/class-to-search-frontend.php:577
 msgid "Search"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:549
+#: classes/class-to-search-frontend.php:568
 msgid "Where do you want to go?"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:690, classes/class-to-search-frontend.php:722
+#: classes/class-to-search-frontend.php:736, classes/class-to-search-frontend.php:768
 msgid "Select"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:696, classes/class-to-search-frontend.php:727
+#: classes/class-to-search-frontend.php:742, classes/class-to-search-frontend.php:773
 msgid "Select "
 msgstr ""
 
-#: classes/class-to-search-frontend.php:702
+#: classes/class-to-search-frontend.php:748
 msgid "Please re-index your facets."
 msgstr ""
 
