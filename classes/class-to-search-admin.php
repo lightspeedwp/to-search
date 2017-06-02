@@ -80,16 +80,18 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
                 </select>
 			</td>
 		</tr>
-		<tr class="form-field">
+		<tr class="form-field-wrap">
 			<th scope="row">
 				<label for="enable_date_sorting"><?php _e('Sorting','to-search'); ?></label>
 			</th>
 			<td>
                 <ul>
                     <li><input type="checkbox" {{#if disable_all_sorting}} checked="checked" {{/if}} name="disable_all_sorting" /> <label for="facets"><?php _e('Disable Sorting','to-search'); ?></label></li>
-				    <li><input type="checkbox" {{#if enable_az_sorting}} checked="checked" {{/if}} name="enable_az_sorting" /> <label for="facets"><?php _e('Enable A - Z','to-search'); ?></label></li>
-                    <li><input type="checkbox" {{#if enable_date_sorting}} checked="checked" {{/if}} name="enable_date_sorting" /> <label for="facets"><?php _e('Enable Date','to-search'); ?></label></li>
-                    <li><input type="checkbox" {{#if enable_price_sorting}} checked="checked" {{/if}} name="enable_price_sorting" /> <label for="facets"><?php _e('Enable Price','to-search'); ?></label></li>
+				    <li><input type="checkbox" {{#if disable_az_sorting}} checked="checked" {{/if}} name="disable_az_sorting" /> <label for="facets"><?php _e('Disable Title (A-Z)','to-search'); ?></label></li>
+                    <li><input type="checkbox" {{#if disable_date_sorting}} checked="checked" {{/if}} name="disable_date_sorting" /> <label for="facets"><?php _e('Disable Date','to-search'); ?></label></li>
+			        <?php if('tour' === $post_type || 'accommodation' === $post_type || 'display' === $post_type) { ?>
+                    <li><input type="checkbox" {{#if disable_price_sorting}} checked="checked" {{/if}} name="disable_price_sorting" /> <label for="facets"><?php _e('Disable Price','to-search'); ?></label></li>
+					<?php } ?>
                 </ul>
 			</td>
 		</tr>
@@ -174,23 +176,22 @@ class LSX_TO_Search_Admin extends LSX_TO_Search{
                 </select>
 			</td>
 		</tr>
-		<tr class="form-field">
-			<th scope="row">
-				<label for="enable_archive_date_sorting"><?php _e('Enable Date Sorting','to-search'); ?></label>
-			</th>
-			<td>
-				<input type="checkbox" {{#if enable_archive_date_sorting}} checked="checked" {{/if}} name="enable_archive_date_sorting" />
-			</td>
-		</tr>
-		<tr class="form-field">
-			<th scope="row">
-				<label for="enable_archive_price_sorting"><?php _e('Enable Price Sorting','to-search'); ?></label>
-			</th>
-			<td>
-				<input type="checkbox" {{#if enable_archive_price_sorting}} checked="checked" {{/if}} name="enable_archive_price_sorting" />
-				<small><?php _e('WARNING, any item that doesnt have a price will not show. ','to-search'); ?></small>
-			</td>
-		</tr>		
+        <tr class="form-field-wrap">
+            <th scope="row">
+                <label for="enable_date_sorting"><?php _e('Sorting','to-search'); ?></label>
+            </th>
+            <td>
+                <ul>
+                    <li><input type="checkbox" {{#if disable_archive_all_sorting}} checked="checked" {{/if}} name="disable_archive_all_sorting" /> <label for="facets"><?php _e('Disable Sorting','to-search'); ?></label></li>
+                    <li><input type="checkbox" {{#if disable_archive_az_sorting}} checked="checked" {{/if}} name="disable_archive_az_sorting" /> <label for="facets"><?php _e('Disable Title (A-Z)','to-search'); ?></label></li>
+                    <li><input type="checkbox" {{#if disable_archive_date_sorting}} checked="checked" {{/if}} name="disable_archive_date_sorting" /> <label for="facets"><?php _e('Disable Date','to-search'); ?></label></li>
+                    <?php if('tour' === $post_type || 'accommodation' === $post_type || 'display' === $post_type) { ?>
+                    <li><input type="checkbox" {{#if disable_archive_price_sorting}} checked="checked" {{/if}} name="disable_archive_price_sorting" /> <label for="facets"><?php _e('Disable Price','to-search'); ?></label></li>
+                    <?php } ?>
+
+                </ul>
+            </td>
+        </tr>
 		<tr class="form-field">
 			<th scope="row">
 				<label for="display_archive_result_count"><?php _e('Display Result Count','to-search'); ?></label>

@@ -267,7 +267,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	public function facet_sort_options( $options, $params ) {
 		global $wp_query;
 		
-		unset($options['distance']);	
+		//unset($options['distance']);
 
 		$search_slug = false;
 		$option_slug = false;
@@ -278,60 +278,59 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 			
 			if(false !== $engine && 'default' !== $engine && '' !== $engine){
 				$search_slug = $engine;	
-			} else {
+			}else {
 				$search_slug = 'display';
 			}
-		}elseif(is_post_type_archive(array_keys($this->post_types))||is_tax(array_keys($this->taxonomies))){
-			$search_slug = get_post_type();
-			$option_slug = 'archive_';
+		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
+			$obj = get_queried_object();
+			if(isset($obj->name) && (in_array($obj->name,array_keys($this->post_types)) || in_array($obj->name,array_keys($this->taxonomies)))) {
+				$search_slug = $obj->name;
+				$option_slug = 'archive_';
+			}
 		}
 
 		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
-			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug.'price_sorting']) 
-			&& 'on' === $this->options[$search_slug]['enable_'.$option_slug.'price_sorting']) {
+			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['disable_'.$option_slug.'price_sorting'])
+			&& 'on' === $this->options[$search_slug]['disable_'.$option_slug.'price_sorting']) {
 
+		    //Do nothing
+		}elseif('tour' === $search_slug || 'accommodation' === $search_slug || 'display' === $search_slug){
 			$options['price_asc'] = array(
-					'label' => __( 'Price (Highest)', 'lsx' ),
-					'query_args' => array(
-							'orderby' => 'meta_value_num',
-							'meta_key' => 'price',
-							'order' => 'DESC',
-					)
+				'label' => __( 'Price (Highest)', 'lsx' ),
+				'query_args' => array(
+					'orderby' => 'meta_value_num',
+					'meta_key' => 'price',
+					'order' => 'DESC',
+				)
 			);
-		
+
 			$options['price_desc'] = array(
-					'label' => __( 'Price (Lowest)', 'lsx' ),
-					'query_args' => array(
-							'orderby' => 'meta_value_num',
-							'meta_key' => 'price',						
-							'order' => 'ASC',
-					)
+				'label' => __( 'Price (Lowest)', 'lsx' ),
+				'query_args' => array(
+					'orderby' => 'meta_value_num',
+					'meta_key' => 'price',
+					'order' => 'ASC',
+				)
 			);
-		 
-		}
+        }
 
 		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
-			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug.'date_sorting']) 
-			&& 'on' === $this->options[$search_slug]['enable_'.$option_slug.'date_sorting']) {
+			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['disable_'.$option_slug.'date_sorting'])
+			&& 'on' === $this->options[$search_slug]['disable_'.$option_slug.'date_sorting']) {
 
-			// Do nothing
-		 
-		} else {
 			unset($options['date_desc']);
 			unset($options['date_asc']);
+		 
 		}
 
 		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
-			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug.'az_sorting'])
-			&& 'on' === $this->options[$search_slug]['enable_'.$option_slug.'az_sorting']) {
+			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['disable_'.$option_slug.'az_sorting'])
+			&& 'on' === $this->options[$search_slug]['disable_'.$option_slug.'az_sorting']) {
 
-			// Do nothing
-
-		} else {
 			unset($options['title_desc']);
 			unset($options['title_asc']);
-		}
 
+		}
 		return $options;
 	}		
 

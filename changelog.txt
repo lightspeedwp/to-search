@@ -13,6 +13,7 @@
 * Dev - Made the facets shortcode attribute able to handle multiple faces
 * Dev - Added in a combination box option
 * Fix - Fixed the default pagination from LSX
+* Dev - Added in options to disable the title, price, and date FacetWP sort options
 
 ### 1.0.2
 * Fix - Fixed all prefixes replaces (to_ > lsx_to_, TO_ > LSX_TO_)

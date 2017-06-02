@@ -26,15 +26,22 @@ function lsx_to_search_top()
         $option_slug = '';
     } elseif (is_post_type_archive(array_keys($lsx_to_search->post_types)) || is_tax(array_keys($lsx_to_search->taxonomies))) {
         $option_slug = 'archive_';
+    }else{
+		return '';
     }
     ?>
     <div id="facetwp-top">
-        <div class="row facetwp-top-row-1">
-            <div class="col-md-12">
-                <?php echo do_shortcode('[facetwp sort="true"]'); ?>
-                <?php echo do_shortcode('[facetwp per_page="true"]'); ?>
+
+            <div class="row facetwp-top-row-1">
+                <div class="col-md-12">
+					<?php
+                    if(!isset($lsx_to_search->options[$lsx_to_search->search_slug]['disable_'.$option_slug . 'all_sorting']) || 'on' !== $lsx_to_search->options[$lsx_to_search->search_slug]['disable_'.$option_slug . 'all_sorting']){ ?>
+                        <?php echo do_shortcode('[facetwp sort="true"]'); ?>
+                    <?php } ?>
+                    <?php echo do_shortcode('[facetwp per_page="true"]'); ?>
+                </div>
             </div>
-        </div>
+
         <div class="row facetwp-top-row-2">
             <div class="col-md-8">
                 <?php if (isset($lsx_to_search->options[$lsx_to_search->search_slug][$option_slug . 'facets']) && is_array($lsx_to_search->options[$lsx_to_search->search_slug][$option_slug . 'facets']) && array_key_exists('a_z', $lsx_to_search->options[$lsx_to_search->search_slug][$option_slug . 'facets'])) {
