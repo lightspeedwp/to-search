@@ -42,6 +42,8 @@ body.archive-tour-operator #facetwp-sidebar, body.archive-tour-operator #seconda
   body.archive-tour-operator #facetwp-sidebar .facetwp-type-slider .noUi-connect, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-type-slider .noUi-connect {
     background: #eaeaea;
     box-shadow: none; }
+  body.archive-tour-operator #facetwp-sidebar .facetwp-type-slider .facetwp-slider-reset, body.archive-tour-operator #secondary.facetwp-sidebar .facetwp-type-slider .facetwp-slider-reset {
+    box-shadow: none; }
 
 body.archive-tour-operator #facetwp-top {
   margin-bottom: 30px; }
