@@ -1,0 +1,25 @@
+@mixin customizer-to-search-main-menu-colours($hover: #1098AD, $dropdown: #374750, $dropdown-link: #FFF) {
+	.facetwp-template {
+		.nav.nav-tabs {
+			background-color: $dropdown;
+
+			& > li {
+				& > a {
+					color: $dropdown-link;
+
+					&:hover { color: $hover; }
+				}
+
+				&.active > a {
+					background-color: $hover;
+					color: $dropdown-link;
+
+					&:hover {
+						background-color: $hover;
+						color: $dropdown-link;
+					}
+				}
+			}
+		}
+	}
+}

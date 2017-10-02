@@ -71,10 +71,13 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 			if(!is_admin()) {
 				require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-frontend.php');
 			}
+			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-facetwp.php');
 
 			// flush_rewrite_rules()
 			register_activation_hook( LSX_TO_SEARCH_CORE, array( $this, 'register_activation_hook' ) );
-			add_action( 'admin_init', array( $this, 'register_activation_hook_check' ) );
+
+			//require_once(LSX_TO_SEARCH_PATH . '/classes/class-facetwp-destination-hierarchy.php');
+			//add_action( 'facetwp_facet_types', array( $this, 'register_facet' ) );
 		}
 		
 		/**
@@ -109,6 +112,11 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 					$this->facet_data[$facet['name']] = $facet;
 				}
 			}
+		}
+
+		function register_facet ( $facet_types ) {
+			$facet_types['destinations'] = new TO_Search_Destination_Facet();
+			return $facet_types;
 		}
 	
 		/**

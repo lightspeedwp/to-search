@@ -3,7 +3,7 @@
  * LSX_TO_Search Frontend Main Class
  */
 
-class LSX_TO_Search_Frontend extends LSX_TO_Search{
+class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 	/**
 	 * Holds the current search slug, if any
@@ -16,35 +16,34 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action('init',array($this,'set_vars'));
-		add_action('init',array($this,'set_facetwp_vars'));
-		add_action('init',array($this,'remove_posts_and_pages_from_search'),99);
+		add_action( 'init',array( $this, 'set_vars' ) );
+		add_action( 'init',array( $this, 'set_facetwp_vars' ) );
+		add_action( 'init',array( $this, 'remove_posts_and_pages_from_search' ),99 );
 
-		add_action('wp_head', array($this,'wp_head'), 11);
-		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
+		add_action( 'lsx_to_settings_current_tab', array( $this, 'set_settings_current_tab' ) );
+		add_filter( 'body_class', array( $this, 'body_class' ), 15, 1 );
 
-		//Redirects
-		add_filter( 'template_include', array( $this, 'search_template_include'), 99 );
-		add_action( 'template_redirect', array($this,'pretty_search_redirect') ) ;
-		add_filter( 'pre_get_posts',  array($this,'pretty_search_parse_query') ) ;
+		add_filter( 'lsx_to_the_title_end', array( $this, 'add_label_to_title' ) );
 
-		//Layout Filter
-		add_filter('lsx_layout', array($this,'lsx_layout'), 20,1);	
+		add_action( 'wp_head', array( $this, 'wp_head' ), 11 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ), 1499 );
 
-		add_filter( 'facetwp_sort_options', array( $this,'facet_sort_options'), 10, 2 );
-		add_action('pre_get_posts', array($this,'price_sorting'),100);
+		// Redirects
+		add_filter( 'template_include', array( $this, 'search_template_include' ), 99 );
+		add_action( 'template_redirect', array( $this, 'pretty_search_redirect' ) );
+		add_filter( 'pre_get_posts',  array( $this, 'pretty_search_parse_query' ) );
 
-		
-		add_filter( 'facetwp_pager_html', array($this,'facetwp_pager_html'), 10, 2 );
-		add_filter( 'facetwp_result_count', array($this,'facetwp_result_count'), 10, 2 );
+		// Layout Filter
+		add_filter( 'lsx_layout', array( $this, 'lsx_layout' ), 20,1 );
+		add_filter( 'lsx_layout_selector', array( $this, 'lsx_layout_selector' ), 10, 4 );
 
-		add_filter( 'facetwp_facet_html', array($this,'destination_facet_html'), 10, 2 );
+		add_action( 'pre_get_posts', array( $this, 'price_sorting' ),100 );
 
-		add_shortcode( 'lsx_search_form', array($this,'search_form') );
+		add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
 
-		add_filter( 'searchwp_short_circuit', array($this,'searchwp_short_circuit'), 10, 2 );
+		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
 
-		add_filter( 'get_search_query', array($this,'get_search_query') );				
+		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
 	}
 
 	/**
@@ -58,43 +57,86 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	}
 
 	/**
+	 * Sets the current tab selected.
+	 */
+	public function set_settings_current_tab( $settings_tab ) {
+		if ( is_search() ) {
+			$engine = get_query_var( 'engine' );
+
+			if ( ! empty( $engine ) && 'default' !== $engine ) {
+				$settings_tab = $engine;
+			} else {
+				$settings_tab = 'display';
+			}
+		}
+
+		return $settings_tab;
+	}
+
+	/**
+	 * Add a some classes so we can style.
+	 */
+	public function body_class( $classes ) {
+		if ( is_search() ) {
+			$classes[] = 'archive-tour-operator';
+		}
+
+		return $classes;
+	}
+
+	/**
+	 * Add post type label to the title.
+	 */
+	public function add_label_to_title( $id ) {
+		if ( is_search() ) {
+			$engine = get_query_var( 'engine' );
+
+			if ( empty( $engine ) || 'default' === $engine ) {
+				if ( ! empty( tour_operator()->options['display']['enable_search_pt_label'] ) ) {
+					echo wp_kses_post( ' <span class="label lsx-to-label">' . ucwords( get_post_type() ) . '</span>' );
+				}
+			}
+		}
+	}
+
+	/**
 	 * A filter to set the layout to 2 column
 	 *
 	 */
 	public function wp_head() {
-
 		$search_slug = false;
-		if(is_search()){
+
+		if ( is_search() ) {
 			$search_slug = 'display';
 
-			$engine = get_query_var('engine');
-			if(false !== $engine && 'default' !== $engine && '' !== $engine){
-				$search_slug = $engine;	
+			$engine = get_query_var( 'engine' );
+			if ( false !== $engine && 'default' !== $engine && '' !== $engine ) {
+				$search_slug = $engine;
 			}
 
-			$option_slug_1 = $option_slug_2 = 'search';
-
-		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
+			$option_slug_1 = 'search';
+			$option_slug_2 = 'search';
+		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$search_slug = get_post_type();
 
 			$option_slug_1 = 'facets';
 			$option_slug_2 = 'archive';
 		}
 
-		if(false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['enable_'.$option_slug_1])){
+		if ( false !== $search_slug && false !== $this->options && isset( $this->options[ $search_slug ][ 'enable_' . $option_slug_1 ] ) ) {
 			$this->search_slug = $search_slug;
 
-			remove_action( 'lsx_content_bottom', array( 'LSX_TO_Frontend', 'lsx_default_pagination' ) );
+			remove_action( 'lsx_content_bottom', array( 'lsx\legacy\Frontend', 'lsx_default_pagination' ) );
 
-			add_action('lsx_content_top', array($this,'lsx_content_top'));
-			add_action('lsx_content_bottom', array($this,'lsx_content_bottom'));
+			add_action( 'lsx_content_top', array( $this, 'lsx_content_top' ) );
+			add_action( 'lsx_content_bottom', array( $this, 'lsx_content_bottom' ) );
 
-			if(isset($this->options[$this->search_slug][$option_slug_2.'_layout']) && '1c' !== $this->options[$this->search_slug][$option_slug_2.'_layout']){
-				add_action('lsx_content_wrap_before', array($this,'search_sidebar'));		
-				add_filter('lsx_sidebar_enable', array($this,'lsx_sidebar_enable'), 10, 1);		
-			}elseif('1c' === $this->options[$this->search_slug][$option_slug_2.'_layout']){
-				add_action('lsx_content_wrap_before', array($this,'search_sidebar'));
-			}	
+			if ( isset( $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) && '1c' !== $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) {
+				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ),150 );
+				add_filter( 'lsx_sidebar_enable', array( $this, 'lsx_sidebar_enable' ), 10, 1 );
+			} elseif ( '1c' === $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) {
+				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ),150 );
+			}
 		}
 	}
 
@@ -102,13 +144,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 * Enques the assets.
 	 */
 	public function assets() {
-		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
-			$min = '';
-		} else {
-			$min = '.min';
-		}
-
-		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/to-search' . $min . '.js', array( 'jquery' ), LSX_TO_SEARCH_VER, true );
+		wp_enqueue_script( 'touchSwipe', LSX_TO_SEARCH_URL . 'assets/js/vendor/jquery.touchSwipe.min.js', array( 'jquery' ), LSX_TO_SEARCH_VER, true );
+		wp_enqueue_script( 'slideandswipe', LSX_TO_SEARCH_URL . 'assets/js/vendor/jquery.slideandswipe.min.js', array( 'jquery', 'touchSwipe' ), LSX_TO_SEARCH_VER, true );
+		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/to-search.min.js', array( 'jquery', 'touchSwipe', 'slideandswipe' ), LSX_TO_SEARCH_VER, true );
 
 		$params = apply_filters( 'lsx_to_search_js_params', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -126,53 +164,57 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 * @return	$template
 	 */
 	public function search_template_include( $template ) {
-		
 		if ( is_main_query() && is_search() ) {
-			if ( /*'' == locate_template( array( 'search.php' ) ) &&*/ file_exists( LSX_TO_SEARCH_PATH.'templates/search.php' )) {
-				$template = LSX_TO_SEARCH_PATH.'templates/search.php';
+			if ( file_exists( LSX_TO_SEARCH_PATH . 'templates/search.php' ) ) {
+				$template = LSX_TO_SEARCH_PATH . 'templates/search.php';
 			}
 		}
+
 		return $template;
-	}	
+	}
 
 	/**
 	 * Rewrite the search URL
-	 */	
+	 */
 	public function pretty_search_redirect() {
 		global $wp_rewrite,$wp_query;
-		if ( !isset( $wp_rewrite ) || !is_object( $wp_rewrite ) || !$wp_rewrite->using_permalinks() )
+
+		if ( ! isset( $wp_rewrite ) || ! is_object( $wp_rewrite ) || ! $wp_rewrite->using_permalinks() ) {
 			return;
+		}
 
 		$search_base = $wp_rewrite->search_base;
-		if ( is_search() && !is_admin() && strpos( $_SERVER['REQUEST_URI'], "/{$search_base}/" ) === false ) {
+
+		if ( is_search() && ! is_admin() && strpos( $_SERVER['REQUEST_URI'], "/{$search_base}/" ) === false ) {
 			$search_query = get_query_var( 's' );
-			
 			$engine = '';
+
 			//If the search was triggered by a supplemental engine
-			if(isset($_GET['engine']) && 'default' !== $_GET['engine']){
+			if ( isset( $_GET['engine'] ) && 'default' !== $_GET['engine'] ) {
 				$engine = $_GET['engine'];
-				set_query_var('engine',$engine);
-				$engine = array_search($engine,$this->post_type_slugs).'/';
+				set_query_var( 'engine',$engine );
+				$engine = array_search( $engine,$this->post_type_slugs ) . '/';
 			}
 
 			$get_array = $_GET;
 
-			if(is_array($get_array) && !empty($get_array)){
+			if ( is_array( $get_array ) && ! empty( $get_array ) ) {
+				$vars_to_maintain = array();
 
-			    $vars_to_maintain = array();
-			    foreach($get_array as $ga_key => $ga_value){
-                    if(false !== strpos( $ga_key, 'fwp_' )){
-						$vars_to_maintain[] = $ga_key.'='.$ga_value;
-                    }
-                }
-            }
+				foreach ( $get_array as $ga_key => $ga_value ) {
+					if ( false !== strpos( $ga_key, 'fwp_' ) ) {
+						$vars_to_maintain[] = $ga_key . '=' . $ga_value;
+					}
+				}
+			}
 
-            $redirect_url = home_url( "/{$search_base}/". $engine . urlencode($search_query ));
-            if(!empty($vars_to_maintain)){
-                $redirect_url .= '?'.implode('&',$vars_to_maintain);
-            }
+			$redirect_url = home_url( "/{$search_base}/" . $engine . urlencode( $search_query ) );
 
-			wp_redirect($redirect_url);
+			if ( ! empty( $vars_to_maintain ) ) {
+				$redirect_url .= '?' . implode( '&',$vars_to_maintain );
+			}
+
+			wp_redirect( $redirect_url );
 			exit();
 		}
 	}
@@ -181,214 +223,162 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 * Parse the Query and trigger a search
 	 */
 	public function pretty_search_parse_query( $query ) {
-		if ( is_search() && !is_admin() && $query->is_main_query() ) {
-			$search_query = $query->get('s');
+		if ( is_search() && ! is_admin() && $query->is_main_query() ) {
+			$search_query = $query->get( 's' );
+			$keyword_test = explode( '/', $search_query );
 
-			$keyword_test = explode('/',$search_query);
+			if ( isset( $this->post_type_slugs[ $keyword_test[0] ] ) ) {
+				$engine = $this->post_type_slugs[ $keyword_test[0] ];
 
-			if(isset($this->post_type_slugs[$keyword_test[0]])) {
-				$engine = $this->post_type_slugs[$keyword_test[0]];
+				$query->set( 'post_type', $engine );
+				$query->set( 'engine', $engine );
 
-				if (count($keyword_test) > 1) {
-
-					$query->set('s', $keyword_test[1]);
-					$query->set('engine', $engine);
-
-
-					if (class_exists('SWP_Query')) {
-						$additional_posts = new SWP_Query(
-							array(
-								's' => $keyword_test[1], // search query
-								'engine' => $engine,
-								'fields' => 'ids'
-							)
-						);
-
-						if (!empty($additional_posts->posts)) {
-							$query->set('s', '');
-							$query->set('engine_keyword', $keyword_test[1]);
-							$query->set('post__in', $additional_posts->posts);
-						}
-					} else {
-						if ('default' !== $engine) {
-							$query->set('post_type', $engine);
-						}
-					}
-				} elseif (post_type_exists($engine)) {
-					$query->set('post_type', $engine);
-					$query->set('engine', $engine);
-					$query->set('s', '');
-
+				if ( count( $keyword_test ) > 1 ) {
+					$query->set( 's', $keyword_test[1] );
+				} elseif ( post_type_exists( $engine ) ) {
+					$query->set( 's', '' );
+				}
+			} else {
+				if ( isset( $this->options['general']['search_post_types'] ) && is_array( $this->options['general']['search_post_types'] ) ) {
+					$post_types = array_keys( $this->options['general']['search_post_types'] );
+					$query->set( 'post_type', $post_types );
 				}
 			}
 		}
+
 		return $query;
 	}
 
 	/**
-	 * A filter to set the layout to 2 column
-	 *
+	 * A filter to set the layout to 2 column.
 	 */
-	public function lsx_layout($layout) {
-		if(false !== $this->search_slug){
-			if(is_search()){
+	public function lsx_layout( $layout ) {
+		global $wp_query;
+
+		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
+			if ( is_search() ) {
 				$slug = 'search';
 				$id = 'search';
-			}else{
-				$slug='facets';
+			} else {
+				$slug = 'facets';
 				$id = 'archive';
 			}
-			if(false !== $this->options && isset($this->options[$this->search_slug]['enable_'.$slug]) && isset($this->options[$this->search_slug][$id.'_layout']) && '' !== $this->options[$this->search_slug][$id.'_layout']){
-				$layout = $this->options[$this->search_slug][$id.'_layout'];
+
+			if ( false !== $this->options && isset( $this->options[ $this->search_slug ][ 'enable_' . $slug ] ) && isset( $this->options[ $this->search_slug ][ $id . '_layout' ] ) && '' !== $this->options[ $this->search_slug ][ $id . '_layout' ] ) {
+				$layout = $this->options[ $this->search_slug ][ $id . '_layout' ];
 			}
 		}
+
 		return $layout;
-	}	
+	}
+
+	/**
+	 * Change the primary and secondary column classes.
+	 */
+	public function lsx_layout_selector( $return_class, $class, $layout, $size ) {
+		global $wp_query;
+
+		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
+			if ( is_search() ) {
+				$slug = 'search';
+				$id   = 'search';
+			} else {
+				$slug = 'facets';
+				$id   = 'archive';
+			}
+
+			if ( false !== $this->options && isset( $this->options[ $this->search_slug ][ 'enable_' . $slug ] ) && isset( $this->options[ $this->search_slug ][ $id . '_layout' ] ) && '' !== $this->options[ $this->search_slug ][ $id . '_layout' ] ) {
+				#$layout = $this->options[ $this->search_slug ][ $id . '_layout' ];
+
+				if ( is_search() || ( is_post_type_archive( tour_operator()->get_active_post_types() ) ) || ( is_tax( array_keys( tour_operator()->get_taxonomies() ) ) ) ) {
+					if ( '2cl' === $layout || '2cr' === $layout ) {
+						$main_class    = 'col-sm-8 col-md-9';
+						$sidebar_class = 'col-sm-4 col-md-3';
+
+						if ( '2cl' === $layout ) {
+							$main_class    .= ' col-sm-pull-4 col-md-pull-3';
+							$sidebar_class .= ' col-sm-push-8 col-md-push-9';
+						}
+
+						if ( 'main' === $class ) {
+							return $main_class;
+						}
+
+						if ( 'sidebar' === $class ) {
+							return $sidebar_class;
+						}
+					}
+				}
+			}
+		}
+
+		return $return_class;
+	}
 
 	/**
 	 * Shortcircuit the main search if need be
 	 */
-	public function searchwp_short_circuit($maybe_short_circuit, $obj) {
-		$search_query = get_query_var('s');
-		$engine = get_query_var('engine');
+	public function searchwp_short_circuit( $maybe_short_circuit, $obj ) {
+		$search_query = get_query_var( 's' );
+		$engine = get_query_var( 'engine' );
 
-		if(false !== $engine && '' !== $engine && 'default' !== $engine){
+		if ( false !== $engine && '' !== $engine && 'default' !== $engine ) {
 			$maybe_short_circuit = true;
-		}	
+		}
+
 		return $maybe_short_circuit;
-	}	
-
-	/**
-	 * Register the global post types.
-	 *
-	 *
-	 * @return    null
-	 */	
-	public function facet_sort_options( $options, $params ) {
-		global $wp_query;
-		
-		//unset($options['distance']);
-
-		$search_slug = false;
-		$option_slug = false;
-		
-		if(is_search()){
-			$option_slug = '';
-			$engine = get_query_var('engine');
-			
-			if(false !== $engine && 'default' !== $engine && '' !== $engine){
-				$search_slug = $engine;	
-			}else {
-				$search_slug = 'display';
-			}
-		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
-			$obj = get_queried_object();
-			if(isset($obj->name) && (in_array($obj->name,array_keys($this->post_types)) || in_array($obj->name,array_keys($this->taxonomies)))) {
-				$search_slug = $obj->name;
-				$option_slug = 'archive_';
-			}
-		}
-
-		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
-			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['disable_'.$option_slug.'price_sorting'])
-			&& 'on' === $this->options[$search_slug]['disable_'.$option_slug.'price_sorting']) {
-
-		    //Do nothing
-		}elseif('tour' === $search_slug || 'accommodation' === $search_slug || 'display' === $search_slug){
-			$options['price_asc'] = array(
-				'label' => __( 'Price (Highest)', 'lsx' ),
-				'query_args' => array(
-					'orderby' => 'meta_value_num',
-					'meta_key' => 'price',
-					'order' => 'DESC',
-				)
-			);
-
-			$options['price_desc'] = array(
-				'label' => __( 'Price (Lowest)', 'lsx' ),
-				'query_args' => array(
-					'orderby' => 'meta_value_num',
-					'meta_key' => 'price',
-					'order' => 'ASC',
-				)
-			);
-        }
-
-		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
-			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['disable_'.$option_slug.'date_sorting'])
-			&& 'on' === $this->options[$search_slug]['disable_'.$option_slug.'date_sorting']) {
-
-			unset($options['date_desc']);
-			unset($options['date_asc']);
-		 
-		}
-
-		if(('default' === $params['template_name'] || 'wp' === $params['template_name'])
-			&& false !== $search_slug && false !== $this->options && isset($this->options[$search_slug]['disable_'.$option_slug.'az_sorting'])
-			&& 'on' === $this->options[$search_slug]['disable_'.$option_slug.'az_sorting']) {
-
-			unset($options['title_desc']);
-			unset($options['title_asc']);
-
-		}
-		return $options;
-	}		
+	}
 
 	/**
 	 * Filters the travel style main query
-	 *
 	 */
-	public function price_sorting($query) {
+	public function price_sorting( $query ) {
 		$search_slug = false;
 		$option_slug = false;
-		
-		if(is_search()){
+
+		if ( is_search() ) {
 			$option_slug = '';
-			$engine = get_query_var('engine');
-			
-			if(false !== $engine && 'default' !== $engine && '' !== $engine){
-				$search_slug = $engine;	
+			$engine = get_query_var( 'engine' );
+
+			if ( false !== $engine && 'default' !== $engine && '' !== $engine ) {
+				$search_slug = $engine;
 			} else {
 				$search_slug = 'display';
 			}
-		}elseif(is_post_type_archive(array_keys($this->post_types))||is_tax(array_keys($this->taxonomies))){
+		} elseif ( is_post_type_archive( array_keys( $this->post_types ) )||is_tax( array_keys( $this->taxonomies ) ) ) {
 			$search_slug = get_post_type();
 			$option_slug = 'archive_';
 		}
 
-		if (!is_admin() && $query->is_main_query() && false !== $search_slug && false !== $this->options) {
-
-
+		if ( ! is_admin() && $query->is_main_query() && false !== $search_slug && false !== $this->options ) {
 			/*if (isset($this->options[$search_slug]['enable_search']) && 'on' === $this->options[$search_slug]['enable_search']) {
-				
+
 				$query->set('posts_per_page', -1);
 				$query->set('nopaging', true);
-			}*/	
+			}*/
 
-			if (isset($this->options[$search_slug]['enable_'.$option_slug.'price_sorting'])	&& 'on' === $this->options[$search_slug]['enable_'.$option_slug.'price_sorting']){
+			if ( isset( $this->options[ $search_slug ][ 'enable_' . $option_slug . 'price_sorting' ] )	&& 'on' === $this->options[ $search_slug ][ 'enable_' . $option_slug . 'price_sorting' ] ) {
 
-				$query->set('orderby', 'meta_value_num');
-				$query->set('order', 'DESC');
-				$query->set('meta_key', 'price');	
-				
-				if(isset($_GET['sort'])){
-					$query->set('order', ucwords($_GET['sort']));
+				$query->set( 'orderby', 'meta_value_num' );
+				$query->set( 'order', 'DESC' );
+				$query->set( 'meta_key', 'price' );
+
+				if ( isset( $_GET['sort'] ) ) {
+					$query->set( 'order', ucwords( $_GET['sort'] ) );
 				}
-			}			
+			}
 		}
 
 		return $query;
 	}
-	
 
 	/**
 	 * Outputs Search Sidebar.
-	 *
 	 */
-	public function lsx_content_top() { 
-		if(is_search()){
+	public function lsx_content_top() {
+		if ( is_search() ) {
 			$option_slug = '';
-		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
+		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$option_slug = 'archive_';
 		}
 
@@ -399,15 +389,15 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 		}
 		?>
 
-        <?php do_action('lsx_to_search_top'); ?>
+		<?php do_action( 'lsx_to_search_top' ); ?>
 
 		<div class="facetwp-template">
 
 		<?php
 		if ( true === $show_map ) {
 			echo '<ul class="nav nav-tabs">';
-			echo '<li class="active"><a data-toggle="tab" href="#to-search-list"><i class="fa fa-list" aria-hidden="true"></i> ' . esc_html__( 'List', 'to-search' ) . '</a></li>';
-			echo '<li><a data-toggle="tab" href="#to-search-map"><i class="fa fa-map-marker" aria-hidden="true"></i> ' . esc_html__( 'Map', 'to-search' ) . '</a></li>';
+			echo '<li class="active"><a data-toggle="tab" href="#to-search-list">' . esc_html__( 'List', 'to-search' ) . '</a></li>';
+			echo '<li><a data-toggle="tab" href="#to-search-map">' . esc_html__( 'Map', 'to-search' ) . '</a></li>';
 			echo '</ul>';
 			echo '<div class="tab-content">';
 			echo '<div id="to-search-list" class="tab-pane fade in active">';
@@ -416,12 +406,11 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 	/**
 	 * Outputs Search Sidebar.
-	 *
 	 */
 	public function lsx_content_bottom() {
-		if(is_search()){
+		if ( is_search() ) {
 			$option_slug = '';
-		}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
+		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$option_slug = 'archive_';
 		}
 
@@ -442,9 +431,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 		</div>
 
-		<?php do_action('lsx_to_search_bottom'); ?>
-	<?php 
-	}	
+		<?php do_action( 'lsx_to_search_bottom' ); ?>
+	<?php
+	}
 
 	/**
 	 * Outputs Map.
@@ -452,15 +441,22 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	public function display_map() {
 		global $lsx_to_maps_frontend;
 		global $wp_query;
-		
-		if ( ! empty( $lsx_to_maps_frontend ) && count( $wp_query->posts ) > 0 ) {
-			$ids = wp_list_pluck( $wp_query->posts, 'ID' );
 
-			if ( ! empty( $ids ) ) {
+		if ( ! empty( $lsx_to_maps_frontend ) && count( $wp_query->posts ) > 0 ) {
+
+			$map_query_args = $wp_query->query;
+			$map_query_args['post_per_page'] = -1;
+			$map_query_args['posts_per_archive_page'] = -1;
+			$map_query_args['nopagin'] = true;
+			$map_query_args['fields'] = 'ids';
+			$map_query_args['suppress_filters'] = true;
+			$map_query = new WP_Query( $map_query_args );
+
+			if ( $map_query->have_posts() ) {
 				$args = array(
-					'connections' => $ids,
-					'type'        => 'cluster',
-					'content'     => 'excerpt',
+					'connections' => $map_query->posts,
+					'type' => 'cluster',
+					'content' => 'excerpt',
 				);
 
 				echo wp_kses_post( $lsx_to_maps_frontend->map_output( false, $args ) );
@@ -470,55 +466,74 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 
 	/**
 	 * Outputs Search Sidebar.
-	 *
 	 */
 	public function search_sidebar() {
+		global $wp_query;
 
-		if(false !== $this->search_slug){
-			if(is_search()){
+		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
+			if ( is_search() ) {
 				$option_slug = '';
 				$facet_slug = '';
-			}elseif(is_post_type_archive(array_keys($this->post_types)) || is_tax(array_keys($this->taxonomies))){
+			} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 				$option_slug = 'archive_';
-			}		
+			}
 			?>
-				<div id="secondary" class="facetwp-sidebar widget-area <?php echo esc_attr(lsx_sidebar_class()); ?>" role="complementary">
-
-					<div class="row">
-
-					<?php if(isset($this->options[$this->search_slug]['display_'.$option_slug.'result_count']) && 'on' === $this->options[$this->search_slug]['display_'.$option_slug.'result_count']) { ?>
-						<div class="col-sm-12 col-xs-12 facetwp-results">
-							<h3 class="title"><?php _e('Results','to-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h3>
+				<div id="secondary" class="facetwp-sidebar widget-area <?php echo esc_attr( lsx_sidebar_class() ); ?>" role="complementary">
+					<?php if ( isset( $this->options[ $this->search_slug ][ 'display_' . $option_slug . 'result_count' ] ) && 'on' === $this->options[ $this->search_slug ][ 'display_' . $option_slug . 'result_count' ] ) { ?>
+						<div class="row hidden-xs">
+							<div class="col-xs-12 facetwp-item facetwp-results">
+								<h3 class="lsx-to-search-title lsx-to-search-title-results"><?php esc_html_e( 'Results', 'to-search' ); ?> (<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>)</h3>
+								<!--<button class="btn btn-md facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()"><?php esc_html_e( 'Clear', 'to-search' ); ?></button>-->
+							</div>
 						</div>
 					<?php } ?>
-						
-					<?php if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) && is_array( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) { 
-						// Search
-						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-							if ( 'search_form' === $facet ) {
-								$this->display_facet_search();
-							}
-						}
-						// Slider
-						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-							if ( isset( $this->facet_data[ $facet ] ) && 'slider' === $this->facet_data[ $facet ]['type'] ) {
-								$this->display_facet_default( $facet );
-							}
-						}
-						// Others
-						foreach( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-							if ( isset( $this->facet_data[ $facet ] ) && 'search_form' !== $facet && ! in_array( $this->facet_data[ $facet ]['type'], array( 'alpha', 'slider' ) ) ) {
-								$this->display_facet_default( $facet );
-							}
-						}
-					} ?>	
 
-					<?php if(isset($this->options[$this->search_slug]['display_'.$option_slug.'result_count']) && 'on' === $this->options[$this->search_slug]['display_'.$option_slug.'result_count'] && $this->options[$this->search_slug]['search_layout'] != '1c') { ?>
-						<div class="col-sm-12 col-xs-12 facetwp-results">
-							<h3 class="title"><?php _e('Results','to-search'); ?> (<?php echo do_shortcode('[facetwp counts="true"]'); ?>) <button class="btn facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()">Clear</button></h3>
+					<?php if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) && is_array( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) { ?>
+						<div class="row">
+							<div class="col-xs-12 facetwp-item facetwp-filters-button hidden-sm hidden-md hidden-lg">
+								<button class="ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Filters', 'to-search' ); ?> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+							</div>
+							<div class="ssm-overlay ssm-toggle-nav" rel="to-search-filters"></div>
+							<div class="col-xs-12 facetwp-item facetwp-filters-wrap" rel="to-search-filters">
+								<div class="row hidden-sm hidden-md hidden-lg ssm-row-margin-bottom">
+									<div class="col-xs-12 facetwp-item facetwp-filters-button">
+										<button class="ssm-close-btn ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Close Filters', 'to-search' ); ?> <i class="fa fa-times" aria-hidden="true"></i></button>
+									</div>
+								</div>
+								<div class="row">
+									<?php
+										// Search
+										foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+											if ( 'search_form' === $facet ) {
+												$this->display_facet_search();
+											}
+										}
+									?>
+									<?php
+										// Slider
+										foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+											if ( isset( $this->facet_data[ $facet ] ) && 'search_form' !== $facet && 'slider' === $this->facet_data[ $facet ]['type'] ) {
+												$this->display_facet_default( $facet );
+											}
+										}
+									?>
+									<?php
+										// Others
+										foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+											if ( isset( $this->facet_data[ $facet ] ) && 'search_form' !== $facet && ! in_array( $this->facet_data[ $facet ]['type'], array( 'alpha', 'slider' ) ) ) {
+												$this->display_facet_default( $facet );
+											}
+										}
+									?>
+								</div>
+								<div class="row hidden-sm hidden-md hidden-lg ssm-row-margin-top">
+									<div class="col-xs-12 facetwp-item facetwp-filters-button">
+										<button class="ssm-apply-btn ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Apply Filters', 'to-search' ); ?> <i class="fa fa-check" aria-hidden="true"></i></button>
+									</div>
+								</div>
+							</div>
 						</div>
 					<?php } ?>
-					</div>
 				</div>
 
 			<?php
@@ -530,16 +545,20 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 */
 	public function display_facet_search() {
 		?>
-		<div class="col-sm-12 col-xs-12 facetwp-form">
-			<form class="banner-form" action="/" method="get">
+		<div class="col-xs-12 facetwp-item facetwp-form">
+			<form class="search-form to-search-form" action="/" method="get">
 				<div class="input-group">
-					<input class="search-field form-control" name="s" type="search" placeholder="<?php _e('Search','to-search'); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
-					<?php if('display' !== $this->search_slug) { ?>
-						<input name="engine" type="hidden" value="<?php echo $this->search_slug; ?>">
+					<div class="field">
+						<input class="search-field form-control" name="s" type="search" placeholder="<?php esc_html_e( 'Search', 'to-search' ); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
+					</div>
+					<div class="field submit-button">
+						<button class="search-submit btn" type="submit"><?php esc_html_e( 'Search', 'to-search' ); ?></button>
+					</div>
+					<?php if ( 'display' !== $this->search_slug ) { ?>
+						<input name="engine" type="hidden" value="<?php echo esc_attr( $this->search_slug ); ?>">
 					<?php } ?>
-					<span class="input-group-btn"><button class="search-submit btn cta-btn" type="submit"><?php _e('Search','to-search'); ?></button></span>
 				</div>
-			</form>	
+			</form>
 		</div>
 		<?php
 	}
@@ -549,9 +568,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 */
 	public function display_facet_default( $facet ) {
 		?>
-		<div class="col-sm-12 col-xs-12">
-			<h3 class="title"><?php echo $this->facet_data[$facet]['label']; ?></h3>
-			<?php echo do_shortcode('[facetwp facet="'.$facet.'"]'); ?>
+		<div class="col-xs-12 facetwp-item">
+			<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+			<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 		</div>
 		<?php
 	}
@@ -559,200 +578,246 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	/**
 	 * Outputs the appropriate search form
 	 */
-	public function search_form( $atts = array() ){
-		
+	public function search_form( $atts = array() ) {
 		$classes = 'search-form to-search-form ';
-		if(isset($atts['class'])){ $classes .= $atts['class']; }
 
-		$placeholder = __('Where do you want to go?','to-search');
-		if(isset($atts['placeholder'])){ $placeholder = $atts['placeholder']; }	
+		if ( isset( $atts['class'] ) ) {
+			$classes .= $atts['class'];
+		}
+
+		$placeholder = __( 'Where do you want to go?', 'to-search' );
+
+		if ( isset( $atts['placeholder'] ) ) {
+			$placeholder = $atts['placeholder'];
+		}
 
 		$action = '/';
-		if(isset($atts['action'])){ $action = $atts['action']; }	
+
+		if ( isset( $atts['action'] ) ) {
+			$action = $atts['action'];
+		}
 
 		$method = 'get';
-		if(isset($atts['method'])){ $method = $atts['method']; }	
 
-		$button_label = __('Search','to-search');
-		if(isset($atts['button_label'])){ $button_label = $atts['button_label']; }
+		if ( isset( $atts['method'] ) ) {
+			$method = $atts['method'];
+		}
+
+		$button_label = __( 'Search', 'to-search' );
+
+		if ( isset( $atts['button_label'] ) ) {
+			$button_label = $atts['button_label'];
+		}
 
 		$button_class = 'btn cta-btn ';
-		if(isset($atts['button_class'])){ $button_class .= $atts['button_class']; }	
+
+		if ( isset( $atts['button_class'] ) ) {
+			$button_class .= $atts['button_class'];
+		}
 
 		$engine = false;
-		if(isset($atts['engine'])){ $engine = $atts['engine']; }
+
+		if ( isset( $atts['engine'] ) ) {
+			$engine = $atts['engine'];
+		}
 
 		$engine_select = false;
-		if(isset($atts['engine_select'])){ $engine_select = true; }
+
+		if ( isset( $atts['engine_select'] ) ) {
+			$engine_select = true;
+		}
 
 		$display_search_field = true;
-		if(isset($atts['search_field'])){ $display_search_field = (boolean) $atts['search_field']; }
+
+		if ( isset( $atts['search_field'] ) ) {
+			$display_search_field = (boolean) $atts['search_field'];
+		}
 
 		$facets = false;
-		if(isset($atts['facets'])){ $facets = $atts['facets']; }
+
+		if ( isset( $atts['facets'] ) ) {
+			$facets = $atts['facets'];
+		}
 
 		$combo_box = false;
-		if(isset($atts['combo_box'])){ $combo_box = true; }
+
+		if ( isset( $atts['combo_box'] ) ) {
+			$combo_box = true;
+		}
 
 		$return = '';
 
 		ob_start(); ?>
 
-			<?php do_action('lsx_search_form_before'); ?>
+			<?php do_action( 'lsx_search_form_before' ); ?>
 
-			<form class="<?php echo $classes; ?>" action="<?php echo $action; ?>" method="<?php echo $method; ?>">
+			<form class="<?php echo esc_attr( $classes ); ?>" action="<?php echo esc_attr( $action ); ?>" method="<?php echo esc_attr( $method ); ?>">
 
-			<?php do_action('lsx_search_form_top'); ?>
+				<?php do_action( 'lsx_search_form_top' ); ?>
 
 				<div class="input-group">
-
-                    <?php if ( true === $display_search_field ) : ?>
-                        <div class="field">
-                            <input class="search-field form-control" name="s" type="search" placeholder="<?php echo $placeholder; ?>" autocomplete="off">
-                        </div>
-                    <?php endif; ?>
-
-					<?php if (false !== $engine_select && false !== $engine && 'default' !== $engine ) :
-						$engines = explode('|',$engine); ?>
-                        <div class="field engine-select">
-                            <div class="dropdown">
-                                <?php
-								$plural = 's';
-								if('accommodation' === $engine[0]){
-								    $plural = '';
-								}
-                                ?>
-                                <button id="engine" data-selection="<?php echo $engines[0]; ?>" class="btn btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo ucwords(str_replace('_',' ',$engines[0])).$plural; ?> <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-									<?php
-									foreach($engines as $engine){
-
-									    $plural = 's';
-									    if('accommodation' === $engine){$plural = '';}
-										echo '<li><a data-value="'.$engine.'" href="#">'.ucfirst(str_replace('_',' ',$engine)).$plural.'</a></li>';
-									}
-									?>
-                                </ul>
-                            </div>
-                        </div>
+					<?php if ( true === $display_search_field ) : ?>
+						<div class="field">
+							<input class="search-field form-control" name="s" type="search" placeholder="<?php echo esc_attr( $placeholder ); ?>" autocomplete="off">
+						</div>
 					<?php endif; ?>
 
-					<?php if(false !== $facets) {
+					<?php if ( false !== $engine_select && false !== $engine && 'default' !== $engine ) :
+						$engines = explode( '|',$engine ); ?>
+						<div class="field engine-select">
+							<div class="dropdown">
+								<?php
+									$plural = 's';
+									if ( 'accommodation' === $engine[0] ) {
+										$plural = '';
+									}
+								?>
+								<button id="engine" data-selection="<?php echo esc_attr( $engines[0] ); ?>" class="btn border-btn btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo esc_html( ucwords( str_replace( '_', ' ',$engines[0] ) ) . $plural ); ?> <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<?php
+									foreach ( $engines as $engine ) {
+										$plural = 's';
+										if ( 'accommodation' === $engine ) {
+											$plural = '';
+										}
+										echo '<li><a data-value="' . esc_attr( $engine ) . '" href="#">' . esc_html( ucfirst( str_replace( '_', ' ',$engine ) ) . $plural ) . '</a></li>';
+									}
+									?>
+								</ul>
+							</div>
+						</div>
+					<?php endif; ?>
 
-					    $facets = explode("|",$facets);
-                        if(!is_array($facets)){
-							$facets = array($facets);
-                        }
+					<?php if ( false !== $facets ) {
+						$facets = explode( '|',$facets );
 
-                        $field_class = 'field';
+						if ( ! is_array( $facets ) ) {
+							$facets = array( $facets );
+						}
 
-						if(false !== $combo_box){
-							$this->combo_box($facets);
+						$field_class = 'field';
+
+						if ( false !== $combo_box ) {
+							$this->combo_box( $facets );
 							$field_class .= ' combination-toggle hidden';
 						}
-                        foreach($facets as $facet){
+
+						foreach ( $facets as $facet ) {
 							?>
-                            <div class="<?php echo wp_kses_post($field_class); ?>">
+							<div class="<?php echo wp_kses_post( $field_class ); ?>">
 								<?php
-								$facet = FWP()->helper->get_facet_by_name( $facet );
-								$values = $this->get_form_facet($facet['source']);
-								$this->display_form_field('select',$facet,$values,$combo_box);
+									$facet = FWP()->helper->get_facet_by_name( $facet );
+									$values = $this->get_form_facet( $facet['source'] );
+									$this->display_form_field( 'select',$facet,$values,$combo_box );
 								?>
-                            </div>
+							</div>
 							<?php
-                        }
-                    } ?>
+						}
+					} ?>
 
-                    <div class="field">
-                        <button class="<?php echo $button_class; ?>" type="submit"><?php echo $button_label; ?></button>
-                    </div>
+					<div class="field submit-button">
+						<button class="<?php echo esc_attr( $button_class ); ?>" type="submit"><?php echo wp_kses_post( $button_label ); ?></button>
+					</div>
 
-					<?php if (false === $engine_select && false !== $engine && 'default' !== $engine ) : ?>
-						<input name="engine" type="hidden" value="<?php echo $engine; ?>">
+					<?php if ( false === $engine_select && false !== $engine && 'default' !== $engine ) : ?>
+						<input name="engine" type="hidden" value="<?php echo esc_attr( $engine ); ?>">
 					<?php endif; ?>
 				</div>
 
-			<?php do_action('lsx_search_form_bottom'); ?>	
-				
-			</form>	
+				<?php do_action( 'lsx_search_form_bottom' ); ?>
 
-			<?php do_action('lsx_search_form_after'); ?>
+			</form>
+
+			<?php do_action( 'lsx_search_form_after' ); ?>
 		<?php
 		$return = ob_get_clean();
 
+		$return = preg_replace( '/[\n]+/', ' ', $return );
+		$return = preg_replace( '/[\t]+/', ' ', $return );
+
 		return $return;
-	}		
+	}
 
 	/**
 	 * Outputs closing facetWP div.
-	 *
 	 */
-	public function lsx_sidebar_enable($return) {
-		if(false !== $this->search_slug){
+	public function lsx_sidebar_enable( $return ) {
+		global $wp_query;
+
+		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
 			$return = 0;
 		}
+
 		return $return;
 	}
 
 	/**
 	 * Grabs the Values for the Facet in Question.
 	 */
-	protected function get_form_facet( $facet_source = false) {
-	    global $wpdb;
-	    $values = array();
-		$response = $wpdb->get_results("
-        SELECT  facet_value,facet_display_value
-        FROM    {$wpdb->prefix}facetwp_index
-        WHERE   facet_source = '{$facet_source}'
-        ");
+	protected function get_form_facet( $facet_source = false ) {
+		global $wpdb;
 
-        if(!empty($response)){
-            foreach($response as $re){
-				$values[$re->facet_value] = $re->facet_display_value;
-            }
-        }
-        asort($values);
-        return $values;
+		$values = array();
+		$select = "f.facet_value, f.facet_display_value";
+		$from = "{$wpdb->prefix}facetwp_index f";
+		$where = "f.facet_source = '{$facet_source}'";
+
+		//Check if the current facet is showing destinations.
+		if ( stripos( $facet_source, 'destination_to' ) ) {
+			$from .= " INNER JOIN {$wpdb->posts} p ON f.facet_value = p.ID";
+			$where .= " AND p.post_parent = '0'";
+
+		}
+
+		$response = $wpdb->get_results( "SELECT {$select} FROM {$from} WHERE {$where}" );
+
+		if ( ! empty( $response ) ) {
+			foreach ( $response as $re ) {
+				$values[ $re->facet_value ] = $re->facet_display_value;
+			}
+		}
+
+		asort( $values );
+		return $values;
 	}
 
 
 	/**
 	 * Change FaceWP pagination HTML to be equal main pagination (WP-PageNavi)
 	 */
-	public function display_form_field( $type='select',$facet=array(), $values = array(), $combo = false ) {
+	public function display_form_field( $type = 'select', $facet = array(), $values = array(), $combo = false ) {
+		if ( empty( $facet ) ) {
+			return;
+		}
 
-	    if(empty($facet)){
-	        return;
-        }
+		$source = 'fwp_' . $facet['name'];
 
-		$source = 'fwp_'.$facet['name'];
+		switch ( $type ) {
 
-	    switch($type){
+			case 'select':?>
+				<div class="dropdown <?php if ( true === $combo ) { echo 'combination-dropdown'; } ?>">
+					<button data-selection="0" class="btn border-btn btn-dropdown dropdown-toggle" type="button" id="<?php echo wp_kses_post( $source ); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<?php esc_attr_e( 'Select', 'to-search' ); ?> <?php echo wp_kses_post( $facet['label'] ); ?>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="<?php echo wp_kses_post( $source ); ?>">
+						<?php if ( ! empty( $values ) ) { ?>
 
-            case 'select':?>
-                <div class="dropdown <?php if(true === $combo) { echo 'combination-dropdown'; } ?>">
-                    <button data-selection="0" class="btn btn-dropdown dropdown-toggle" type="button" id="<?php echo wp_kses_post($source); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						<?php esc_attr_e('Select','to-search'); ?> <?php echo wp_kses_post($facet['label']); ?>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="<?php echo wp_kses_post($source); ?>">
-                        <?php if(!empty($values)) { ?>
+							<li style="display: none;"><a class="default" data-value="0" href="#"><?php esc_attr_e( 'Select ', 'to-search' ); ?> <?php echo wp_kses_post( $facet['label'] ); ?></a></li>
 
-                            <li style="display: none;"><a class="default" data-value="0" href="#"><?php esc_attr_e('Select ','to-search'); ?> <?php echo wp_kses_post($facet['label']); ?></a></li>
+							<?php foreach ( $values as $key => $value ) { ?>
+								<li><a data-value="<?php echo wp_kses_post( $key ); ?>" href="#"><?php echo wp_kses_post( $value ); ?></a></li>
+							<?php } ?>
+						<?php } else { ?>
+							<li><a data-value="0" href="#"><?php esc_attr_e( 'Please re-index your facets.', 'to-search' ); ?></a></li>
+						<?php } ?>
+					</ul>
+				</div>
+			<?php
+				break;
+		}
 
-                            <?php foreach($values as $key => $value) { ?>
-                                <li><a data-value="<?php echo wp_kses_post($key); ?>" href="#"><?php echo wp_kses_post($value); ?></a></li>
-                            <?php } ?>
-                        <?php }else{ ?>
-                            <li><a data-value="0" href="#"><?php esc_attr_e('Please re-index your facets.','to-search'); ?></a></li>
-                        <?php } ?>
-                    </ul>
-                </div>
-	        <?php
-                break;
-        }
-
-	    ?>
+		?>
 
 	<?php }
 
@@ -760,185 +825,42 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search{
 	 * Outputs the combination selector
 	 */
 	public function combo_box( $facets ) {
-        ?>
-        <div class="field combination-dropdown">
-            <div class="dropdown">
-                <button data-selection="0" class="btn btn-dropdown dropdown-toggle btn-combination" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <?php esc_attr_e('Select','to-search'); ?>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
+		?>
+		<div class="field combination-dropdown">
+			<div class="dropdown">
+				<button data-selection="0" class="btn border-btn btn-dropdown dropdown-toggle btn-combination" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					<?php esc_attr_e( 'Select', 'to-search' ); ?>
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
 
-                    <li style="display: none;"><a class="default" data-value="0" href="#"><?php esc_attr_e('Select ','to-search'); ?></a></li>
+					<li style="display: none;"><a class="default" data-value="0" href="#"><?php esc_attr_e( 'Select ', 'to-search' ); ?></a></li>
 
-                    <?php foreach($facets as $facet) {
-                        $facet = FWP()->helper->get_facet_by_name( $facet );
-                        ?>
-                        <li><a data-value="fwp_<?php echo wp_kses_post($facet['name']); ?>" href="#"><?php echo wp_kses_post($facet['label']); ?></a></li>
-                    <?php } ?>
-                </ul>
-            </div>
-        </div>
-        <?php
+					<?php foreach ( $facets as $facet ) {
+						$facet = FWP()->helper->get_facet_by_name( $facet );
+						?>
+						<li><a data-value="fwp_<?php echo wp_kses_post( $facet['name'] ); ?>" href="#"><?php echo wp_kses_post( $facet['label'] ); ?></a></li>
+					<?php } ?>
+				</ul>
+			</div>
+		</div>
+		<?php
 	}
-
-	/**
-	 * Change FaceWP pagination HTML to be equal main pagination (WP-PageNavi)
-	 */
-	public function facetwp_pager_html( $output, $params ) {
-	    $output = '';
-	    $page = (int) $params['page'];
-	    $per_page = (int) $params['per_page'];
-	    $total_pages = (int) $params['total_pages'];
-
-	    if ( 1 < $total_pages ) {
-	        $output .= '<div class="wp-pagenavi-wrapper facetwp-custom">';
-	        $output .= '<div class="lsx-breaker"></div>';
-	        $output .= '<div class="wp-pagenavi">';
-	        $output .= '<span class="pages">Page '. $page .' of '. $total_pages .'</span>';
-
-	        if ( 1 < $page ) {
-	            $output .= '<a class="previouspostslink facetwp-page" rel="prev" data-page="'. ( $page - 1 ) .'">«</a>';
-	        }
-
-	        $temp = false;
-	        
-	        for ( $i = 1; $i <= $total_pages; $i++ ) {
-	            if ( $i == $page ) {
-	                $output .= '<span class="current">'. $i .'</span>';
-	            } elseif ( ( $page - 2 ) < $i && ( $page + 2 ) > $i ) {
-	                $output .= '<a class="page larger facetwp-page" data-page="'. $i .'">'. $i .'</a>';
-	            } elseif ( ( $page - 2 ) >= $i && $page > 2 ) {
-	                if ( ! $temp ) {
-	                    $output .= '<span>...</span>';
-	                    $temp = true;
-	                }
-	            } elseif ( ( $page + 2 ) <= $i && ( $page + 2 ) <= $total_pages ) {
-	                $output .= '<span>...</span>';
-	                break;
-	            }
-	        }
-
-	        if ( $page < $total_pages ) {
-	            $output .= '<a class="nextpostslink facetwp-page" rel="next" data-page="'. ( $page + 1 ) .'">»</a>';
-	        }
-
-	        $output .= '</div>';
-	        $output .= '</div>';
-	    }
-
-	    return $output;
-	}
-	
 
 	/**
 	 * Change FaceWP result count HTML
 	 */
-	function facetwp_result_count( $output, $params ) {
-		$output = $params['total'];
-		return $output;
-	}	
+	public function get_search_query( $keyword ) {
+		$engine = get_query_var( 'engine_keyword' );
 
-
-	/**
-	 * Change FaceWP result count HTML
-	 */
-	function get_search_query( $keyword ) {
-		$engine = get_query_var('engine_keyword');
-		if(false !== $engine && '' !== $engine && 'default' !== $engine){
+		if ( false !== $engine && '' !== $engine && 'default' !== $engine ) {
 			$keyword = $engine;
 		}
+
 		$keyword = str_replace( '+', ' ', $keyword );
 		return $keyword;
 	}
-
-	public function destination_facet_html( $output, $params ) {
-	    $possible_keys = array('destination_to_accommodation','destination_to_tour','destination_to_special','destination_to_activity','destination','destinations','destination_to_review','destination_to_vehicle');
-
-		if ( in_array($params['facet']['name'],$possible_keys) ) {
-			$output = $this->destination_facet_render($params);
-		}
-		return $output;
-	}
-
-	/**
-	 * Generate the facet HTML
-	 */
-	function destination_facet_render( $params ) {
-		$facet = $params['facet'];
-
-		$output = '';
-		$values = (array) $params['values'];
-		$selected_values = (array) $params['selected_values'];
-		$soft_limit = empty( $facet['soft_limit'] ) ? 0 : (int) $facet['soft_limit'];
-
-		$destination_ids = array();
-		foreach($values as $key => $result){
-			$destination_ids[] = $result['facet_value'];
-        }
-        $countries = apply_filters('lsx_to_parents_only',$destination_ids);
-
-        $options = array();
-        $sorted_values = array();
-
-		/*if(!empty($selected_values)) {
-			//sort the options so
-			foreach ($values as $key => $result) {
-				$sorted_values[$key] = $result;
-		    }
-			$values = $sorted_values;
-		}*/
-
-		$regions = $values;
-
-		$key = 0;
-		foreach ( $values as $key => $result ) {
-
-			//Check to see if we should display the countries
-			if (!in_array($result['facet_value'], $countries)) {
-				continue;
-			}
-
-			$options[] = $this->format_single_facet($key,$result,$selected_values,$soft_limit);
-
-			//if a country is selected, then run through and add in the regions.
-			if(!empty($selected_values) && in_array( $result['facet_value'], $selected_values )){
-                foreach($regions as $region_key => $region_value){
-                    /*print_r(wp_get_post_parent_id($region_value['facet_value']));
-					print_r(' - '.$result['facet_value']);
-                    print_r('<br />');*/
-					if((String)wp_get_post_parent_id($region_value['facet_value']) === (String)$result['facet_value']){
-						$options[] = $this->format_single_facet($region_key,$region_value,$selected_values,$soft_limit,true);
-                    }
-                }
-            }
-		}
-
-		if ( 0 < $soft_limit && $soft_limit <= $key ) {
-			$output .= '</div>';
-			$output .= '<a class="facetwp-toggle">' . __( 'See {num} more', 'fwp' ) . '</a>';
-			$output .= '<a class="facetwp-toggle facetwp-hidden">' . __( 'See less', 'fwp' ) . '</a>';
-		}
-
-		$output = implode('',$options);
-
-		return $output;
-	}
-
-	function format_single_facet($key,$result,$selected_values,$soft_limit,$region = false){
-		$temp_html = '';
-		if ( 0 < $soft_limit && $key == $soft_limit ) {
-			$temp_html .= '<div class="facetwp-overflow facetwp-hidden">';
-		}
-		$selected = in_array( $result['facet_value'], $selected_values ) ? ' checked' : '';
-		$selected .= ( 0 == $result['counter'] && '' == $selected ) ? ' disabled' : '';
-		$selected .= $region ? ' region' : '';
-
-		$temp_html .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . $result['facet_value'] . '">';
-		$temp_html .= $result['facet_display_value'] . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
-		$temp_html .= '</div>';
-		return $temp_html;
-    }
 }
+
 global $lsx_to_search;
 $lsx_to_search = new LSX_TO_Search_Frontend();

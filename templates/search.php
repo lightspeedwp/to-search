@@ -1,62 +1,61 @@
 <?php
 /**
- * Search results
+ * Accommodation Archive
  *
- * @package 	lsx-tour-operators
- * @category	search
+ * @package  tour-operator
+ * @category search
  */
 
-get_header(); 
-?>
+get_header(); ?>
 
 	<?php lsx_content_wrap_before(); ?>
 
-	<section id="primary" class="content-area <?php echo lsx_main_class(); ?>">
+	<div id="primary" class="content-area <?php echo esc_attr( lsx_main_class() ); ?>">
 
 		<?php lsx_content_before(); ?>
 
-			<main id="main" class="site-main" role="main">
+		<main id="main" class="site-main" role="main">
 
-				<?php 
-				/**
-				 * Hooked
-				 * 
-				 *  - lsx_tour_operator_archive_header() - 100
-				 *  - lsx_tour_operator_archive_description() - 100
-				 */
-					lsx_content_top();
-					global $lsx_archive;
-					$lsx_archive = 1;
-					?>
-					<?php if ( have_posts() ) : ?>
+			<?php lsx_content_top(); ?>
 
-						<div class="row">
-							<?php while ( have_posts() ) : the_post(); ?>
-								<div class="panel col-sm-12">
-									<?php if ( function_exists( 'lsx_to_content' ) ) { lsx_to_content( 'content', get_post_type() ); } ?>
-								</div>
-							<?php endwhile; ?>
+			<?php
+				global $lsx_to_archive;
+				$lsx_to_archive = 1;
+			?>
+
+			<?php if ( have_posts() ) : ?>
+
+				<div class="row lsx-to-archive-items lsx-to-archive-template-<?php echo esc_attr( tour_operator()->archive_layout ); ?> lsx-to-archive-template-image-<?php echo esc_attr( tour_operator()->archive_list_layout_image_style ); ?>">
+
+					<?php while ( have_posts() ) : the_post(); ?>
+
+						<div class="<?php echo esc_attr( lsx_to_archive_class( 'lsx-to-archive-item' ) ); ?>">
+							<?php lsx_to_content( 'content', get_post_type() ); ?>
 						</div>
 
-					<?php else : ?>
+					<?php endwhile; ?>
 
-						<?php get_template_part( 'content', 'none' ); ?>
+				</div>
 
-					<?php endif; ?>
-					
-					<?php $lsx_archive = 0; ?>
+			<?php else : ?>
 
-				<?php lsx_content_bottom(); ?>
-				
-				<?php lsx_to_sharing(); ?>
+				<?php get_template_part( 'partials/content', 'none' ); ?>
 
-			</main><!-- #main -->
+			<?php endif; ?>
+
+			<?php
+				$lsx_to_archive = 0;
+			?>
+
+			<?php lsx_content_bottom(); ?>
+
+		</main><!-- #main -->
 
 		<?php lsx_content_after(); ?>
-		
-	</section><!-- #primary -->
 
-<?php lsx_content_wrap_after(); ?>
+	</div><!-- #primary -->
+
+	<?php lsx_content_wrap_after(); ?>
 
 <?php get_sidebar(); ?>
 
