@@ -21,6 +21,12 @@
 		"oAP": "\/.gitignore",
 		"oF": 0
 		},
+	"\/assets\/css\/maps\/to-search.css.map": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/assets\/css\/maps\/to-search.css.map",
+		"oF": 0
+		},
 	"\/assets\/css\/scss\/_customizer-to-search-body-colours.scss": {
 		"aP": 0,
 		"bl": 0,
@@ -72,6 +78,26 @@
 		"oF": 2,
 		"oS": 0,
 		"uL": 1
+		},
+	"\/assets\/css\/to-search-rtl.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/assets\/css\/to-search-rtl-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/assets\/css\/to-search.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/assets\/css\/to-search-min.css",
+		"oF": 0,
+		"oS": 0
 		},
 	"\/assets\/js\/src\/to-search.js": {
 		"ft": 64,
@@ -196,6 +222,18 @@
 		"oAP": "\/languages\/to-search-en_EN.mo",
 		"oF": 0
 		},
+	"\/languages\/to-search-en_EN.po": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/languages\/to-search-en_EN.po",
+		"oF": 0
+		},
+	"\/languages\/to-search.pot": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/languages\/to-search.pot",
+		"oF": 0
+		},
 	"\/LICENSE": {
 		"ft": 8192,
 		"oA": 2,
@@ -262,7 +300,7 @@
 "projectAttributes": {
 	"creationDate": 527016671,
 	"displayValue": "to-search",
-	"displayValueWasSetByUser": 0,
+	"displayValueWasSetByUser": 1,
 	"iconImageName": "meme-karate"
 	},
 "projectSettings": {

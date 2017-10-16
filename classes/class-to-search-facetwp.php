@@ -405,6 +405,9 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 		$values = $sorted_values;
 		$key = 0;
 
+		$continent_class = '';
+		$country_class = '';
+		// Run through each value and output the values.
 		foreach ( $values as $key => $facet ) {
 
 			$depth_type = '';
@@ -412,14 +415,16 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			switch ( $facet['depth'] ) {
 				case '0':
 					$depth_type = '';
+					$continent_class = in_array( $facet['facet_value'], $selected_values ) ? $depth_type.=' continent-checked' : '';
 					break;
 
 				case '1':
-					$depth_type = 'country';
+					$depth_type = 'country' . $continent_class;
+					$country_class = in_array( $facet['facet_value'], $selected_values ) ? $depth_type.=' country-checked' : '';
 					break;
 
 				case '2':
-					$depth_type = 'region';
+					$depth_type = 'region' . $continent_class . ' ' . $country_class;
 					break;
 			}
 

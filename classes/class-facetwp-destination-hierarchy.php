@@ -59,9 +59,6 @@ class TO_Search_Destination_Facet
         $from_clause = $wpdb->prefix . 'facetwp_index f';
         $where_clause = $params['where_clause'];
 
-        $output = 'test';
-        return $output;
-
         $selected_values = (array) $params['selected_values'];
 
         // Orderby
@@ -363,8 +360,9 @@ class FacetWP_Facet_Links
 	 * Generate the output HTML
 	 */
 	function render( $params ) {
+		global $wpdb;
 
-		$output = 'sss';
+		$output = '';
 		$facet = $params['facet'];
 		$values = (array) $params['values'];
 		$selected_values = (array) $params['selected_values'];
@@ -377,13 +375,7 @@ class FacetWP_Facet_Links
 			$output .= esc_html( $result['facet_display_value'] ) . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
 			$output .= '</div>';
 
-
-
-
-
 		}
-
-
 
 		$results = $wpdb->get_results( $sql );
 

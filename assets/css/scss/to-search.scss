@@ -297,9 +297,23 @@
 		&:before { content: '\f14a'; }
 	}
 
-	&.country { margin-left: 20px; }
+	&.country {
+		margin-left: 20px;
+		display:none;
+		
+		&.continent-checked {
+			display: block;
+		}
+	}
 
-	&.region { margin-left: 40px; }
+	&.region {
+		margin-left: 40px;
+		display:none;
+
+		&.country-checked {
+			display: block;
+		}
+	}
 }
 
 .facetwp-overflow { margin-top: 5px; }
