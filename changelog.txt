@@ -1,5 +1,8 @@
 ## Change log
 
+### 1.1.1
+* Dev - Added in CSS classes to allow the Destinations Facet to work when "widening" and "narrowing"
+
 ### 1.1.0
 * Dev - Support LSX Theme 2.0 new designs
 * Added compatibility with LSX 2.0
