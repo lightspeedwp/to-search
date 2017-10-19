@@ -143,7 +143,7 @@ msgstr ""
 msgid "Enable Filtering"
 msgstr ""
 
-#: classes/class-to-search-facetwp.php:240, classes/class-to-search-facetwp.php:243, classes/class-to-search-frontend.php:552, classes/class-to-search-frontend.php:555, classes/class-to-search-frontend.php:606
+#: classes/class-to-search-facetwp.php:236, classes/class-to-search-facetwp.php:239, classes/class-to-search-frontend.php:552, classes/class-to-search-frontend.php:555, classes/class-to-search-frontend.php:611
 msgid "Search"
 msgstr ""
 
@@ -171,19 +171,19 @@ msgstr ""
 msgid "Apply Filters"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:588
+#: classes/class-to-search-frontend.php:593
 msgid "Where do you want to go?"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:800, classes/class-to-search-frontend.php:832
+#: classes/class-to-search-frontend.php:805, classes/class-to-search-frontend.php:837
 msgid "Select"
 msgstr ""
 
-#: classes/class-to-search-frontend.php:806, classes/class-to-search-frontend.php:837
+#: classes/class-to-search-frontend.php:811, classes/class-to-search-frontend.php:842
 msgid "Select "
 msgstr ""
 
-#: classes/class-to-search-frontend.php:812
+#: classes/class-to-search-frontend.php:817
 msgid "Please re-index your facets."
 msgstr ""
 

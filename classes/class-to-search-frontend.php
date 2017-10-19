@@ -567,8 +567,13 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 * Display facet default.
 	 */
 	public function display_facet_default( $facet ) {
+		if ( ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) ) {
+			$continent_class = 'continent-visible';
+		} else {
+			$continent_class = 'no-continent-visible';
+		}
 		?>
-		<div class="col-xs-12 facetwp-item">
+		<div class="col-xs-12 facetwp-item <?php echo esc_attr( $continent_class ); ?>">
 			<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
 			<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 		</div>
