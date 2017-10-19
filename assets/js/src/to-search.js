@@ -115,7 +115,6 @@ var LSX_TO_Search = {
 	reloadMap: function() {
 		if (undefined !== LSX_TO_Maps) {
 			LSX_TO_Maps.initThis();
-			LSX_TO_Maps_Styles.changeMapStyles();
 		}
 	},
 
