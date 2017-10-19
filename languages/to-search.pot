@@ -143,7 +143,7 @@ msgstr ""
 msgid "Enable Filtering"
 msgstr ""
 
-#: classes/class-to-search-facetwp.php:242, classes/class-to-search-facetwp.php:245, classes/class-to-search-frontend.php:552, classes/class-to-search-frontend.php:555, classes/class-to-search-frontend.php:606
+#: classes/class-to-search-facetwp.php:240, classes/class-to-search-facetwp.php:243, classes/class-to-search-frontend.php:552, classes/class-to-search-frontend.php:555, classes/class-to-search-frontend.php:606
 msgid "Search"
 msgstr ""
 

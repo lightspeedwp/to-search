@@ -27,8 +27,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 		add_filter( 'facetwp_pager_html', array( $this, 'facetwp_pager_html' ), 10, 2 );
 		add_filter( 'facetwp_result_count', array( $this, 'facetwp_result_count' ), 10, 2 );
 
-
-
+		add_filter( 'facetwp_facet_html', array( $this, 'destination_facet_html' ), 10, 2 );
 		add_filter( 'facetwp_facet_html', array( $this, 'slide_facet_html' ), 10, 2 );
 		add_filter( 'facetwp_load_css', array( $this, 'facetwp_load_css' ), 10, 1 );
 
@@ -45,7 +44,6 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 	public function enable_search_continent_filter() {
 		if ( ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) ) {
 			add_filter( 'facetwp_indexer_row_data', array( $this, 'facetwp_index_row_data' ), 10, 2 );
-			add_filter( 'facetwp_facet_html', array( $this, 'destination_facet_html' ), 10, 2 );
 		}
 	}
 
@@ -348,6 +346,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 				'taxonomy' => 'continent',
 			)
 		);
+
 		if ( ! is_wp_error( $continent_terms ) ) {
 			foreach ( $continent_terms as $continent ) {
 				$continents[ $continent->term_id ] = $continent->slug;
@@ -370,26 +369,11 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 				if ( $depths[ $selected ] > $current_depth ) {
 					$current_depth = $depths[ $selected ];
 				}
-
-				//Check if the current selected values parent is in the array.
-				/*if ( 0 !== $depths[ $selected ] && ! in_array( $parents[ $selected ] , $selected_values ) ) {
-
-					if ( 1 === $depths[ $selected ] ) {
-						//This is if a country is selected
-						$additional_values[] = $continents[$parents[ $selected ]];
-					} else {
-						//This is if a region is selected.
-						$additional_values[] = $parents[ $selected ];
-
-						$additional_values[] = $continents[ $parents[ $parents[ $selected ] ] ];
-					}
-
-				}*/
 			}
 			$current_depth++;
 		}
 
-		if ( ! empty( $additional_values ) ){
+		if ( ! empty( $additional_values ) ) {
 			$selected_values = array_merge( $selected_values, $additional_values );
 		}
 
@@ -398,44 +382,56 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 		$stored = $values;
 
 		//sort the options so
-		foreach ( $values as $key => $result ) {
+		if ( ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) ) {
+			foreach ( $values as $key => $result ) {
+				if ( in_array( $result['facet_value'], $continents ) ) {
+					$sorted_values[] = $result;
+					$destinations = $this->get_countries( $stored, $result['facet_value'], $continents, '1' );
 
-			if ( in_array( $result['facet_value'], $continents ) ) {
-				$sorted_values[] = $result;
-
-				$destinations = $this->get_countries( $stored, $result['facet_value'], $continents, '1' );
-				if ( ! empty( $destinations ) ) {
-					foreach ( $destinations as $destination ) {
-						$sorted_values[] = $destination;
+					if ( ! empty( $destinations ) ) {
+						foreach ( $destinations as $destination ) {
+							$sorted_values[] = $destination;
+						}
 					}
 				}
 			}
-
+			$values = $sorted_values;
 		}
-		$values = $sorted_values;
-		$key = 0;
 
 		$continent_class = '';
 		$country_class = '';
+
 		// Run through each value and output the values.
 		foreach ( $values as $key => $facet ) {
-
 			$depth_type = '';
 
-			switch ( $facet['depth'] ) {
-				case '0':
-					$depth_type = '';
-					$continent_class = in_array( $facet['facet_value'], $selected_values ) ? $depth_type.=' continent-checked' : '';
-					break;
+			if ( ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) ) {
+				switch ( $facet['depth'] ) {
+					case '0':
+						$depth_type = '';
+						$continent_class = in_array( $facet['facet_value'], $selected_values ) ? $depth_type .= ' continent-checked' : '';
+						break;
 
-				case '1':
-					$depth_type = 'country' . $continent_class;
-					$country_class = in_array( $facet['facet_value'], $selected_values ) ? $depth_type.=' country-checked' : '';
-					break;
+					case '1':
+						$depth_type = 'country' . $continent_class;
+						$country_class = in_array( $facet['facet_value'], $selected_values ) ? $depth_type .= ' country-checked' : '';
+						break;
 
-				case '2':
-					$depth_type = 'region' . $continent_class . ' ' . $country_class;
-					break;
+					case '2':
+						$depth_type = 'region' . $continent_class . $country_class;
+						break;
+				}
+			} else {
+				switch ( $facet['depth'] ) {
+					case '0':
+						$depth_type = 'country';
+						$country_class = in_array( $facet['facet_value'], $selected_values ) ? $depth_type .= ' country-checked' : '';
+						break;
+
+					case '1':
+						$depth_type = 'region' . $country_class;
+						break;
+				}
 			}
 
 			if ( $facet['depth'] <= $current_depth ) {
