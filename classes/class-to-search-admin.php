@@ -118,6 +118,15 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 					<small><?php esc_html_e( 'This enables the post type label from entries on search results page.', 'tour-operator' ); ?></small>
 				</td>
 			</tr>
+			<tr class="form-field">
+				<th scope="row">
+					<label for="enable_search_continent_filter"><?php esc_html_e( 'Enable Continent Filter', 'tour-operator' ); ?></label>
+				</th>
+				<td>
+					<input type="checkbox" {{#if enable_search_continent_filter}} checked="checked" {{/if}} name="enable_search_continent_filter" />
+					<small><?php esc_html_e( 'This enables the continent filter in FacetWP destinations filter.', 'tour-operator' ); ?></small>
+				</td>
+			</tr>
 		<?php endif; ?>
 		<tr class="form-field-wrap">
 			<th scope="row">

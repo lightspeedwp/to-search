@@ -18,8 +18,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 	public function __construct() {
 		add_action( 'init',array( $this, 'set_vars' ) );
 		add_action( 'init',array( $this, 'set_facetwp_vars' ) );
-
-		add_filter( 'facetwp_indexer_row_data', array( $this, 'facetwp_index_row_data' ), 10, 2 );
+		add_action( 'init', array( $this, 'enable_search_continent_filter' ) );
 
 		add_filter( 'facetwp_index_row', array( $this, 'facetwp_index_row' ), 10, 2 );
 
@@ -28,7 +27,8 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 		add_filter( 'facetwp_pager_html', array( $this, 'facetwp_pager_html' ), 10, 2 );
 		add_filter( 'facetwp_result_count', array( $this, 'facetwp_result_count' ), 10, 2 );
 
-		add_filter( 'facetwp_facet_html', array( $this, 'destination_facet_html' ), 10, 2 );
+
+
 		add_filter( 'facetwp_facet_html', array( $this, 'slide_facet_html' ), 10, 2 );
 		add_filter( 'facetwp_load_css', array( $this, 'facetwp_load_css' ), 10, 1 );
 
@@ -36,6 +36,16 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			add_filter( 'facetwp_render_output', array( $this, 'slide_price_lsx_currencies' ), 10, 2 );
 		} else {
 			add_filter( 'facetwp_render_output', array( $this, 'slide_price_to_currencies' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * Enables the continent filter in FacetWP destinations filter.
+	 */
+	public function enable_search_continent_filter() {
+		if ( ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) ) {
+			add_filter( 'facetwp_indexer_row_data', array( $this, 'facetwp_index_row_data' ), 10, 2 );
+			add_filter( 'facetwp_facet_html', array( $this, 'destination_facet_html' ), 10, 2 );
 		}
 	}
 
