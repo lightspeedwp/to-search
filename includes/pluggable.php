@@ -66,13 +66,15 @@ function lsx_to_search_top() {
 
 		<?php if ( ! empty( $az_pagination ) || ( $show_pagination && ! $pagination_visible ) ) { ?>
 			<div class="row facetwp-top-row-2 hidden-xs">
-				<?php if ( ! empty( $az_pagination ) ) { ?>
-					<?php echo do_shortcode( '[facetwp facet="' . $az_pagination . '"]' ); ?>
-				<?php } ?>
+				<div class="col-xs-12">
+					<?php if ( ! empty( $az_pagination ) ) { ?>
+						<?php echo do_shortcode( '[facetwp facet="' . $az_pagination . '"]' ); ?>
+					<?php } ?>
 
-				<?php if ( $show_pagination && ! $pagination_visible ) { ?>
-					<?php echo do_shortcode( '[facetwp pager="true"]' ); ?>
-				<?php } ?>
+					<?php if ( $show_pagination && ! $pagination_visible ) { ?>
+						<?php echo do_shortcode( '[facetwp pager="true"]' ); ?>
+					<?php } ?>
+				</div>
 			</div>
 		<?php } ?>
 	</div>
