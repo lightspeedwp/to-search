@@ -43,7 +43,7 @@ function lsx_to_search_top() {
 	$pagination_visible  = false;
 	?>
 	<div id="facetwp-top">
-		<?php if ( $show_sort_combo || ( $show_pagination && $show_per_page_combo ) || $show_pagination ) { ?>
+		<?php if ( $show_sort_combo || ( $show_pagination && $show_per_page_combo ) ) { ?>
 			<div class="row facetwp-top-row-1 hidden-xs">
 				<div class="col-xs-12">
 					<?php if ( $show_sort_combo ) { ?>
@@ -66,15 +66,17 @@ function lsx_to_search_top() {
 
 		<?php if ( ! empty( $az_pagination ) || ( $show_pagination && ! $pagination_visible ) ) { ?>
 			<div class="row facetwp-top-row-2 hidden-xs">
-				<div class="col-xs-12">
+				<div class="col-xs-12 col-lg-8">
 					<?php if ( ! empty( $az_pagination ) ) { ?>
 						<?php echo do_shortcode( '[facetwp facet="' . $az_pagination . '"]' ); ?>
 					<?php } ?>
-
-					<?php if ( $show_pagination && ! $pagination_visible ) { ?>
-						<?php echo do_shortcode( '[facetwp pager="true"]' ); ?>
-					<?php } ?>
 				</div>
+
+				<?php if ( $show_pagination && ! $pagination_visible ) { ?>
+					<div class="col-xs-12 col-lg-4">
+						<?php echo do_shortcode( '[facetwp pager="true"]' ); ?>
+					</div>
+				<?php } ?>
 			</div>
 		<?php } ?>
 	</div>
