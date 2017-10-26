@@ -4,6 +4,7 @@
 * Dev - Added in CSS classes to allow the Destinations Facet to work when "widening" and "narrowing"
 * Dev - Added an option to disable the continents filter (FacetWP)
 * Fix - TO Maps undefined function removed
+* Fix - Fixed missing column in alpha pagination
 
 ### 1.1.0
 * Dev - Support LSX Theme 2.0 new designs
