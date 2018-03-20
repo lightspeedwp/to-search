@@ -13,13 +13,13 @@ The to Search plugins adds the “Search” post type, which you can display fro
 == Description ==
 People like to see a face behind a business, it gives you a more personal, approachable relationship with your users. 
 
-The to Search plugin allows you to display your Search profiles beautifully on your website.
+The TO Search plugin allows you to display your Search profiles beautifully on your website.
 
 = Works with the to Theme =
 Our theme [theme](https://www.lsdev.biz/product/to-wordpress-theme/) works perfectly with the Search Extension, improving internal linking, website SEO and user experience!
 
 = It's free, and always will be. =
-We’re firm believers in open source - that’s why we’re releasing the to Search plugin for free, forever. We offer free support on the [to Team support forums](https://wordpress.org/support/plugin/to-team).
+We’re firm believers in open source - that’s why we’re releasing the TO Search plugin for free, forever. We offer free support on the [to Team support forums](https://wordpress.org/support/plugin/to-team).
 
 = Support =
 We offer premium support for this plugin. Premium support that can be purchased via [lsdev.biz](https://www.lsdev.biz/).
@@ -48,7 +48,7 @@ Yes you can! Join in on our [GitHub repository](https://github.com/lightspeeddev
 
 == Screenshots ==
 
-1. The Settings Panel for to Search
+1. The Settings Panel for TO Search
 2. to Search Edit Page
 3. to Search Widget Frontend
 
