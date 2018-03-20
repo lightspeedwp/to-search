@@ -253,7 +253,7 @@ class TO_Search_Destination_Facet {
 		$sql = "
 		SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
 		WHERE facet_name = '{$facet['name']}' AND facet_value IN ('$selected_values')";
-		return $wpdb->get_col( $sql );
+		return $wpdb->get_col( $sql ); // WPCS: unprepared SQL OK
 	}
 
 

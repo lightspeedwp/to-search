@@ -127,8 +127,8 @@ if ( ! class_exists( 'LSX_TO_Search' ) ) {
 		/**
 		 * Make TO last plugin to load.
 		 */
-		// @codingStandardsIgnoreLine
 		public function activated_plugin() {
+			// @codingStandardsIgnoreLine
 			if ( $plugins = get_option( 'active_plugins' ) ) {
 				$search = preg_grep( '/.*\/tour-operator\.php/', $plugins );
 				$key = array_search( $search, $plugins );

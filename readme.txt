@@ -1,22 +1,22 @@
 === TO Search ===
 Contributors: feedmymedia
 Donate link: https://www.lsdev.biz/product/to-team/
-Tags: to theme, post type, search, search widget, sort
+Tags: to theme, FacetWP, search, search widget, sort
 Requires at least: 4.3
 Tested up to: 4.9.4
 Requires PHP: 7.0
 Stable tag: 1.1.0
 License: GPLv3
 
-The to Search plugins adds the “Search” post type, which you can display front-and-centre on your site.
+The Tour Operator Search extension adds robust search functionality to sites, allowing filterable search by post type, category and more.
 
 == Description ==
-People like to see a face behind a business, it gives you a more personal, approachable relationship with your users. 
+The Search extension for the Tour Operators plugin adds robust search functionality to your WordPress Tour Operator site. 
 
-The TO Search plugin allows you to display your Search profiles beautifully on your website.
+It requires that you also have the FacetWP plugin installed, as that allows for much of the filtering functionality that the plugin uses.
 
 = Works with the to Theme =
-Our theme [theme](https://www.lsdev.biz/product/to-wordpress-theme/) works perfectly with the Search Extension, improving internal linking, website SEO and user experience!
+Our theme [theme](https://www.lsdev.biz/product/to-wordpress-theme/) works perfectly with the Search Extension, improving the FacetWP user experience!
 
 = It's free, and always will be. =
 We’re firm believers in open source - that’s why we’re releasing the TO Search plugin for free, forever. We offer free support on the [to Team support forums](https://wordpress.org/support/plugin/to-team).
@@ -40,7 +40,7 @@ For help setting up and configuring the Search plugin please refer to our [user 
 If you get stuck, you can ask for help in the [to Search plugin forum](https://wordpress.org/support/plugin/to-search).
 For help with premium add-ons from LightSpeed, use [our contact page](https://www.lsdev.biz/contact-us/)
 = Will the to Search plugin work with my theme
-Yes; the to Search plugin will work with any theme, but may require some styling to make it match nicely. Please see our [codex](https://www.lsdev.biz/documentation/to/) for help. If you're looking for a theme with built in to Team plugin integration we recommend [to Theme](https://www.lsdev.biz/product/to-wordpress-theme/).
+No; the to Search plugin will not work with any theme, it requires LSX Theme to make it match nicely. Please see our [codex](https://www.lsdev.biz/documentation/to/) for help. If you're looking for a theme with built in to Team plugin integration we recommend [to Theme](https://www.lsdev.biz/product/to-wordpress-theme/).
 = Where can I report bugs or contribute to the project? =
 Bugs can be reported either in our support forum or preferably on the [to Search GitHub repository](https://github.com/lightspeeddevelopment/to/issues).
 = The to Search plugin is awesome! Can I contribute? =
