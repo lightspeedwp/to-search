@@ -65,17 +65,16 @@ if ( ! class_exists( 'LSX_TO_Search' ) ) {
 			add_action( 'activated_plugin', array( $this, 'activated_plugin' ) );
 
 			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-			
-			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-admin.php');
+			require_once( LSX_TO_SEARCH_PATH . '/classes/class-lsx-to-search-admin.php' );
 			if ( ! is_admin() ) {
-				require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-frontend.php');
+				require_once( LSX_TO_SEARCH_PATH . '/classes/class-lsx-to-search-frontend.php' );
 			}
-			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-facetwp.php');
+			require_once( LSX_TO_SEARCH_PATH . '/classes/class-lsx-to-search-facetwp.php' );
 
 			// flush_rewrite_rules()
 			register_activation_hook( LSX_TO_SEARCH_CORE, array( $this, 'register_activation_hook' ) );
 
-			//require_once(LSX_TO_SEARCH_PATH . '/classes/class-facetwp-destination-hierarchy.php');
+			//require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-destination-facet.php');
 			//add_action( 'facetwp_facet_types', array( $this, 'register_facet' ) );
 		}
 		/**
@@ -103,9 +102,9 @@ if ( ! class_exists( 'LSX_TO_Search' ) ) {
 				$facet_data = FWP()->helper->get_facets();
 			}
 			$this->facet_data['search_form'] = array(
-			    'name' => 'search_form',
-                'label' => __( 'Search Form', 'to-search' )
-            );
+				'name' => 'search_form',
+				'label' => __( 'Search Form', 'to-search' )
+			);
 
 			if ( is_array( $facet_data ) && ! empty( $facet_data ) ) {
 				foreach ( $facet_data as $facet ) {

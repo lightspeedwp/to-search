@@ -763,7 +763,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		global $wpdb;
 
 		$values = array();
-		$select = "f.facet_value, f.facet_display_value";
+		$select = 'f.facet_value, f.facet_display_value';
 		$from = "{$wpdb->prefix}facetwp_index f";
 		$where = "f.facet_source = '{$facet_source}'";
 

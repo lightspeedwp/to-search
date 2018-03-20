@@ -124,6 +124,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 
 			if ( '' === $title && ! empty( $meta_key ) ) {
 				//$params = false;
+				NULL;
 			}
 		}
 
@@ -181,10 +182,10 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 		if ( ( 'default' === $params['template_name'] || 'wp' === $params['template_name'] )
 			&& false !== $search_slug && false !== $this->options && isset( $this->options[ $search_slug ][ 'disable_' . $option_slug . 'price_sorting' ] )
 			&& 'on' === $this->options[ $search_slug ][ 'disable_' . $option_slug . 'price_sorting' ] ) {
-
+					NULL;
 			// Do nothing
 
-		} elseif ( 'tour' === $search_slug || 'accommodation' === $search_slug || 'display' === $search_slug ) {
+		}elseif ( 'tour' === $search_slug || 'accommodation' === $search_slug || 'display' === $search_slug ) {
 			$options['price_asc'] = array(
 				'label' => __( 'Price (Highest)', 'lsx' ),
 				'query_args' => array(
