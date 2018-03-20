@@ -1,10 +1,9 @@
 <?php
-if (!class_exists( 'LSX_TO_Search' ) ) {
+if ( ! class_exists( 'LSX_TO_Search' ) ) {
 	/**
 	 * LSX Search Main Class
 	 */
 	class LSX_TO_Search {
-		
 		/**
 		 * The plugins slug, used for the text domain
 		 *
@@ -24,7 +23,7 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 		 *
 		 * @var      string
 		 */
-		public $post_types = array();	
+		public $post_types = array();
 
 		/**
 		 * Holds the taxonomies that need search settings.
@@ -45,30 +44,30 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 		 *
 		 * @var      string
 		 */
-		public $layout = '2cr';	
+		public $layout = '2cr';
 
 		/**
 		 * Holds the array of facets
 		 *
 		 * @var      array
 		 */
-		public $facet_data = false;	
+		public $facet_data = false;
 
 
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
-			add_action('init',array($this,'set_vars'));
-			add_action('init',array($this,'set_facetwp_vars'));
+			add_action( 'init', array( $this, 'set_vars' ) );
+			add_action( 'init', array( $this, 'set_facetwp_vars' ) );
 
-			// Make TO last plugin to load
+			// Make TO last plugin to load.
 			add_action( 'activated_plugin', array( $this, 'activated_plugin' ) );
 
-			add_action('init',array($this,'load_plugin_textdomain'));
+			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 			
 			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-admin.php');
-			if(!is_admin()) {
+			if ( ! is_admin() ) {
 				require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-frontend.php');
 			}
 			require_once(LSX_TO_SEARCH_PATH . '/classes/class-to-search-facetwp.php');
@@ -79,53 +78,52 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 			//require_once(LSX_TO_SEARCH_PATH . '/classes/class-facetwp-destination-hierarchy.php');
 			//add_action( 'facetwp_facet_types', array( $this, 'register_facet' ) );
 		}
-		
 		/**
-		 * sets the variables
+		 * Sets the variables.
 		 */
-		public function set_vars(){
-			$this->options = get_option('_lsx-to_settings',false);
+		public function set_vars() {
+			$this->options = get_option( '_lsx-to_settings', false );
 
-			$this->post_types = apply_filters('lsx_to_search_post_types',array());
-			$this->taxonomies = apply_filters('lsx_to_search_taxonomies',array());
+			$this->post_types = apply_filters( 'lsx_to_search_post_types', array() );
+			$this->taxonomies = apply_filters( 'lsx_to_search_taxonomies', array() );
 
 			$this->post_type_slugs = false;
-			if(!empty($this->post_types)){
-				foreach($this->post_types as $key => $value){
-					$this->post_type_slugs[strtolower($value)] = $key;
+			if ( ! empty( $this->post_types ) ) {
+				foreach ( $this->post_types as $key => $value ) {
+					$this->post_type_slugs[ strtolower( $value ) ] = $key;
 				}
 			}
 		}
-		
 		/**
-		 * sets the facetwp variable
+		 * Sets the facetwp variable.
 		 */
-		public function set_facetwp_vars(){
+		public function set_facetwp_vars() {
 			$facet_data = null;
-			if(class_exists('FacetWP')){
+			if ( class_exists( 'FacetWP' ) ) {
 				$facet_data = FWP()->helper->get_facets();
 			}
-			$this->facet_data['search_form'] = array('name'=>'search_form','label'=>__('Search Form','to-search'));
+			$this->facet_data['search_form'] = array(
+			    'name' => 'search_form',
+                'label' => __( 'Search Form', 'to-search' )
+            );
 
-			if(is_array($facet_data) && !empty($facet_data)){
-				foreach($facet_data as $facet){
-					$this->facet_data[$facet['name']] = $facet;
+			if ( is_array( $facet_data ) && ! empty( $facet_data ) ) {
+				foreach ( $facet_data as $facet ) {
+					$this->facet_data[ $facet['name'] ] = $facet;
 				}
 			}
 		}
 
-		function register_facet ( $facet_types ) {
+		function register_facet( $facet_types ) {
 			$facet_types['destinations'] = new TO_Search_Destination_Facet();
 			return $facet_types;
 		}
-	
 		/**
 		 * Load the plugin text domain for translation.
 		 */
 		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'to-search', FALSE, basename( LSX_TO_SEARCH_PATH ) . '/languages');
+			load_plugin_textdomain( 'to-search', false, basename( LSX_TO_SEARCH_PATH ) . '/languages' );
 		}
-	
 		/**
 		 * Make TO last plugin to load.
 		 */
@@ -143,7 +141,6 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 				}
 			}
 		}
-	
 		/**
 		 * On plugin activation
 		 */
@@ -152,7 +149,6 @@ if (!class_exists( 'LSX_TO_Search' ) ) {
 				set_transient( '_tour_operators_search_flush_rewrite_rules', 1, 30 );
 			}
 		}
-		
 		/**
 		 * On plugin activation (check)
 		 */

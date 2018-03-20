@@ -16,7 +16,6 @@ function fwp_destination_facet( $facet_types ) {
 
 class TO_Search_Destination_Facet
 {
-
     function __construct() {
         $this->label = __( 'Destinations', 'fwp' );
     }
@@ -31,7 +30,7 @@ class TO_Search_Destination_Facet
 		$from_clause = $wpdb->prefix . 'facetwp_index f';
 		$where_clause = $params['where_clause'];
 
-		// Count setting
+		// Count setting.
 		$limit = ctype_digit( $facet['count'] ) ? $facet['count'] : 10;
 
 		$from_clause = apply_filters( 'facetwp_facet_from', $from_clause, $facet );
@@ -70,7 +69,7 @@ class TO_Search_Destination_Facet
             $orderby = 'f.facet_value ASC';
         }
 
-        // Visible results
+        // Visible results.
         $num_visible = ctype_digit( $facet['count'] ) ? $facet['count'] : 10;
 
         $max_depth = 0;

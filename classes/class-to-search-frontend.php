@@ -16,9 +16,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action( 'init',array( $this, 'set_vars' ) );
-		add_action( 'init',array( $this, 'set_facetwp_vars' ) );
-		add_action( 'init',array( $this, 'remove_posts_and_pages_from_search' ),99 );
+		add_action( 'init', array( $this, 'set_vars' ) );
+		add_action( 'init', array( $this, 'set_facetwp_vars' ) );
+		add_action( 'init', array( $this, 'remove_posts_and_pages_from_search' ), 99 );
 
 		add_action( 'lsx_to_settings_current_tab', array( $this, 'set_settings_current_tab' ) );
 		add_filter( 'body_class', array( $this, 'body_class' ), 15, 1 );
@@ -28,16 +28,16 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_action( 'wp_head', array( $this, 'wp_head' ), 11 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ), 1499 );
 
-		// Redirects
+		// Redirects.
 		add_filter( 'template_include', array( $this, 'search_template_include' ), 99 );
 		add_action( 'template_redirect', array( $this, 'pretty_search_redirect' ) );
-		add_filter( 'pre_get_posts',  array( $this, 'pretty_search_parse_query' ) );
+		add_filter( 'pre_get_posts', array( $this, 'pretty_search_parse_query' ) );
 
-		// Layout Filter
-		add_filter( 'lsx_layout', array( $this, 'lsx_layout' ), 20,1 );
+		// Layout Filter.
+		add_filter( 'lsx_layout', array( $this, 'lsx_layout' ), 20, 1 );
 		add_filter( 'lsx_layout_selector', array( $this, 'lsx_layout_selector' ), 10, 4 );
 
-		add_action( 'pre_get_posts', array( $this, 'price_sorting' ),100 );
+		add_action( 'pre_get_posts', array( $this, 'price_sorting' ), 100 );
 
 		add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
 
@@ -132,10 +132,10 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			add_action( 'lsx_content_bottom', array( $this, 'lsx_content_bottom' ) );
 
 			if ( isset( $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) && '1c' !== $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) {
-				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ),150 );
+				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ), 150 );
 				add_filter( 'lsx_sidebar_enable', array( $this, 'lsx_sidebar_enable' ), 10, 1 );
 			} elseif ( '1c' === $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) {
-				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ),150 );
+				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ), 150 );
 			}
 		}
 	}
@@ -189,10 +189,10 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$search_query = get_query_var( 's' );
 			$engine = '';
 
-			//If the search was triggered by a supplemental engine
+			// If the search was triggered by a supplemental engine.
 			if ( isset( $_GET['engine'] ) && 'default' !== $_GET['engine'] ) {
 				$engine = $_GET['engine'];
-				set_query_var( 'engine',$engine );
+				set_query_var( 'engine', $engine );
 				$engine = array_search( $engine,$this->post_type_slugs ) . '/';
 			}
 
@@ -211,7 +211,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$redirect_url = home_url( "/{$search_base}/" . $engine . urlencode( $search_query ) );
 
 			if ( ! empty( $vars_to_maintain ) ) {
-				$redirect_url .= '?' . implode( '&',$vars_to_maintain );
+				$redirect_url .= '?' . implode( '&', $vars_to_maintain );
 			}
 
 			wp_redirect( $redirect_url );
@@ -345,7 +345,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			} else {
 				$search_slug = 'display';
 			}
-		} elseif ( is_post_type_archive( array_keys( $this->post_types ) )||is_tax( array_keys( $this->taxonomies ) ) ) {
+		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$search_slug = get_post_type();
 			$option_slug = 'archive_';
 		}
@@ -357,7 +357,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				$query->set('nopaging', true);
 			}*/
 
-			if ( isset( $this->options[ $search_slug ][ 'enable_' . $option_slug . 'price_sorting' ] )	&& 'on' === $this->options[ $search_slug ][ 'enable_' . $option_slug . 'price_sorting' ] ) {
+			if ( isset( $this->options[ $search_slug ][ 'enable_' . $option_slug . 'price_sorting' ] ) && 'on' === $this->options[ $search_slug ][ 'enable_' . $option_slug . 'price_sorting' ] ) {
 
 				$query->set( 'orderby', 'meta_value_num' );
 				$query->set( 'order', 'DESC' );

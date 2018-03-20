@@ -16,8 +16,8 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action( 'init',array( $this, 'set_vars' ) );
-		add_action( 'init',array( $this, 'set_facetwp_vars' ) );
+		add_action( 'init', array( $this, 'set_vars' ) );
+		add_action( 'init', array( $this, 'set_facetwp_vars' ) );
 
 		add_filter( 'facetwp_indexer_row_data', array( $this, 'facetwp_index_row_data' ), 10, 2 );
 		add_filter( 'facetwp_index_row', array( $this, 'facetwp_index_row' ), 10, 2 );
@@ -127,7 +127,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			}
 		}
 
-		// If its a price, save the value as a standard number
+		// If its a price, save the value as a standard number.
 		if ( 'cf/price' === $class->facet['source'] ) {
 			$params['facet_value'] = preg_replace( '/[^0-9.]/', '', $params['facet_value'] );
 			$params['facet_value'] = ltrim( $params['facet_value'], '.' );
@@ -135,7 +135,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			$params['facet_display_value'] = $params['facet_value'];
 		}
 
-		// If its a duration, save the value as a standard number
+		// If its a duration, save the value as a standard number.
 		if ( 'cf/duration' === $class->facet['source'] ) {
 			$params['facet_value'] = preg_replace( '/[^0-9 ]/', '', $params['facet_value'] );
 			$params['facet_value'] = trim( $params['facet_value'] );
@@ -204,7 +204,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			);
 		}
 
-		if ( ('default' === $params['template_name'] || 'wp' === $params['template_name'])
+		if ( ( 'default' === $params['template_name'] || 'wp' === $params['template_name'] )
 			&& false !== $search_slug && false !== $this->options && isset( $this->options[ $search_slug ][ 'disable_' . $option_slug . 'date_sorting' ] )
 			&& 'on' === $this->options[ $search_slug ][ 'disable_' . $option_slug . 'date_sorting' ] ) {
 
@@ -212,7 +212,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			unset( $options['date_asc'] );
 		}
 
-		if ( ('default' === $params['template_name'] || 'wp' === $params['template_name'])
+		if ( ( 'default' === $params['template_name'] || 'wp' === $params['template_name'] )
 			&& false !== $search_slug && false !== $this->options && isset( $this->options[ $search_slug ][ 'disable_' . $option_slug . 'az_sorting' ] )
 			&& 'on' === $this->options[ $search_slug ][ 'disable_' . $option_slug . 'az_sorting' ] ) {
 
@@ -233,7 +233,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			<form class="search-form to-search-form" action="/" method="get">
 				<div class="input-group">
 					<div class="field">
-						<input class="search-field form-control" name="s" type="search" placeholder="<?php esc_html_e( 'Search', 'to-search' ); ?>..." autocomplete="off" value="<?php echo get_search_query() ?>">
+						<input class="search-field form-control" name="s" type="search" placeholder="<?php esc_html_e( 'Search', 'to-search' ); ?>..." autocomplete="off" value="<?php echo get_search_query(); ?>">
 					</div>
 					<div class="field submit-button">
 						<button class="search-submit btn" type="submit"><?php esc_html_e( 'Search', 'to-search' ); ?></button>
