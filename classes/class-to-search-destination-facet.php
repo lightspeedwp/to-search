@@ -63,9 +63,7 @@ class TO_Search_Destination_Facet {
 		$orderby = 'counter DESC, f.facet_display_value ASC';
 		if ( 'display_value' == $facet['orderby'] ) {
 			$orderby = 'f.facet_display_value ASC';
-		}
-
-		elseif ( 'raw_value' == $facet['orderby'] ) {
+		} elseif ( 'raw_value' == $facet['orderby'] ) {
 			$orderby = 'f.facet_value ASC';
 		}
 
@@ -142,7 +140,7 @@ class TO_Search_Destination_Facet {
 		GROUP BY f.facet_value
 		ORDER BY $orderby";
 
-		$results = $wpdb->get_results( $sql );
+		$results = $wpdb->get_results( $sql ); // WPCS: unprepared SQL OK.
 
 		$output .= print_r( $results, true );
 
@@ -290,7 +288,7 @@ class TO_Search_Destination_Facet {
 	function settings_html() {
 ?>
 		<tr>
-			<td><?php _e( 'Sort by', 'fwp' ); ?>:</td>
+			<td><?php esc_attr_e( 'Sort by', 'fwp' ); ?>:</td>
 			<td>
 				<select class="facet-orderby">
 					<option value="count"><?php esc_attr_e( 'Highest Count', 'fwp' ); ?></option>
@@ -301,7 +299,7 @@ class TO_Search_Destination_Facet {
 		</tr>
 		<tr>
 			<td>
-				<?php _e( 'Count', 'fwp' ); ?>:
+				<?php esc_attr_e( 'Count', 'fwp' ); ?>:
 				<div class="facetwp-tooltip">
 					<span class="icon-question">?</span>
 					<div class="facetwp-tooltip-content"><?php esc_attr_e( 'The maximum number of facet choices to show', 'fwp' ); ?></div>
@@ -350,7 +348,7 @@ class FacetWP_Facet_Links {
 		ORDER BY f.depth, counter DESC, f.facet_display_value ASC
 		LIMIT $limit";
 
-		return $wpdb->get_results( $sql, ARRAY_A );
+		return $wpdb->get_results( $sql, ARRAY_A ); // WPCS: unprepared SQL OK.
 	}
 
 
@@ -375,7 +373,7 @@ class FacetWP_Facet_Links {
 
 		}
 
-		$results = $wpdb->get_results( $sql );
+		$results = $wpdb->get_results( $sql ); // WPCS: unprepared SQL OK.
 
 		$output .= print_r( $results, true );
 
@@ -411,9 +409,6 @@ class FacetWP_Facet_Links {
 		}
 
 		return $output;
-
-
-
 		return $output;
 	}
 

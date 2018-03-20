@@ -103,6 +103,7 @@ if ( ! class_exists( 'LSX_TO_Search' ) ) {
 			}
 			$this->facet_data['search_form'] = array(
 				'name' => 'search_form',
+				// @codingStandardsIgnoreLine
 				'label' => __( 'Search Form', 'to-search' )
 			);
 
@@ -126,6 +127,7 @@ if ( ! class_exists( 'LSX_TO_Search' ) ) {
 		/**
 		 * Make TO last plugin to load.
 		 */
+		// @codingStandardsIgnoreLine
 		public function activated_plugin() {
 			if ( $plugins = get_option( 'active_plugins' ) ) {
 				$search = preg_grep( '/.*\/tour-operator\.php/', $plugins );

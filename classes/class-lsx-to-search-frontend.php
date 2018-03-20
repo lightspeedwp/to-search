@@ -774,7 +774,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		}
 
-		$response = $wpdb->get_results( "SELECT {$select} FROM {$from} WHERE {$where}" );
+		$response = $wpdb->get_results( "SELECT {$select} FROM {$from} WHERE {$where}" ); // WPCS: unprepared SQL OK.
 
 		if ( ! empty( $response ) ) {
 			foreach ( $response as $re ) {
