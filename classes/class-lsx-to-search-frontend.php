@@ -13,6 +13,17 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public $search_slug = false;
 
 	/**
+	 * Determine weather or not search is enabled for this page.
+	 *
+	 * @var boolean
+	 */
+	public $search_enabled = false;
+
+	public $search_core_suffix = false;
+
+	public $search_prefix = false;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -37,9 +48,14 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_filter( 'lsx_layout', array( $this, 'lsx_layout' ), 20, 1 );
 		add_filter( 'lsx_layout_selector', array( $this, 'lsx_layout_selector' ), 10, 4 );
 
+		add_action( 'lsx_search_sidebar_top', array( $this, 'search_sidebar_top' ) );
+
 		add_action( 'pre_get_posts', array( $this, 'price_sorting' ), 100 );
 
-		add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
+		//add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
+
+		add_action( 'lsx_content_bottom', array( $this, 'facetwp_tempate_close' ) );
+		add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));
 
 		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
 
@@ -273,6 +289,27 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	}
 
 	/**
+	 * Outputs the Search Title Facet
+	 */
+	public function search_sidebar_top() {
+		if ( ! is_search() ) {
+			foreach ( $this->options['display'][ $this->search_prefix . '_facets' ] as $facet => $facet_useless ) {
+
+				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
+					echo wp_kses_post( '<div class="row">' );
+					$this->display_facet_default( $facet );
+					echo wp_kses_post( '</div>' );
+					unset( $this->options['display'][ $this->search_prefix . '_facets' ][ $facet ] );
+				}
+			}
+		} else {
+			echo wp_kses_post( '<div class="row">' );
+			$this->display_facet_search();
+			echo wp_kses_post( '</div>' );
+		}
+	}
+
+	/**
 	 * Change the primary and secondary column classes.
 	 */
 	public function lsx_layout_selector( $return_class, $class, $layout, $size ) {
@@ -431,7 +468,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		</div>
 
-		<?php do_action( 'lsx_to_search_bottom' ); ?>
+		<?php //do_action( 'lsx_to_search_bottom' ); ?>
 	<?php
 	}
 
@@ -479,6 +516,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			}
 			?>
 				<div id="secondary" class="facetwp-sidebar widget-area <?php echo esc_attr( lsx_sidebar_class() ); ?>" role="complementary">
+
+					<?php do_action( 'lsx_search_sidebar_top' ); ?>
+
 					<?php if ( isset( $this->options[ $this->search_slug ][ 'display_' . $option_slug . 'result_count' ] ) && 'on' === $this->options[ $this->search_slug ][ 'display_' . $option_slug . 'result_count' ] ) { ?>
 						<div class="row hidden-xs">
 							<div class="col-xs-12 facetwp-item facetwp-results">
@@ -501,14 +541,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 									</div>
 								</div>
 								<div class="row">
-									<?php
-										// Search
-										foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-											if ( 'search_form' === $facet ) {
-												$this->display_facet_search();
-											}
-										}
-									?>
 									<?php
 										// Slider
 										foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
@@ -741,6 +773,52 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		$return = preg_replace( '/[\t]+/', ' ', $return );
 
 		return $return;
+	}
+
+	/**
+	 * Outputs bottom.
+	 */
+	public function facet_bottom_bar() {
+		?>
+		<?php
+		$show_pagination = true;
+		if ( isset( $this->options['display'][ $this->search_prefix . '_az_pagination' ] ) ) {
+			$az_pagination = $this->options['display'][ $this->search_prefix . '_az_pagination' ];
+		} else {
+			$az_pagination = false;
+		}
+
+		$show_per_page_combo = empty( $this->options['display'][ $this->search_prefix . '_disable_per_page' ] );
+		$show_sort_combo     = empty( $this->options['display'][ $this->search_prefix . '_disable_all_sorting' ] );
+
+		$show_pagination     = apply_filters( 'lsx_search_bottom_show_pagination', $show_pagination );
+		$pagination_visible  = apply_filters( 'lsx_search_bottom_pagination_visible', $pagination_visible );
+		$show_per_page_combo = apply_filters( 'lsx_search_bottom_show_per_page_combo', $show_per_page_combo );
+		$show_sort_combo     = apply_filters( 'lsx_search_bottom_show_sort_combo', $show_sort_combo );
+
+		if ( $show_pagination || ! empty( $az_pagination ) ) {
+			?>
+			<div id="facetwp-bottom">
+				<div class="row facetwp-bottom-row-1">
+					<div class="col-xs-12">
+						<?php do_action( 'lsx_search_facetwp_bottom_row' ); ?>
+
+						<?php if ( $show_sort_combo ) { ?>
+							<?php echo do_shortcode( '[facetwp sort="true"]' ); ?>
+						<?php } ?>
+
+						<?php if ( ( $show_pagination && $show_per_page_combo ) || $show_per_page_combo ) { ?>
+							<?php echo do_shortcode( '[facetwp per_page="true"]' ); ?>
+						<?php } ?>
+
+						<?php if ( $show_pagination ) { ?>
+							<?php echo do_shortcode( '[facetwp pager="true"]' ); ?>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+		<?php
+		}
 	}
 
 	/**
