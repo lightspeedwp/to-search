@@ -321,9 +321,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
 				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
 					echo wp_kses_post( '<div class="row">' );
-					$this->display_facet_default( $facet );
+					$this->display_facet_default( $facet, false );
 					echo wp_kses_post( '</div>' );
-					unset( $this->options['display'][ $this->search_prefix . '_facets' ][ $facet ] );
+					unset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ][ $facet ] );
 				}
 			}
 		} else {
@@ -614,7 +614,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	/**
 	 * Display facet default.
 	 */
-	public function display_facet_default( $facet ) {
+	public function display_facet_default( $facet, $display_title = true ) {
 		if ( ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) ) {
 			$continent_class = 'continent-visible';
 		} else {
@@ -622,7 +622,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		}
 		?>
 		<div class="col-xs-12 facetwp-item <?php echo esc_attr( $continent_class ); ?>">
-			<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+			<?php if ( true === $display_title ) { ?>
+				<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+			<?php } ?>
 			<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 		</div>
 		<?php
