@@ -40,17 +40,30 @@ function lsx_to_search_top() {
 	$show_sort_combo     = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ];
 	$az_pagination       = $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'az_pagination' ];
 
+	$show_map = false;
+	if ( isset( $this->options[ $lsx_to_search->search_slug ][ $option_slug . 'layout_map' ] ) && ! empty( $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'layout_map' ] ) ) {
+		$show_map = true;
+	}	
+	$facet_row_classes = apply_filters( 'lsx_to_search_top_facetwp_row_classes', '' );
 	$pagination_visible  = false;
 	?>
 	<div id="facetwp-top">
 		<?php if ( $show_sort_combo || ( $show_pagination && $show_per_page_combo ) ) { ?>
 			<div class="row facetwp-top-row-1 hidden-xs">
 				<div class="col-xs-12">
-					<?php if ( $show_sort_combo ) { ?>
+				
+					<?php if ( true === $show_map ) { ?>
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#to-search-list"><?php echo esc_html__( 'List', 'to-search' ); ?></a></li>
+							<li><a data-toggle="tab" href="#to-search-map"><?php echo esc_html__( 'Map', 'to-search' ); ?></a></li>
+						</ul>
+					<?php } ?>
+
+					<?php if ( $show_sort_combo && false === $show_map ) { ?>
 						<?php echo do_shortcode( '[facetwp sort="true"]' ); ?>
 					<?php } ?>
 
-					<?php if ( $show_pagination && $show_per_page_combo ) { ?>
+					<?php if ( $show_pagination && $show_per_page_combo && false === $show_map ) { ?>
 						<?php echo do_shortcode( '[facetwp per_page="true"]' ); ?>
 					<?php } ?>
 

@@ -54,9 +54,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		//add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
 
-		add_action( 'lsx_content_bottom', array( $this, 'facetwp_tempate_close' ) );
-		add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));
-
 		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
 
 		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
@@ -153,6 +150,10 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			} elseif ( '1c' === $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) {
 				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ), 150 );
 			}
+
+			add_action( 'lsx_content_bottom', array( $this, 'facetwp_tempate_close' ) );
+			add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));			
+
 		}
 	}
 
@@ -294,7 +295,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public function search_sidebar_top() {
 		if ( ! is_search() ) {
 			foreach ( $this->options['display'][ $this->search_prefix . '_facets' ] as $facet => $facet_useless ) {
-
 				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
 					echo wp_kses_post( '<div class="row">' );
 					$this->display_facet_default( $facet );
@@ -425,17 +425,11 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$show_map = true;
 		}
 		?>
-
 		<?php do_action( 'lsx_to_search_top' ); ?>
 
 		<div class="facetwp-template">
-
 		<?php
 		if ( true === $show_map ) {
-			echo '<ul class="nav nav-tabs">';
-			echo '<li class="active"><a data-toggle="tab" href="#to-search-list">' . esc_html__( 'List', 'to-search' ) . '</a></li>';
-			echo '<li><a data-toggle="tab" href="#to-search-map">' . esc_html__( 'Map', 'to-search' ) . '</a></li>';
-			echo '</ul>';
 			echo '<div class="tab-content">';
 			echo '<div id="to-search-list" class="tab-pane fade in active">';
 		}
@@ -465,9 +459,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			echo '</div>';
 		}
 		?>
-
 		</div>
-
 		<?php //do_action( 'lsx_to_search_bottom' ); ?>
 	<?php
 	}
