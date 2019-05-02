@@ -12,6 +12,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 */
 	public $search_slug = false;
 
+	public $facet_data = false;	
+
 	/**
 	 * Determine weather or not search is enabled for this page.
 	 *
@@ -58,6 +60,28 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
 	}
+
+	/**
+	 * Sets the FacetWP variables.
+	 */
+	public function set_facetwp_vars() {
+		if ( class_exists( 'FacetWP' ) ) {
+			$facet_data = FWP()->helper->get_facets();
+		}
+
+		$this->facet_data = array();
+
+		$this->facet_data['search_form'] = array(
+			'name' => 'search_form',
+			'label' => esc_html__( 'Search Form', 'lsx-search' ),
+		);
+
+		if ( ! empty( $facet_data ) && is_array( $facet_data ) ) {
+			foreach ( $facet_data as $facet ) {
+				$this->facet_data[ $facet['name'] ] = $facet;
+			}
+		}
+	}	
 
 	/**
 	 * Remove posts and pages from search
