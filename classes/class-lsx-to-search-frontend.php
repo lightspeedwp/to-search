@@ -318,7 +318,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 */
 	public function search_sidebar_top() {
 		if ( ! is_search() ) {
-			foreach ( $this->options['display'][ $this->search_prefix . '_facets' ] as $facet => $facet_useless ) {
+			foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
 				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
 					echo wp_kses_post( '<div class="row">' );
 					$this->display_facet_default( $facet );
