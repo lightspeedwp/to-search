@@ -49,15 +49,11 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		// Layout Filter.
 		add_filter( 'lsx_layout', array( $this, 'lsx_layout' ), 20, 1 );
 		add_filter( 'lsx_layout_selector', array( $this, 'lsx_layout_selector' ), 10, 4 );
-
 		add_action( 'lsx_search_sidebar_top', array( $this, 'search_sidebar_top' ) );
-
 		add_action( 'pre_get_posts', array( $this, 'price_sorting' ), 100 );
 
 		//add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
-
 		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
-
 		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
 	}
 
@@ -176,8 +172,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			}
 
 			add_action( 'lsx_content_bottom', array( $this, 'facetwp_tempate_close' ) );
-			add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));			
-
+			add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));	
+			
+			add_filter( 'facetwp_facet_html', array( $this, 'search_facet_html' ), 10, 2 );
 		}
 	}
 
@@ -961,6 +958,42 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		$keyword = str_replace( '+', ' ', $keyword );
 		return $keyword;
 	}
+
+	/**
+	 * Overrides the search facet HTML
+	 * @param $output
+	 * @param $params
+	 *
+	 * @return string
+	 */
+	public function search_facet_html( $output, $params ) {
+		if ( 'search' == $params['facet']['type'] ) {
+
+			$value = (array) $params['selected_values'];
+			$value = empty( $value ) ? '' : stripslashes( $value[0] );
+			$placeholder = isset( $params['facet']['placeholder'] ) ? $params['facet']['placeholder'] : __( 'Search...', 'lsx-search' );
+			$placeholder = facetwp_i18n( $placeholder );
+
+			ob_start();
+			?>
+			<div class="col-xs-12 facetwp-item facetwp-form">
+				<div class="search-form lsx-search-form">
+					<div class="input-group facetwp-search-wrap">
+						<div class="field">
+							<input class="facetwp-search search-field form-control" type="text" placeholder="<?php echo $placeholder; ?>" autocomplete="off" value="<?php echo $value; ?>">
+						</div>
+
+						<div class="field submit-button">
+							<button class="search-submit btn facetwp-btn" type="submit"><?php esc_html_e( 'Search2', 'lsx-search' ); ?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+			$output = ob_get_clean();
+		}
+		return $output;
+	}	
 }
 
 global $lsx_to_search;
