@@ -297,8 +297,13 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
 			if ( is_search() ) {
-				$slug = 'search';
-				$id = 'search';
+				if ( 'search' === $this->search_slug ) {
+					$slug = 'search';
+					$id = 'search';
+				} else {
+					$slug = 'facets';
+					$id = 'archive';				
+				}
 			} else {
 				$slug = 'facets';
 				$id = 'archive';
@@ -329,6 +334,13 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			echo wp_kses_post( '<div class="row">' );
 			$this->display_facet_search();
 			echo wp_kses_post( '</div>' );
+
+			//unset any other search facets
+			foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
+					unset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ][ $facet ] );
+				}
+			}			
 		}
 	}
 
