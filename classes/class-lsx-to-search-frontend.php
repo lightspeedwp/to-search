@@ -815,21 +815,21 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public function facet_bottom_bar() {
 
 		if ( is_search() ) {
-			if ( 'search' === $lsx_to_search->search_slug ) {
+			if ( 'search' === $this->search_slug ) {
 				$option_slug = '';
 			} else {
 				$option_slug = 'archive_';
 			}
-		} elseif ( is_post_type_archive( array_keys( $lsx_to_search->post_types ) ) || is_tax( array_keys( $lsx_to_search->taxonomies ) ) ) {
+		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$option_slug = 'archive_';
 		} else {
 			return '';
 		}
 
-		$show_pagination     = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'pagination' ] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'pagination' ];
-		$show_per_page_combo = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'per_page' ] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'per_page' ];
-		$show_sort_combo     = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ];
-		$az_pagination       = $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'az_pagination' ];
+		$show_pagination     = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ];
+		$show_per_page_combo = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ];
+		$show_sort_combo     = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ];
+		$az_pagination       = $this->options[ $this->search_slug ][ $option_slug . 'az_pagination' ];
 
 		$show_pagination     = apply_filters( 'lsx_to_search_bottom_show_pagination', $show_pagination );
 		$pagination_visible  = apply_filters( 'lsx_to_search_bottom_pagination_visible', $pagination_visible );
