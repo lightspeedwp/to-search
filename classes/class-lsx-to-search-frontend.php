@@ -113,7 +113,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		if ( is_search() ) {
 			$classes[] = 'archive-tour-operator';
 		}
-
+		if ( true === $this->search_enabled ) {	
+			$classes[] = 'lsx-to-search-enabled';
+		}
 		return $classes;
 	}
 
