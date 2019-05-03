@@ -146,16 +146,17 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$engine = get_query_var( 'engine' );
 			if ( false !== $engine && 'default' !== $engine && '' !== $engine ) {
 				$search_slug = $engine;
+				$option_slug_1 = 'facets';
+				$option_slug_2 = 'archive';
+			} else {
+				$option_slug_1 = 'search';
+				$option_slug_2 = 'search';
 			}
-
-			$option_slug_1 = 'search';
-			$option_slug_2 = 'search';
 		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$search_slug = get_post_type();
-
 			$option_slug_1 = 'facets';
 			$option_slug_2 = 'archive';
-		}
+		}	
 
 		if ( false !== $search_slug && false !== $this->options && isset( $this->options[ $search_slug ][ 'enable_' . $option_slug_1 ] ) ) {
 			$this->search_slug = $search_slug;
@@ -339,11 +340,16 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
 			if ( is_search() ) {
-				$slug = 'search';
-				$id   = 'search';
+				if ( 'search' === $this->search_slug ) {
+					$slug = 'search';
+					$id = 'search';
+				} else {
+					$slug = 'facets';
+					$id = 'archive';				
+				}
 			} else {
 				$slug = 'facets';
-				$id   = 'archive';
+				$id = 'archive';
 			}
 
 			if ( false !== $this->options && isset( $this->options[ $this->search_slug ][ 'enable_' . $slug ] ) && isset( $this->options[ $this->search_slug ][ $id . '_layout' ] ) && '' !== $this->options[ $this->search_slug ][ $id . '_layout' ] ) {
