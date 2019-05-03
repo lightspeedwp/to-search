@@ -859,6 +859,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			</div>
 		<?php
 		}
+		
 	}
 
 	/**
