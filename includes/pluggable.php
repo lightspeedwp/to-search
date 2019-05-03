@@ -28,11 +28,7 @@ function lsx_to_search_top() {
 	global $lsx_to_search;
 
 	if ( is_search() ) {
-		if ( 'search' === $lsx_to_search->search_slug ) {
-			$option_slug = '';
-		} else {
-			$option_slug = 'archive_';
-		}
+		$option_slug = '';
 	} elseif ( is_post_type_archive( array_keys( $lsx_to_search->post_types ) ) || is_tax( array_keys( $lsx_to_search->taxonomies ) ) ) {
 		$option_slug = 'archive_';
 	} else {

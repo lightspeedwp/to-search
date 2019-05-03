@@ -146,12 +146,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$engine = get_query_var( 'engine' );
 			if ( false !== $engine && 'default' !== $engine && '' !== $engine ) {
 				$search_slug = $engine;
-				$option_slug_1 = 'facets';
-				$option_slug_2 = 'archive';
-			} else {
-				$option_slug_1 = 'search';
-				$option_slug_2 = 'search';
-			}
+			} 
+			$option_slug_1 = 'search';
+			$option_slug_2 = 'search';
 		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$search_slug = get_post_type();
 			$option_slug_1 = 'facets';
@@ -542,7 +539,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
 			if ( is_search() ) {
 				$option_slug = '';
-				$facet_slug = '';
 			} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 				$option_slug = 'archive_';
 			}
@@ -815,11 +811,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public function facet_bottom_bar() {
 
 		if ( is_search() ) {
-			if ( 'search' === $this->search_slug ) {
-				$option_slug = '';
-			} else {
-				$option_slug = 'archive_';
-			}
+			$option_slug = '';
 		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$option_slug = 'archive_';
 		} else {
