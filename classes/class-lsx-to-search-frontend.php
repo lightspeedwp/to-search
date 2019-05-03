@@ -143,7 +143,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		if ( is_search() ) {
 			$search_slug = 'display';
-
 			$engine = get_query_var( 'engine' );
 			if ( false !== $engine && 'default' !== $engine && '' !== $engine ) {
 				$search_slug = $engine;
