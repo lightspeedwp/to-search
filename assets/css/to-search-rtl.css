@@ -47,7 +47,7 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 .archive.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-type-slider .noUi-target, .search-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-type-slider .noUi-target, .search-no-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-type-slider .noUi-target { background-color: #FFF; border-radius: 2px; box-shadow: none; padding: 0 15px; }
 
-.archive.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field, .search-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field, .search-no-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field { width: 190px; height: 60px; }
+.archive.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field, .search-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field, .search-no-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field { width: 190px; height: 60px; border-width: 1px; }
 
 @media (min-width: 768px) { .archive.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field, .search-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field, .search-no-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-form .search-field { min-width: 120px; width: 100%; } }
 

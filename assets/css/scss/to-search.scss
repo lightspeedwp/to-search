@@ -116,6 +116,7 @@
 			.search-field {
 				width: 190px;
 				height: 60px;
+				border-width: 1px;
 				@include media('>=phone') {
 					min-width: 120px;
 					width: 100%;
