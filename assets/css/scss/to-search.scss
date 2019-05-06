@@ -384,19 +384,32 @@
 		padding-bottom: 25px;
 	}
 
-	.facetwp-item.facetwp-form {
-		padding:0px;
+	.facetwp-item {
+		&.facetwp-form {
+			padding:0px;
 
-		.search-form {
-			.input-group {
-				.field:first-child	{
-					width: 90%;
-				}
-				.field:nth-child(2) {
-					width:10%;
+			.search-form {
+				.input-group {
+					.field:first-child	{
+						width: 90%;
+					}
+					.field:nth-child(2) {
+						width:10%;
+					}
 				}
 			}
 		}
+
+		&.no-continent-visible {
+			.facetwp-type-search {
+				margin: 0 -15px;
+				.input-group.facetwp-search-wrap {
+					width: 90%;
+					display: flex;
+				}
+			}
+		}
+
 	}
 }
 
