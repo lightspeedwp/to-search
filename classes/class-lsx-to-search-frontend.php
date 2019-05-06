@@ -350,20 +350,15 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 		if ( false !== $this->search_slug /*&& count( $wp_query->posts ) > 0*/ ) {
 			if ( is_search() ) {
-				if ( 'search' === $this->search_slug ) {
-					$slug = 'search';
-					$id = 'search';
-				} else {
-					$slug = 'facets';
-					$id = 'archive';				
-				}
+				$slug = 'search';
+				$id = 'search';
 			} else {
 				$slug = 'facets';
 				$id = 'archive';
 			}
 
 			if ( false !== $this->options && isset( $this->options[ $this->search_slug ][ 'enable_' . $slug ] ) && isset( $this->options[ $this->search_slug ][ $id . '_layout' ] ) && '' !== $this->options[ $this->search_slug ][ $id . '_layout' ] ) {
-				#$layout = $this->options[ $this->search_slug ][ $id . '_layout' ];
+				$layout = $this->options[ $this->search_slug ][ $id . '_layout' ];
 
 				if ( is_search() || ( is_post_type_archive( tour_operator()->get_active_post_types() ) ) || ( is_tax( array_keys( tour_operator()->get_taxonomies() ) ) ) ) {
 					if ( '2cl' === $layout || '2cr' === $layout ) {
