@@ -15,6 +15,16 @@ import './styles/editor.scss';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 
+const {
+	InspectorControls,
+} = wp.editor;
+const {
+	PanelBody,
+	RangeControl,
+	TextControl,
+	SelectControl,
+} = wp.components;
+
 /**
  * Register: aa Gutenberg Block.
  *
@@ -28,6 +38,34 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
+
+const blockAttributes = {
+	columns: {
+		type: 'number',
+		default: 3,
+	},
+	placeholderText: {
+		type: 'string',
+		default: 'Where do you want to stay?',
+	},
+	searchButtonText: {
+		type: 'string',
+		default: 'Find',
+	},
+	postType: {
+		type: 'string',
+		default: 'tour',
+	},
+	displayFacets: {
+		type: 'string',
+		default: '',
+	},
+	displayFacetsCombo: {
+		type: 'string',
+		default: 'false',
+	},
+};
+
 registerBlockType( 'to-search/to-search-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'TO Search Block' ), // Block title.
@@ -38,58 +76,104 @@ registerBlockType( 'to-search/to-search-block', {
 		__( 'Tour Operator' ),
 		__( 'search' ),
 	],
+	attributes: blockAttributes,
 
-	/**
-	 * The edit function describes the structure of your block in the context of the editor.
-	 * This represents what the editor will render when the block is used.
-	 *
-	 * The "edit" property must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
-	edit: function( props ) {
-		// Creates a <p class='wp-block-cgb-block-my-block'></p>.
+
+	edit( { attributes, className, setAttributes } ) {
+		const { placeholderText, postType, displayFacets, searchButtonText, displayFacetsCombo } = attributes;
+
+		function onChangePlaceholderText( updatedPlaceholderText ) {
+			setAttributes( { placeholderText: updatedPlaceholderText } );
+		}
+
+		function onChangeSearchButtonText( updatedSearchButtonText ) {
+			setAttributes( { searchButtonText: updatedSearchButtonText } );
+		}
+
+		function onChangeDisplayFacets( updatedDisplayFacets ) {
+			setAttributes( { displayFacets: updatedDisplayFacets } );
+		}
+
+		// Post Type options
+		const postTypeOptions = [
+			{ value: 'tour', label: __( 'Tours' ) },
+			{ value: 'accommodation', label: __( 'Accommodations' ) },
+			{ value: 'destination', label: __( 'Destinations' ) },
+			// { value: 'review', label: __( 'Reviews' ) },
+			// { value: 'special', label: __( 'Specials' ) },
+		];
+
+		// Orderby options
+		const displayFacetsComboOptions = [
+			{ value: 'true', label: __( 'Yes' ) },
+			{ value: 'false', label: __( 'No' ) },
+		];
+
+		let comboBox;
+
 		return (
-			<div className={ props.className }>
-				<p>— Hello from the backend.</p>
-				<p>
-					CGB BLOCK: <code>my-block</code> is a new Gutenberg block
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
+			<div>
+				{
+					<InspectorControls key="inspector">
+						<PanelBody title={ __( 'Shortcode Settings' ) } >
+							<TextControl
+								label={ __( 'Placeholder' ) }
+								type="text"
+								value={ placeholderText }
+								onChange={ onChangePlaceholderText }
+							/>
+							<TextControl
+								label={ __( 'Search Button Text' ) }
+								type="text"
+								value={ searchButtonText }
+								onChange={ onChangeSearchButtonText }
+							/>
+							<SelectControl
+								label={ __( 'Type of Content' ) }
+								description={ __( 'Choose the parameter you wish your content to be' ) }
+								options={ postTypeOptions }
+								value={ postType }
+								onChange={ ( value ) => setAttributes( { postType: value } ) }
+							/>
+							<TextControl
+								label={ __( 'Facets to display, like: "accommodation_type | destination_to_accommodation" ' ) }
+								value={ displayFacets }
+								onChange={ onChangeDisplayFacets }
+							/>
+							{ displayFacets && !! displayFacets.length && (
+								<SelectControl
+									label={ __( 'Facet Selector Combo Box' ) }
+									description={ __( 'Choose if the facets will show in a combo selector' ) }
+									options={ displayFacetsComboOptions }
+									value={ displayFacetsCombo }
+									onChange={ ( value ) => setAttributes( { displayFacetsCombo: value } ) }
+								/>
+							) }
+						</PanelBody>
+					</InspectorControls>
+				}
+
+				<div id="search-block">
+					[lsx_search_form engine=&quot;{ postType }&quot; placeholder=&quot;{ placeholderText }&quot; button_label=&quot;{ searchButtonText }&quot; facets=&quot;{ displayFacets }&quot; combo_box=&quot;{ displayFacetsCombo }&quot;]
+				</div>
 			</div>
 		);
 	},
 
-	/**
-	 * The save function defines the way in which the different attributes should be combined
-	 * into the final markup, which is then serialized by Gutenberg into post_content.
-	 *
-	 * The "save" property must be specified and must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
-	save: function( props ) {
+	save( { attributes, className } ) {
+		const { placeholderText, postType, displayFacets, displayFacetsCombo, searchButtonText } = attributes;
+
+		let comboBox;
+
+		if ( ! displayFacets.trim().length==0 && displayFacetsCombo === 'true' ) {
+			comboBox = `combo_box="${displayFacetsCombo}"`
+		}
+
 		return (
-			<div>
-				<p>— Hello from the frontend.</p>
-				<p>
-					CGB BLOCK: <code>my-block</code> is a new Gutenberg block.
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
+			<div id="search-block" className={ className }>
+				<div className="search-block">
+				[lsx_search_form front engine=&quot;{ postType }&quot; placeholder=&quot;{ placeholderText }&quot; button_label=&quot;{ searchButtonText }&quot; facets=&quot;{ displayFacets }&quot; { comboBox } ]
+				</div>
 			</div>
 		);
 	},

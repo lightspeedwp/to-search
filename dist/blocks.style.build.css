@@ -9,10 +9,11 @@
  *
  * CSS for both Frontend+Backend.
  */
-.wp-block-to-search-to-search-block {
-  background: orangered;
-  border: 0.2rem solid #292929;
-  color: #292929;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
+#search-block.wp-block-to-search-to-search-block {
+  width: 100%;
+  max-width: 1150px;
+  margin-left: auto;
+  margin-right: auto; }
+  @media (max-width: 767px) {
+    #search-block.wp-block-to-search-to-search-block .search-form.to-search-form {
+      display: initial; } }

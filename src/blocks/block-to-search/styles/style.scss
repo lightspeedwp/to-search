@@ -4,11 +4,14 @@
  * CSS for both Frontend+Backend.
  */
 
-.wp-block-to-search-to-search-block  {
-  background: $red;
-  border: 0.2rem solid $black;
-  color: $black;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
+#search-block.wp-block-to-search-to-search-block  {
+    width: 100%;
+	max-width: 1150px;
+    margin-left: auto;
+	margin-right: auto;
+	.search-form.to-search-form {
+		@media (max-width: 767px) {
+			display: initial;
+		}
+	}
 }
