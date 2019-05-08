@@ -12,7 +12,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 */
 	public $search_slug = false;
 
-	public $facet_data = false;	
+	public $facet_data = false;
 
 	/**
 	 * Determine weather or not search is enabled for this page.
@@ -52,7 +52,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_action( 'lsx_search_sidebar_top', array( $this, 'search_sidebar_top' ) );
 		add_action( 'pre_get_posts', array( $this, 'price_sorting' ), 100 );
 
-		//add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
+		add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
 		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
 		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
 	}
@@ -77,7 +77,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				$this->facet_data[ $facet['name'] ] = $facet;
 			}
 		}
-	}	
+	}
 
 	/**
 	 * Remove posts and pages from search
@@ -113,7 +113,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		if ( is_search() ) {
 			$classes[] = 'archive-tour-operator';
 		}
-		if ( true === $this->search_enabled ) {	
+		if ( true === $this->search_enabled ) {
 			$classes[] = 'lsx-to-search-enabled';
 		}
 		return $classes;
@@ -146,14 +146,14 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$engine = get_query_var( 'engine' );
 			if ( false !== $engine && 'default' !== $engine && '' !== $engine ) {
 				$search_slug = $engine;
-			} 
+			}
 			$option_slug_1 = 'search';
 			$option_slug_2 = 'search';
 		} elseif ( is_post_type_archive( array_keys( $this->post_types ) ) || is_tax( array_keys( $this->taxonomies ) ) ) {
 			$search_slug = get_post_type();
 			$option_slug_1 = 'facets';
 			$option_slug_2 = 'archive';
-		}	
+		}
 
 		if ( false !== $search_slug && false !== $this->options && isset( $this->options[ $search_slug ][ 'enable_' . $option_slug_1 ] ) ) {
 			$this->search_slug = $search_slug;
@@ -171,8 +171,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			}
 
 			add_action( 'lsx_content_bottom', array( $this, 'facetwp_tempate_close' ) );
-			add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));	
-			
+			add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));
+
 			add_filter( 'facetwp_facet_html', array( $this, 'search_facet_html' ), 10, 2 );
 		}
 	}
@@ -299,7 +299,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 					$id = 'search';
 				} else {
 					$slug = 'facets';
-					$id = 'archive';				
+					$id = 'archive';
 				}
 			} else {
 				$slug = 'facets';
@@ -338,7 +338,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
 					unset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ][ $facet ] );
 				}
-			}			
+			}
 		}
 	}
 
@@ -847,7 +847,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			</div>
 		<?php
 		}
-		
+
 	}
 
 	/**
@@ -1007,7 +1007,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$output = ob_get_clean();
 		}
 		return $output;
-	}	
+	}
 }
 
 global $lsx_to_search;
