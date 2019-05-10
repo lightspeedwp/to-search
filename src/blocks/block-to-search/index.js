@@ -54,7 +54,7 @@ const blockAttributes = {
 	},
 	postType: {
 		type: 'string',
-		default: 'tour',
+		default: 'default',
 	},
 	displayFacets: {
 		type: 'string',
@@ -96,6 +96,7 @@ registerBlockType( 'to-search/to-search-block', {
 
 		// Post Type options
 		const postTypeOptions = [
+			{ value: 'default', label: __( 'Global' ) },
 			{ value: 'tour', label: __( 'Tours' ) },
 			{ value: 'accommodation', label: __( 'Accommodations' ) },
 			{ value: 'destination', label: __( 'Destinations' ) },
