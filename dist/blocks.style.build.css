@@ -1,0 +1,19 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+#search-block.wp-block-to-search-to-search-block {
+  width: 100%;
+  max-width: 1150px;
+  margin-left: auto;
+  margin-right: auto; }
+  @media (max-width: 767px) {
+    #search-block.wp-block-to-search-to-search-block .search-form.to-search-form {
+      display: initial; } }

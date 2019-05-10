@@ -26,3 +26,8 @@ define( 'LSX_TO_SEARCH_VER', '1.1.1' );
 
 require_once( LSX_TO_SEARCH_PATH . '/classes/class-lsx-to-search.php' );
 require_once( LSX_TO_SEARCH_PATH . '/includes/pluggable.php' );
+
+/**
+ * Block Initializer.
+ */
+require_once LSX_TO_SEARCH_PATH . 'src/init.php';
