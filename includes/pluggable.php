@@ -43,7 +43,7 @@ function lsx_to_search_top() {
 	$show_map = false;
 	if ( isset( $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'layout_map' ] ) && ! empty( $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'layout_map' ] ) ) {
 		$show_map = true;
-	}	
+	}
 	$facet_row_classes = apply_filters( 'lsx_to_search_top_facetwp_row_classes', '' );
 	$pagination_visible  = false;
 	?>

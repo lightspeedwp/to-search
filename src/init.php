@@ -27,7 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @uses {wp-editor} for WP editor styles.
  * @since 1.0.0
  */
-function to_search_block_assets() { // phpcs:ignore
+function to_search_block_assets() {
+	// phpcs:ignore
 	// Register block styles for both frontend + backend.
 	wp_register_style(
 		'my_block-to-style-css', // Handle.

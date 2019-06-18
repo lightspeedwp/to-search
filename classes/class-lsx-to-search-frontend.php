@@ -171,7 +171,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			}
 
 			add_action( 'lsx_content_bottom', array( $this, 'facetwp_tempate_close' ) );
-			add_action('lsx_content_bottom', array($this, 'facet_bottom_bar'));
+			add_action( 'lsx_content_bottom', array( $this, 'facet_bottom_bar' ) );
 
 			add_filter( 'facetwp_facet_html', array( $this, 'search_facet_html' ), 10, 2 );
 		}
@@ -543,7 +543,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 					<?php do_action( 'lsx_search_sidebar_top' ); ?>
 
-					<?php if ( isset( $this->options[ $this->search_slug ][ 'display_result_count' ] ) && 'on' === $this->options[ $this->search_slug ][ 'display_result_count' ] ) { ?>
+					<?php if ( isset( $this->options[ $this->search_slug ]['display_result_count'] ) && 'on' === $this->options[ $this->search_slug ][ 'display_result_count' ] ) { ?>
 						<div class="row hidden-xs">
 							<div class="col-xs-12 facetwp-item facetwp-results">
 								<h3 class="lsx-to-search-title lsx-to-search-title-results"><?php esc_html_e( 'Results', 'to-search' ); ?> (<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>)</h3>
@@ -994,7 +994,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				<div class="search-form lsx-search-form">
 					<div class="input-group facetwp-search-wrap">
 						<div class="field">
-							<input class="facetwp-search search-field form-control" type="text" placeholder="<?php echo $placeholder; ?>" autocomplete="off" value="<?php echo $value; ?>">
+							<input class="facetwp-search search-field form-control" type="text" placeholder="<?php echo wp_kses( $placeholder ); ?>" autocomplete="off" value="<?php echo wp_kses( $value ); ?>">
 						</div>
 
 						<div class="field submit-button">
