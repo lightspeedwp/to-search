@@ -543,7 +543,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 					<?php do_action( 'lsx_search_sidebar_top' ); ?>
 
-					<?php if ( isset( $this->options[ $this->search_slug ]['display_result_count'] ) && 'on' === $this->options[ $this->search_slug ][ 'display_result_count' ] ) { ?>
+					<?php if ( isset( $this->options[ $this->search_slug ]['display_result_count'] ) && 'on' === $this->options[ $this->search_slug ]['display_result_count'] ) { ?>
 						<div class="row hidden-xs">
 							<div class="col-xs-12 facetwp-item facetwp-results">
 								<h3 class="lsx-to-search-title lsx-to-search-title-results"><?php esc_html_e( 'Results', 'to-search' ); ?> (<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>)</h3>
