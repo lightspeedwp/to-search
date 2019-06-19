@@ -1,61 +1,45 @@
 === Tour Operator Search ===
 Contributors: feedmymedia
-Donate link: https://www.lsdev.biz/product/to-team/
+Donate link: https://tour-operator.lsdev.biz/extensions/search/
 Tags: Tour Operator, FacetWP, search, search widget, sort
 Requires at least: 4.3
-Tested up to: 4.9.4
+Tested up to: 5.2.2
 Requires PHP: 7.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3
 
-The Tour Operator Search extension adds robust search functionality to the Tour Operator plugin with the help of FacetWP, allowing filterable search by post type, category and more.
+The [Search extension](https://tour-operator.lsdev.biz/extensions/search/) for the Tour Operators plugin adds robust search functionality to your WordPress Tour Operator site by integrating FacetWP. 
 
-== Description ==
-The Search extension for the Tour Operators plugin adds robust search functionality to your WordPress Tour Operator site by integrating FacetWP. 
+It requires that you also have the FacetWP plugin installed, as that allows for much of the filtering functionality that the plugin uses. The [Tour Operator plugin](https://tour-operator.lsdev.biz/) adds settings to enable or disable facets / filters on archive pages.
 
-It requires that you also have the FacetWP plugin installed, as that allows for much of the filtering functionality that the plugin uses. The Tour Operator plugin adds settings to enable or disable facets / filters on archive pages.
+== Works with the LSX Theme ==
 
-= Works with the Tour Operator plugins and LSX Theme =
-Our theme [theme](https://www.lsdev.biz/product/lsx-wordpress-theme/) works perfectly with the Tour Operator Search Extension, improving the FacetWP user experience!
+Our [theme](https://lsx.lsdev.biz/) works perfectly with the Search Extension, improving internal linking, website SEO and user experience! 
 
-= It's free, and always will be. =
-We’re firm believers in open source - that’s why we’re releasing the TO Search plugin for free, forever.
+== Gutenberg Compatible Plugin ==
 
-= Support =
-We offer premium support for this plugin. Premium support that can be purchased via [lsdev.biz](https://www.lsdev.biz/).
+Have you updated to the new WordPress Gutenberg editor? We've got you covered! The Tour Operator Search Plugin has been optimised for the Gutenberg update. Check out our [release post](https://lsx.lsdev.biz/lsx-blocks-available-on-wordpress-org/) on the update for more information.
 
-== Installation ==
-1. Log in to your WordPress website (www.yourwebsiteurl.com/wp-admin).
-2. Navigate to “Plugins”, and select “Add New”.
-3. Upload the .zip file you downloaded and click install now.
-4. When the installation is complete, Activate your plugin.
-5. Make sure you have the Tour Operator plugin and the FacetWP plugin installed
-6. After installation new Search options will appear under your Tour Operator plugin options.
+== It's free, and always will be. ==
 
-== Frequently Asked Questions ==
-= Where can I find Tour Operator Search plugin documentation and user guides? =
-For help setting up and configuring the Tour Operator Search plugin please refer to our [user guide](https://www.lsdev.biz/documentation/tour-operator/search-extension/)
-= Where can I get support or talk to other users =
-If you get stuck, you can ask for help in the [to Search plugin forum](https://wordpress.org/support/plugin/tour-operator-search).
-For help with add-ons from LightSpeed, use our support [package plan](https://www.lsdev.biz/website-packages/)
-= Will the Tour Operator Search plugin work with my theme
-No; the Tour Operator Search plugin will not work with any theme, it requires LSX Theme and Tour Operator plugin to make it match nicely. Please see our [codex](https://www.lsdev.biz/documentation/tour-operator/) for help.
-Also you need FacetWP plugin installed.
-= Where can I report bugs or contribute to the project? =
-Bugs can be reported either in our support forum or preferably on the [to Search GitHub repository](https://github.com/lightspeeddevelopment/to/issues).
-= The to Search plugin is awesome! Can I contribute? =
-Yes you can! Join in on our [GitHub repository](https://github.com/lightspeeddevelopment/to-search) :)
+We’re firm believers in open source - that’s why the [Tour Operator Search Extension](https://tour-operator.lsdev.biz/extensions/search/) is free, and that won't change. We are constantly maintaining and updating our extension so you have the latest and greatest abilities on your LSX Theme powered site. 
+
+== Tour Operator Search Documentation ==
+
+We have created extensive documentation on all of the Tour Operator Search Plugin functionality. This means a hassle free installation and setup with no code requirements. Go to the [Tour Operator Search Documentation](https://tour-operator.lsdev.biz/documentation/extension/search/).
+
+== Tour Operator Search Help & Support ==
+
+We offer premium support for this plugin. Premium support that can be purchased [via our website](https://www.lsdev.biz/services/support/).
+
+If you are experiencing issues with the Tour Operator Search Plugin & have experience with Github, please log any bug issues you are having on the [Tour Operator Search Github Issues](https://github.com/lightspeeddevelopment/to-search/issues/) page.
+
+== Contributing to the Tour Operator Search Plugin ==
+
+If you're a developer who's spotted a bug issue and have a fix, or simply have functionality you think would extend our core theme, we are always happy to accept your contribution! Visit the [Tour Operator Search Plugin on Github](https://github.com/lightspeeddevelopment/to-search/) and submit a Pull Request with your updates.
 
 == Screenshots ==
 
 1. The Settings Panel for Tour Operator Search
 2. Tour Operator Search Edit Page
 3. Tour Operator Search Widget Frontend
-
-== Changelog ==
-
-Change Log
-
-== Upgrade Notice ==
-
-Upgrade Notice
