@@ -1,4 +1,4 @@
-<p align="center"><a target="_blank" href="https://lsx.lsdev.biz/"><img width="100px;" src="https://tour-operator.lsdev.biz/wp-content/uploads/2019/04/icon-search.svg" alt="Tour Operator Search Extension"></a>
+<p align="center"><a target="_blank" href="https://tour-operator.lsdev.biz/"><img width="100px;" src="https://tour-operator.lsdev.biz/wp-content/uploads/2019/04/icon-search.svg" alt="Tour Operator Search Extension"></a>
 </p>
 <h1 align="center">Tour Operator Search</h1>
 
