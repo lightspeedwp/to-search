@@ -1,5 +1,24 @@
 ## Change log
 
+### 1.2.0 21st June 2019
+* Dev - Adding rel="noopener noreferrer" tags to target="_blank" links
+* Dev - Travis fixes and readme file update
+* Fix - Adding the search bar above the sidebar
+* Fix - Added in the facet search HTML
+* Fix - Fixed the facetwp output
+* Fix - Fixed the accommodation selector
+* Dev - Added in the function to set the facetwp cars
+* Fix - Fixed the debug error 
+* Fix - Moved the map option into the top bar
+* Dev - Styling search
+* Fix - Fixing the tour layout selector
+* Fix - Fixing the archive facets
+* Fix - Fixing the facet selections
+* Fix - Security fixes
+* Dev - Adding in the "general" option
+* Dev - adding the shortcode functionality
+* Dev - Started adding the basics to enable a search block
+
 ### 1.1.1
 * Dev - Added in CSS classes to allow the Destinations Facet to work when "widening" and "narrowing"
 * Dev - Added an option to disable the continents filter (FacetWP)

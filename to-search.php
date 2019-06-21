@@ -3,7 +3,7 @@
  * Plugin Name: Tour Operator Search
  * Plugin URI:  https://www.lsdev.biz/product/tour-operator-search/
  * Description: The Tour Operator Search extension adds robust search functionality to sites, allowing filterable search by post type, category and more.
- * Version:     1.1.1
+ * Version:     1.2.0
  * Author:      LightSpeed
  * Author URI:  https://www.lsdev.biz/
  * License:     GPL3+
