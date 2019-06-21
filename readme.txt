@@ -19,34 +19,34 @@ Our favourite part, the Search extension is integrated with FacetWP. So if you a
 
 Remember that in order to use this, the FacetWP plugin installed. The [Tour Operator plugin](https://tour-operator.lsdev.biz/) adds settings to enable or disable facets/filters on archive pages.
 
-## Works with the LSX Theme
+== Works with the LSX Theme == 
 
 Our [theme](https://lsx.lsdev.biz/) works seamlessly with the Tour Operator Plugin, this includes all of the TO Extensions. 
 
 We continuously are keeping up-to-date with the latest security and functionality. 
 
-## Gutenberg Compatible Plugin
+== Gutenberg Compatible Plugin == 
 
 Have you updated to the new WordPress Gutenberg editor? We've got you covered! The Tour Operator Search Plugin has been optimised for the Gutenberg update. 
 
 Check out our [our Tour Operator dedicated website](https://tour-operator.lsdev.biz/) to check out all our available extensions and features.
 
-## It's free, and always will be.
+== It's free, and always will be. == 
 We’re firm believers in open source - that’s why this extension is free, and that won't change. 
 
 We are constantly maintaining and updating our extension so you have the latest and greatest abilities on your LSX Theme powered site. 
 
-## Tour Operator Search Documentation
+== Tour Operator Search Documentation == 
 
 Anything you need to double check, or simply need a walkthrough for setting up the extension? Visit the [Tour Operator Search documentation](https://tour-operator.lsdev.biz/documentation/extension/search/).
 
-## Tour Operator Search Help & Support
+== Tour Operator Search Help & Support == 
 
 We offer premium support for this plugin. Premium support that can be purchased [via our website](https://www.lsdev.biz/services/support/).
 
 If you are experiencing issues with the Tour Operator Search Plugin & have experience with Github, please log any bug issues you are having on the [Tour Operator Search Github Issues](https://github.com/lightspeeddevelopment/to-search/issues/) page.
 
-## Contributing to the Tour Operator Search Plugin
+== Contributing to the Tour Operator Search Plugin == 
 
 If you're a developer who's spotted a bug issue and have a fix, or simply have the functionality you think would extend our core theme, we are always happy to accept your contribution! 
 
