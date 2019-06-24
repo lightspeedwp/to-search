@@ -21,9 +21,9 @@ Remember that in order to use this, the FacetWP plugin installed. The [Tour Oper
 
 ## Works with the LSX Theme
 
-Our [theme](https://lsx.lsdev.biz/) works seamlessly with the Tour Operator Plugin, this includes all of the TO Extensions. 
+The [Tour Operator Plugin](https://tour-operator.lsdev.biz) and [Extensions](https://tour-operator.lsdev.biz/extensions/) are designed to work seamlessly with the LSX theme. 
 
-We continuously are keeping up-to-date with the latest security and functionality. 
+We are always updating our software to add functionality, and maintain latest security protocols. 
 
 ## Gutenberg Compatible Plugin
 
