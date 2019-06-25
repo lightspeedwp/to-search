@@ -29,7 +29,7 @@ We are always updating our software to add functionality, and maintain latest se
 
 Have you updated to the new WordPress Gutenberg editor? We've got you covered! The Tour Operator Search Plugin has been optimised for the Gutenberg update. 
 
-Check out our [our Tour Operator dedicated website](https://tour-operator.lsdev.biz/) to check out all our available extensions and features.
+Check out our [Tour Operator dedicated website](https://tour-operator.lsdev.biz/) to check out all our available extensions and features.
 
 == It's free, and always will be. == 
 We’re firm believers in open source - that’s why this extension is free, and that won't change. 
