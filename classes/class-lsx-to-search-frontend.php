@@ -124,12 +124,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 */
 	public function add_label_to_title( $id ) {
 		if ( is_search() ) {
-			$engine = get_query_var( 'engine' );
-
-			if ( empty( $engine ) || 'default' === $engine ) {
-				if ( ! empty( tour_operator()->options['display']['enable_search_pt_label'] ) ) {
-					echo wp_kses_post( ' <span class="label lsx-to-label">' . ucwords( get_post_type() ) . '</span>' );
-				}
+			if ( ! empty( $this->options['display']['enable_search_pt_label'] ) ) {
+				echo wp_kses_post( ' <span class="label label-default lsx-label-post-type">' . ucwords( get_post_type() ) . '</span>' );
 			}
 		}
 	}

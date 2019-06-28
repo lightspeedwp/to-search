@@ -259,6 +259,19 @@
 			}
 		}
 	}
+	article {
+		position: relative;
+
+		.lsx-label-post-type {
+			padding: 3px 1rem;
+			position: absolute;
+			right: 15px;
+			top: 10px;
+			z-index: 1;
+			color: #FFF;
+			font-size: 65%;
+		}
+	}
 }
 
 .facetwp-filters-wrap {
