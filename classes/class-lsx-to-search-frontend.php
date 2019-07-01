@@ -987,7 +987,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			ob_start();
 			?>
 			<div class="col-xs-12 facetwp-item facetwp-form">
-				<div class="search-form lsx-search-form">
+				<div class="search-form to-search-form">
 					<div class="input-group facetwp-search-wrap">
 						<div class="field">
 							<input class="facetwp-search search-field form-control" type="text" placeholder="<?php echo esc_attr( $placeholder ); ?>" autocomplete="off" value="<?php echo esc_attr( $value ); ?>">
