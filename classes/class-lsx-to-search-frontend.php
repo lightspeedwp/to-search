@@ -537,10 +537,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			?>
 				<div id="secondary" class="facetwp-sidebar widget-area <?php echo esc_attr( lsx_sidebar_class() ); ?>" role="complementary">
 
-					<?php do_action( 'lsx_search_sidebar_top' ); ?>
+					<div class="container-search">
+						<?php do_action( 'lsx_search_sidebar_top' ); ?>
+					</div>
 
 					<?php if ( isset( $this->options[ $this->search_slug ]['display_result_count'] ) && 'on' === $this->options[ $this->search_slug ]['display_result_count'] ) { ?>
-						<div class="row hidden-xs">
+						<div class="row hidden-xs container-results">
 							<div class="col-xs-12 facetwp-item facetwp-results">
 								<h3 class="lsx-to-search-title lsx-to-search-title-results"><?php esc_html_e( 'Results', 'to-search' ); ?> (<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>)</h3>
 								<!--<button class="btn btn-md facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()"><?php esc_html_e( 'Clear', 'to-search' ); ?></button>-->
@@ -549,7 +551,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 					<?php } ?>
 
 					<?php if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) && is_array( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) { ?>
-						<div class="row">
+						<div class="row container-facets">
 							<div class="col-xs-12 facetwp-item facetwp-filters-button hidden-sm hidden-md hidden-lg">
 								<button class="ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Filters', 'to-search' ); ?> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
 							</div>

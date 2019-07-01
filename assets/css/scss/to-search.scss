@@ -178,7 +178,11 @@
 }
 
 .facetwp-sort {
-	& + .facetwp-per-page { margin-left: 10px; }
+	& + .facetwp-per-page {
+		@include media('>=phone') {
+			margin-left: 10px;
+		}
+	}
 }
 
 .facetwp-sort-select,
@@ -269,7 +273,8 @@
 			top: 10px;
 			z-index: 1;
 			color: #FFF;
-			font-size: 65%;
+			font-size: 12px;
+			font-family: 'Noto Sans',sans-serif;
 		}
 	}
 }
@@ -401,13 +406,16 @@
 		}
 	}
 
-
+	&>.container-search {
+		.row {
+			margin-bottom: 25px;
+		}
+	}
 	&>.row:nth-child(2) {
-		margin-top: 25px;
 		border-top: 1px solid #EDEBEB;
 	}
 
-	&>.row:nth-child(3) {
+	&>.row:last-child {
 		border-bottom: 1px solid #EDEBEB;
 		padding-bottom: 25px;
 	}

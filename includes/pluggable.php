@@ -79,11 +79,12 @@ function lsx_to_search_top() {
 
 		<?php if ( ! empty( $az_pagination ) || ( $show_pagination && ! $pagination_visible ) ) { ?>
 			<div class="row facetwp-top-row-2 hidden-xs">
-				<div class="col-xs-12 col-lg-8">
-					<?php if ( ! empty( $az_pagination ) ) { ?>
+
+				<?php if ( ! empty( $az_pagination ) ) { ?>
+					<div class="col-xs-12 col-lg-8">
 						<?php echo do_shortcode( '[facetwp facet="' . $az_pagination . '"]' ); ?>
-					<?php } ?>
-				</div>
+					</div>
+				<?php } ?>
 
 				<?php if ( $show_pagination && ! $pagination_visible ) { ?>
 					<div class="col-xs-12 col-lg-4">

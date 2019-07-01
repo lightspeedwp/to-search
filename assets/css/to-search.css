@@ -79,7 +79,7 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 @media (min-width: 768px) { .facetwp-pager { float: right; } }
 
-.facetwp-sort + .facetwp-per-page { margin-left: 10px; }
+@media (min-width: 768px) { .facetwp-sort + .facetwp-per-page { margin-left: 10px; } }
 
 .facetwp-sort-select, .facetwp-per-page-select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background: transparent; background-repeat: no-repeat; background-position-x: 100%; background-position-y: 50%; border-style: solid; border-width: 1px; box-shadow: none; display: inline-block; font-size: 14px; line-height: 1.25; min-width: 120px; height: 37px; padding: 0 10px; transition: all 150ms ease; width: auto; }
 
@@ -109,7 +109,7 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 .facetwp-template article { position: relative; }
 
-.facetwp-template article .lsx-label-post-type { padding: 3px 1rem; position: absolute; right: 15px; top: 10px; z-index: 1; color: #FFF; font-size: 65%; }
+.facetwp-template article .lsx-label-post-type { padding: 3px 1rem; position: absolute; right: 15px; top: 10px; z-index: 1; color: #FFF; font-size: 12px; font-family: 'Noto Sans',sans-serif; }
 
 @media (max-width: 767px) { .facetwp-filters-wrap { height: 100%; left: 0; margin: 0 !important; padding: 15px; position: fixed !important; overflow-x: visible; overflow-y: auto; top: 0; -webkit-transform: translate(-100%, 0); transform: translate(-100%, 0); z-index: 7; } }
 
@@ -188,9 +188,11 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 @media (min-width: 768px) { #secondary.facetwp-sidebar > .row:nth-child(2), #secondary.facetwp-sidebar > .row:nth-child(3) { background: #FFFFFF; border-radius: 3px 3px 3px 3px; border-left: 1px solid #EDEBEB; border-right: 1px solid #EDEBEB; } }
 
-#secondary.facetwp-sidebar > .row:nth-child(2) { margin-top: 25px; border-top: 1px solid #EDEBEB; }
+#secondary.facetwp-sidebar > .container-search .row { margin-bottom: 25px; }
 
-#secondary.facetwp-sidebar > .row:nth-child(3) { border-bottom: 1px solid #EDEBEB; padding-bottom: 25px; }
+#secondary.facetwp-sidebar > .row:nth-child(2) { border-top: 1px solid #EDEBEB; }
+
+#secondary.facetwp-sidebar > .row:last-child { border-bottom: 1px solid #EDEBEB; padding-bottom: 25px; }
 
 #secondary.facetwp-sidebar .facetwp-item.facetwp-form { padding: 0px; }
 
