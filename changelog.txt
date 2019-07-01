@@ -1,6 +1,9 @@
 ## Change log
 
-### 1.2.0 21st June 2019
+### 1.2.1 - 1 July 2019
+* Dev - Fixed the wp_kses error causing the archive facets not to load.
+
+### 1.2.0 - 21 June 2019
 * Dev - Adding rel="noopener noreferrer" tags to target="_blank" links
 * Dev - Travis fixes and readme file update
 * Fix - Adding the search bar above the sidebar

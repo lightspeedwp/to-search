@@ -990,7 +990,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				<div class="search-form lsx-search-form">
 					<div class="input-group facetwp-search-wrap">
 						<div class="field">
-							<input class="facetwp-search search-field form-control" type="text" placeholder="<?php echo wp_kses( $placeholder ); ?>" autocomplete="off" value="<?php echo wp_kses( $value ); ?>">
+							<input class="facetwp-search search-field form-control" type="text" placeholder="<?php echo esc_attr( $placeholder ); ?>" autocomplete="off" value="<?php echo esc_attr( $value ); ?>">
 						</div>
 
 						<div class="field submit-button">
