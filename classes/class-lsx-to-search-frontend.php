@@ -562,6 +562,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 										<button class="ssm-close-btn ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Close Filters', 'to-search' ); ?> <i class="fa fa-times" aria-hidden="true"></i></button>
 									</div>
 								</div>
+								<div class="container-search-mobile hidden-sm hidden-md hidden-lg ssm-row-margin-bottom">
+									<?php do_action( 'lsx_search_sidebar_top' ); ?>
+								</div>
 								<div class="row">
 									<?php
 										// Slider
