@@ -89,6 +89,8 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 .facetwp-template .row .lsx-to-archive-item:first-child { margin-top: 0 !important; }
 
+@media (max-width: 767px) { .facetwp-template .row .lsx-to-archive-item { margin-bottom: 25px; } }
+
 .facetwp-template .row.lsx-to-archive-template-grid .lsx-to-archive-item:nth-child(2), .facetwp-template .row.lsx-to-archive-template-grid .lsx-to-archive-item:nth-child(3) { margin-top: 0 !important; }
 
 .facetwp-template > .no-results { margin-top: 4rem; }

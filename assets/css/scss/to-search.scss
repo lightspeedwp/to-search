@@ -214,6 +214,9 @@
 			&:first-child {
 				margin-top: 0 !important;
 			}
+			@include media('<phone') {
+				margin-bottom: 25px;
+			}
 		}
 		&.lsx-to-archive-template-grid {
 			.lsx-to-archive-item {
