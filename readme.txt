@@ -1,6 +1,6 @@
 === Tour Operator Search ===
 Contributors: feedmymedia
-Donate link: https://tour-operator.lsdev.biz/extensions/search/
+Donate link: https://donate.lsdev.biz/
 Tags: tour operator, facetwp, search, search widget, gutenberg
 Requires at least: 4.9
 Tested up to: 5.2.2
