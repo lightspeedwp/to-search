@@ -3,7 +3,8 @@
 ### 1.2.1 - 1 July 2019
 * Dev - Fixed the wp_kses error causing the archive facets not to load.
 * Fix - Adding the correct class to the search facet.
-* Dex - Imroving search styles.
+* Dev - Imroving search styles.
+* Dev - Adding filter number to search results on mobile.
 
 ### 1.2.0 - 21 June 2019
 * Dev - Adding rel="noopener noreferrer" tags to target="_blank" links

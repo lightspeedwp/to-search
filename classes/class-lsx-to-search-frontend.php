@@ -551,7 +551,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 					<?php if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) && is_array( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) { ?>
 						<div class="row container-facets">
 							<div class="col-xs-12 facetwp-item facetwp-filters-button hidden-sm hidden-md hidden-lg">
-								<button class="ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Filters', 'to-search' ); ?> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+								<button class="ssm-toggle-nav btn btn-block filter-mobile" rel="to-search-filters"><?php esc_html_e( 'Filter (', 'to-search' ); ?><?php echo do_shortcode( '[facetwp counts="true"]' ); ?><?php esc_html_e( ') results', 'to-search' ); ?> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
 							</div>
 							<div class="ssm-overlay ssm-toggle-nav" rel="to-search-filters"></div>
 							<div class="col-xs-12 facetwp-item facetwp-filters-wrap" rel="to-search-filters">

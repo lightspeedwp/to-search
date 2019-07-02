@@ -241,6 +241,7 @@ body:not(.search-no-results) #facetwp-bottom .col-xs-12 { padding: 0; }
 @media (max-width: 767px) { #facetwp-top, .to-search-form, .lsx-search-form { display: none; }
   .container-search-mobile .to-search-form { display: inline; }
   .container-search-mobile .facetwp-form { padding-left: 15px; padding-right: 15px; }
+  .container-facets .filter-mobile { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; }
   .lsx-pagination-wrapper.facetwp-custom { margin-top: 0; }
   .logged-in .facetwp-item.facetwp-filters-wrap { padding-top: 10rem; }
   .facetwp-sort-select, .facetwp-per-page-select { width: 96%; margin-bottom: 1em; } }

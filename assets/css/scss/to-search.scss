@@ -565,6 +565,12 @@ body:not(.search-no-results) {
 			padding-left: 15px;
 		}
 	}
+	.container-facets {
+		.filter-mobile {
+			display: flex;
+			justify-content: center;
+		}
+	}
 	.lsx-pagination-wrapper.facetwp-custom {
 		margin-top: 0;
 	}
