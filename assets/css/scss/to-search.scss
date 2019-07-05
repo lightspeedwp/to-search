@@ -166,7 +166,11 @@
 
 .facetwp-top-row-2 { margin-top: 12px; }
 
-.facetwp-bottom-row-1 { margin-top: 4.25rem; }
+.facetwp-bottom-row-1 {
+	@include media('>=phone') {
+		margin-top: 4.25rem;
+ 	}
+}
 
 .facetwp-sort,
 .facetwp-per-page {
@@ -579,9 +583,13 @@ body:not(.search-no-results) {
 			padding-top: 10rem;
 		}
 	}
+	.facetwp-sort, .facetwp-per-page {
+		display: flex;
+	}
 	.facetwp-sort-select, .facetwp-per-page-select {
-		width: 96%;
+		width: 100%;
 		margin-bottom: 1em;
+		min-width: 100%;
 	}
 }
 

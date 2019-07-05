@@ -73,7 +73,7 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 .facetwp-top-row-2 { margin-top: 12px; }
 
-.facetwp-bottom-row-1 { margin-top: 4.25rem; }
+@media (min-width: 768px) { .facetwp-bottom-row-1 { margin-top: 4.25rem; } }
 
 @media (min-width: 768px) { .facetwp-sort, .facetwp-per-page { float: left; } }
 
@@ -244,7 +244,8 @@ body:not(.search-no-results) #facetwp-bottom .col-xs-12 { padding: 0; }
   .container-facets .filter-mobile { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; }
   .lsx-pagination-wrapper.facetwp-custom { margin-top: 0; }
   .logged-in .facetwp-item.facetwp-filters-wrap { padding-top: 10rem; }
-  .facetwp-sort-select, .facetwp-per-page-select { width: 96%; margin-bottom: 1em; } }
+  .facetwp-sort, .facetwp-per-page { display: -webkit-box; display: -ms-flexbox; display: flex; }
+  .facetwp-sort-select, .facetwp-per-page-select { width: 100%; margin-bottom: 1em; min-width: 100%; } }
 
 @media (min-width: 768px) { .search #primary.content-area.col-sm-8, .archive #primary.content-area.col-sm-8 { width: 66.66667%; } }
 
