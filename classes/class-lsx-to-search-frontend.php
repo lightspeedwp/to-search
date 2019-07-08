@@ -165,8 +165,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			} elseif ( '1c' === $this->options[ $this->search_slug ][ $option_slug_2 . '_layout' ] ) {
 				add_action( 'lsx_content_wrap_before', array( $this, 'search_sidebar' ), 150 );
 			}
-
-			add_action( 'lsx_content_bottom', array( $this, 'facetwp_tempate_close' ) );
 			add_action( 'lsx_content_bottom', array( $this, 'facet_bottom_bar' ) );
 		}
 	}
@@ -1007,16 +1005,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$output = ob_get_clean();
 		}
 		return $output;
-	}
-	/**
-	 * Adds in the closing facetwp div
-	 *
-	 * @return void
-	 */
-	public function facetwp_tempate_close() {
-		?>
-		</div>
-		<?php
 	}	
 }
 
