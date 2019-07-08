@@ -1005,7 +1005,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$output = ob_get_clean();
 		}
 		return $output;
-	}	
+	}
 }
 
 global $lsx_to_search;
