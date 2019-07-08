@@ -314,12 +314,14 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public function search_sidebar_top() {
 		if ( ! is_search() ) {
 			$option_slug = 'archive_';
-			foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-				if ( isset( $this->facet_data[ $facet ] ) && isset( $this->facet_data[ $facet ]['type'] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
-					echo wp_kses_post( '<div class="row">' );
-					$this->display_facet_default( $facet, false );
-					echo wp_kses_post( '</div>' );
-					unset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ][ $facet ] );
+			if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) {
+				foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+					if ( isset( $this->facet_data[ $facet ] ) && isset( $this->facet_data[ $facet ]['type'] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
+						echo wp_kses_post( '<div class="row">' );
+						$this->display_facet_default( $facet, false );
+						echo wp_kses_post( '</div>' );
+						unset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ][ $facet ] );
+					}
 				}
 			}
 		} else {
@@ -495,10 +497,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 * Outputs Map.
 	 */
 	public function display_map() {
-		global $lsx_to_maps_frontend;
 		global $wp_query;
 
-		if ( ! empty( $lsx_to_maps_frontend ) && count( $wp_query->posts ) > 0 ) {
+		if ( count( $wp_query->posts ) > 0 ) {
 
 			$map_query_args = $wp_query->query;
 			$map_query_args['post_per_page'] = -1;
@@ -514,8 +515,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 					'type' => 'cluster',
 					'content' => 'excerpt',
 				);
-
-				echo wp_kses_post( $lsx_to_maps_frontend->map_output( false, $args ) );
+				echo wp_kses_post( tour_operator()->frontend->maps->map_output( false, $args ) );
 			}
 		}
 	}
