@@ -315,7 +315,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		if ( ! is_search() ) {
 			$option_slug = 'archive_';
 			foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
+				if ( isset( $this->facet_data[ $facet ] ) && isset( $this->facet_data[ $facet ]['type'] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
 					echo wp_kses_post( '<div class="row">' );
 					$this->display_facet_default( $facet, false );
 					echo wp_kses_post( '</div>' );
@@ -812,6 +812,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		} else {
 			return '';
 		}
+		$pagination_visible  = false;
 
 		$show_pagination     = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ];
 		$show_per_page_combo = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ];
@@ -1007,6 +1008,16 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		}
 		return $output;
 	}
+	/**
+	 * Adds in the closing facetwp div
+	 *
+	 * @return void
+	 */
+	public function facetwp_tempate_close() {
+		?>
+		</div>
+		<?php
+	}	
 }
 
 global $lsx_to_search;

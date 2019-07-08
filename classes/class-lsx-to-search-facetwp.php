@@ -448,7 +448,9 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			}
 		}
 
-		$output = implode( '', $options );
+		if ( ! empty( $options ) ) {
+			$output = implode( '', $options );
+		}
 
 		return $output;
 	}
