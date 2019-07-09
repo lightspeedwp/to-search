@@ -124,7 +124,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 */
 	public function add_label_to_title( $id ) {
 		if ( is_search() ) {
-			if ( ! empty( $this->options['display']['enable_search_pt_label'] ) ) {
+			$engine = get_query_var( 'engine' );
+			if ( ! empty( $this->options['display']['enable_search_pt_label'] ) && ( 'default' === $engine || '' === $engine ) ) {
 				echo wp_kses_post( ' <span class="label label-default lsx-label-post-type">' . ucwords( get_post_type() ) . '</span>' );
 			}
 		}
@@ -327,10 +328,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$this->display_facet_search();
 			echo wp_kses_post( '</div>' );
 			$option_slug = 'search_';
-			//unset any other search facets
-			foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
-				if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
-					unset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ][ $facet ] );
+			// unset any other search facets.
+			if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) {
+				foreach ( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] as $facet => $facet_useless ) {
+					if ( isset( $this->facet_data[ $facet ] ) && 'search' === $this->facet_data[ $facet ]['type'] ) {
+						unset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ][ $facet ] );
+					}
 				}
 			}
 		}
