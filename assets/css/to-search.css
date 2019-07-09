@@ -31,6 +31,11 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 .wp-block-to-search-to-search-block .input-group { width: 100%; }
 
+.wp-block-to-search-to-search-block .input-group .field { margin-bottom: 10px; margin-right: 10px; margin-left: 0; }
+
+@media (max-width: 768px) { .wp-block-to-search-to-search-block .input-group .field { width: 100%; }
+  .wp-block-to-search-to-search-block .input-group .field input, .wp-block-to-search-to-search-block .input-group .field button { width: 100%; min-width: 100%; } }
+
 .archive.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-item:first-child, .search-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-item:first-child, .search-no-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-item:first-child { margin-top: 0; }
 
 .archive.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-facet, .search-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-facet, .search-no-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-facet { margin-bottom: 0; }
