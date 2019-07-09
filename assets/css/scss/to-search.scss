@@ -300,6 +300,14 @@
 			color: #FFF;
 			font-size: 12px;
 			font-family: 'Noto Sans',sans-serif;
+			font-weight: 300;
+			background-color: #363636;
+		}
+	}
+	.lsx-to-archive-template-list {
+		.lsx-label-post-type {
+			left: 10px;
+			right: initial;
 		}
 	}
 }
