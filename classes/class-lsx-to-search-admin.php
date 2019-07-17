@@ -220,7 +220,7 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 							<option <?php if ( empty( $active_facet ) ) { echo 'selected="selected"'; } ?> value=""><?php esc_html_e( 'None', 'to-search' ); ?></option>
 
 							<?php foreach ( $this->facet_data as $facet ) {
-								if ( 'alpha' === $facet['type'] ) { ?>
+								if ( isset( $facet['type'] ) && 'alpha' === $facet['type'] ) { ?>
 									<option <?php if ( $active_facet === $facet['name'] ) { echo 'selected="selected"'; } ?> value="<?php echo esc_attr( $facet['name'] ); ?>"><?php echo esc_html( $facet['label'] ) . ' (' . esc_html( $facet['name'] ) . ')'; ?></option>
 								<?php }
 							} ?>
@@ -353,7 +353,7 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 							<option <?php if ( empty( $active_facet ) ) { echo 'selected="selected"'; } ?> value=""><?php esc_html_e( 'None', 'to-search' ); ?></option>
 
 							<?php foreach ( $this->facet_data as $facet ) {
-								if ( 'alpha' === $facet['type'] ) { ?>
+								if ( isset( $facet['type'] ) && 'alpha' === $facet['type'] ) { ?>
 									<option <?php if ( $active_facet === $facet['name'] ) { echo 'selected="selected"'; } ?> value="<?php echo esc_attr( $facet['name'] ); ?>"><?php echo esc_html( $facet['label'] ) . ' (' . esc_html( $facet['name'] ) . ')'; ?></option>
 								<?php }
 							} ?>
@@ -372,25 +372,27 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 			<td>
 				<ul>
 					<?php
-						if ( is_array( $this->facet_data ) && ! empty( $this->facet_data ) ) {
-							$active_facets = array();
+					if ( is_array( $this->facet_data ) && ! empty( $this->facet_data ) ) {
+						$active_facets = array();
 
-							if ( isset( $this->options[ $post_type ]['archive_facets'] ) && is_array( $this->options[ $post_type ]['archive_facets'] ) ) {
-								$active_facets = $this->options[ $post_type ]['archive_facets'];
-							}
-
-							foreach ( $this->facet_data as $facet ) {
-								if ( 'alpha' !== $facet['type'] ) { ?>
-									<li>
-										<input type="checkbox" <?php if ( array_key_exists( $facet['name'], $active_facets ) ) { echo 'checked="checked"'; } ?> name="archive_facets[<?php echo esc_attr( $facet['name'] ); ?>]" /> <label for="facets"><?php echo esc_html( $facet['label'] ) . ' (' . esc_html( $facet['name'] ) . ')'; ?></label>
-									</li>
-								<?php }
-							}
-						} else {
-							?>
-								<li><?php esc_html_e( 'You have no Facets setup.', 'to-search' ); ?></li>
-							<?php
+						if ( isset( $this->options[ $post_type ]['archive_facets'] ) && is_array( $this->options[ $post_type ]['archive_facets'] ) ) {
+							$active_facets = $this->options[ $post_type ]['archive_facets'];
 						}
+
+						foreach ( $this->facet_data as $facet ) {
+							if ( isset( $facet['type'] ) && 'alpha' !== $facet['type'] ) {
+								?>
+								<li>
+									<input type="checkbox" <?php if ( array_key_exists( $facet['name'], $active_facets ) ) { echo 'checked="checked"'; } ?> name="archive_facets[<?php echo esc_attr( $facet['name'] ); ?>]" /> <label for="facets"><?php echo esc_html( $facet['label'] ) . ' (' . esc_html( $facet['name'] ) . ')'; ?></label>
+								</li>
+								<?php
+							}
+						}
+					} else {
+						?>
+							<li><?php esc_html_e( 'You have no Facets setup.', 'to-search' ); ?></li>
+						<?php
+					}
 					?>
 				</ul>
 			</td>
