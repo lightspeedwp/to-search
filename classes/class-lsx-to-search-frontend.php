@@ -39,7 +39,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_filter( 'lsx_to_the_title_end', array( $this, 'add_label_to_title' ) );
 
 		add_action( 'wp_head', array( $this, 'wp_head' ), 11 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ), 1499 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ), 5 );
 
 		// Redirects.
 		add_filter( 'template_include', array( $this, 'search_template_include' ), 99 );
