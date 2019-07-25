@@ -49,6 +49,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 				$countries = array();
 
 				foreach ( $rows as $r_index => $row ) {
+
 					$parent = wp_get_post_parent_id( $row['facet_value'] );
 					$rows[ $r_index ]['parent_id'] = $parent;
 
@@ -70,7 +71,6 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 						}
 					}
 				}
-
 				if ( ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) ) {
 					if ( ! empty( $countries ) ) {
 						foreach ( $countries as $row_index => $country ) {
@@ -79,6 +79,9 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 
 							if ( ! is_wp_error( $continents ) ) {
 								$new_row = $params['defaults'];
+								if ( ! is_array( $continents ) ) {
+									$continents = array( $continents );
+								}
 
 								foreach ( $continents as $continent ) {
 									$new_row['facet_value'] = $continent->slug;
@@ -86,7 +89,6 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 									$continent_id = $continent->term_id;
 									$new_row['depth'] = 0;
 								}
-
 								$rows[] = $new_row;
 								$rows[ $row_index ]['parent_id'] = $continent_id;
 							}
@@ -110,22 +112,22 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 		$custom_field = false;
 		$meta_key = false;
 
-		if ( strpos( $class->facet['source'], 'cf/' ) && strpos( $class->facet['source'], '_to_' ) ) {
-			$params['facet_display_value'] = get_the_title( $params['facet_value'] );
-		}
-
 		preg_match( '/cf\//', $class->facet['source'], $custom_field );
 		preg_match( '/_to_/', $class->facet['source'], $meta_key );
 
 		if ( ! empty( $custom_field ) && ! empty( $meta_key ) ) {
-			$title = get_the_title( $params['facet_value'] );
-			if ( '' !== $title ) {
-				$params['facet_display_value'] = $title;
-			}
 
-			if ( '' === $title && ! empty( $meta_key ) ) {
-				//$params = false;
-				null;
+			if ( ( 'cf/destination_to_accommodation' === $class->facet['source'] || 'cf/destination_to_tour' === $class->facet['source'] ) && ! empty( tour_operator()->options['display']['enable_search_continent_filter'] ) && ( '0' === (string) $params['depth'] ) ) {
+				$title = '';
+			} else {
+				$title = get_the_title( $params['facet_value'] );
+				if ( '' !== $title ) {
+					$params['facet_display_value'] = $title;
+				}
+
+				if ( '' === $title && ! empty( $meta_key ) ) {
+					$params['facet_value'] = '';
+				}
 			}
 		}
 
