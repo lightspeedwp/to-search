@@ -124,7 +124,6 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 				if ( '' !== $title ) {
 					$params['facet_display_value'] = $title;
 				}
-
 				if ( '' === $title && ! empty( $meta_key ) ) {
 					$params['facet_value'] = '';
 				}
