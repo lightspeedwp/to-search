@@ -770,7 +770,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 							<div class="<?php echo wp_kses_post( $field_class ); ?>">
 								<?php
 									$facet = FWP()->helper->get_facet_by_name( $facet );
-									$values = $this->get_form_facet( $facet['source'] );
+									$values = $this->get_form_facet( $facet['name'] );
 									$this->display_form_field( 'select',$facet,$values,$combo_box );
 								?>
 							</div>
@@ -873,7 +873,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		$values = array();
 		$select = 'f.facet_value, f.facet_display_value';
 		$from = "{$wpdb->prefix}facetwp_index f";
-		$where = "f.facet_source = '{$facet_source}'";
+		$where = "f.facet_name = '{$facet_source}'";
 
 		//Check if the current facet is showing destinations.
 		if ( stripos( $facet_source, 'destination_to' ) ) {
@@ -881,9 +881,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$where .= " AND p.post_parent = '0'";
 
 		}
-
 		$response = $wpdb->get_results( "SELECT {$select} FROM {$from} WHERE {$where}" ); // WPCS: unprepared SQL OK.
-
 		if ( ! empty( $response ) ) {
 			foreach ( $response as $re ) {
 				$values[ $re->facet_value ] = $re->facet_display_value;
