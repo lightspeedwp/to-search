@@ -46,6 +46,8 @@ We offer premium support for this plugin. Premium support that can be purchased 
 
 If you are experiencing issues with the Tour Operator Search Plugin & have experience with Github, please log any bug issues you are having on the [Tour Operator Search Github Issues](https://github.com/lightspeeddevelopment/to-search/issues/) page.
 
+You can also send an email to our Support Team at [support@lsdev.biz](mailto:support@lsdev.biz) if you have a request for the LightSpeed Development team.
+
 ## Contributing to the Tour Operator Search Plugin
 
 If you're a developer who's spotted a bug issue and have a fix, or simply have the functionality you think would extend our core theme, we are always happy to accept your contribution! 

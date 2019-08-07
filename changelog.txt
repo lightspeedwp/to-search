@@ -5,10 +5,12 @@
 ### 1.2.1 - In development
 * Dev - Fixed the wp_kses error causing the archive facets not to load.
 * Fix - Adding the correct class to the search facet.
-* Dev - Imroving search styles.
+* Dev - Improving search styles.
 * Dev - Adding filter number to search results on mobile.
+* Dev - Adding search bar to mobile.
 * Fix - Restricted the post type labels to the global search only.
-* Dev - Updating the FacetWP Queries
+* Dev - Updating the FacetWP Queries.
+* Fix - Fixing footer bar.
 
 ### 1.2.0 - 21 June 2019
 * Dev - Adding rel="noopener noreferrer" tags to target="_blank" links
