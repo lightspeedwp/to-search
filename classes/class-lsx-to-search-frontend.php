@@ -540,22 +540,14 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 						<?php do_action( 'lsx_search_sidebar_top' ); ?>
 					</div>
 
-					<?php if ( isset( $this->options[ $this->search_slug ]['display_result_count'] ) && 'on' === $this->options[ $this->search_slug ]['display_result_count'] ) { ?>
-						<div class="row hidden-xs container-results">
-							<div class="col-xs-12 facetwp-item facetwp-results">
-								<h3 class="lsx-to-search-title lsx-to-search-title-results"><?php esc_html_e( 'Results', 'to-search' ); ?> (<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>)</h3>
-								<!--<button class="btn btn-md facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()"><?php esc_html_e( 'Clear', 'to-search' ); ?></button>-->
-							</div>
-						</div>
-					<?php } ?>
-
 					<?php if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) && is_array( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) { ?>
-						<div class="row container-facets">
+						<div class="row container-facets facetwp-row to-search-filer-area">
+							<h3 class="facetwp-filter-title"><?php echo esc_html_e( 'Refine by', 'lsx-search' ); ?></h3>
 							<div class="col-xs-12 facetwp-item facetwp-filters-button hidden-sm hidden-md hidden-lg">
 								<button class="ssm-toggle-nav btn btn-block filter-mobile" rel="to-search-filters"><?php esc_html_e( 'Filter (', 'to-search' ); ?><?php echo do_shortcode( '[facetwp counts="true"]' ); ?><?php esc_html_e( ') results', 'to-search' ); ?> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
 							</div>
 							<div class="ssm-overlay ssm-toggle-nav" rel="to-search-filters"></div>
-							<div class="col-xs-12 facetwp-item facetwp-filters-wrap" rel="to-search-filters">
+							<div class="col-xs-12 facetwp-item-wrap facetwp-filters-wrap" rel="to-search-filters">
 								<div class="row hidden-sm hidden-md hidden-lg ssm-row-margin-bottom">
 									<div class="col-xs-12 facetwp-item facetwp-filters-button">
 										<button class="ssm-close-btn ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Close Filters', 'to-search' ); ?> <i class="fa fa-times" aria-hidden="true"></i></button>
@@ -816,14 +808,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		$pagination_visible  = false;
 
 		$show_pagination     = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ];
-		$show_per_page_combo = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ];
+
 		$show_sort_combo     = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ];
 		$az_pagination       = $this->options[ $this->search_slug ][ $option_slug . 'az_pagination' ];
 
 		$show_pagination     = apply_filters( 'lsx_to_search_bottom_show_pagination', $show_pagination );
 		$pagination_visible  = apply_filters( 'lsx_to_search_bottom_pagination_visible', $pagination_visible );
-		$show_per_page_combo = apply_filters( 'lsx_to_search_bottom_show_per_page_combo', $show_per_page_combo );
-		$show_sort_combo     = apply_filters( 'lsx_to_search_bottom_show_sort_combo', $show_sort_combo );
 
 		if ( $show_pagination || ! empty( $az_pagination ) ) {
 			?>
@@ -831,14 +821,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				<div class="row facetwp-bottom-row-1">
 					<div class="col-xs-12">
 						<?php do_action( 'lsx_search_facetwp_bottom_row' ); ?>
-
-						<?php if ( $show_sort_combo ) { ?>
-							<?php echo do_shortcode( '[facetwp sort="true"]' ); ?>
-						<?php } ?>
-
-						<?php if ( ( $show_pagination && $show_per_page_combo ) || $show_per_page_combo ) { ?>
-							<?php echo do_shortcode( '[facetwp per_page="true"]' ); ?>
-						<?php } ?>
 
 						<?php if ( $show_pagination ) { ?>
 							<?php echo do_shortcode( '[facetwp pager="true"]' ); ?>

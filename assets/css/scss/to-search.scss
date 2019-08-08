@@ -134,12 +134,27 @@
 	}
 }
 
+#primary.content-area {
+	@include media('<phone') {
+		margin-top: 4.25rem;
+	}
+	#facetwp-top {
+		.facetwp-sort-select {
+			left: 10px;
+			position: relative;
+		}
+	}
+}
+
 .archive.archive-tour-operator,
 .search-results.archive-tour-operator,
 .search-no-results.archive-tour-operator {
 	.facetwp-sidebar.widget-area {
 		.facetwp-item {
-			//margin-top: 4.25rem;
+			background: #FFFFFF;
+			border-radius: 0;
+			padding: 20px 12px;
+			margin-bottom: 3px;
 
 			&:first-child { margin-top: 0; }
 		}
@@ -150,7 +165,7 @@
 			text-align: left;
 
 			@include media('>=phone') {
-				margin-top: 2rem;
+				margin-top: 0;
 				margin-bottom: 2rem;
 				&.lsx-to-search-title-results {
 					padding-bottom: 2rem;
@@ -183,7 +198,7 @@
 		.facetwp-form {
 			.search-field {
 				width: 190px;
-				height: 60px;
+				height: 50px;
 				border-width: 1px;
 				@include media('>=phone') {
 					min-width: 120px;
@@ -199,7 +214,13 @@
 			.btn.search-submit {
 				padding-left: 20px;
 				padding-right: 17px;
-				height: 58px;
+				height: 48px;
+				box-shadow: 1px 1px 0 0 #0C7383;
+    			border-radius: 0 2px 2px 0;
+				&:before {
+					font-size: 20px;
+					font-weight: 200;
+				}
 			}
 		}
 	}
@@ -270,11 +291,12 @@
 	display: inline-block;
 	font-size: 14px;
 	line-height: 1.25;
-	min-width: 120px;
-    height: 37px;
-    padding: 0 10px;
-    transition: all 150ms ease;
-    width: auto;
+	min-width: 180px;
+	height: 50px;
+	padding: 0 15px;
+	transition: all 150ms ease;
+	width: auto;
+	border-radius: 0;
 }
 
 .facetwp-template {
@@ -497,28 +519,35 @@
 
 #secondary.facetwp-sidebar {
 	padding: 0px 15px 15px 15px;
-	@media (min-width: 768px) {
-		&>.row:nth-child(2), &>.row:nth-child(3) {
-			background: #FFFFFF;
-			border-radius: 3px 3px 3px 3px;
-			border-left: 1px solid #EDEBEB;
-			border-right: 1px solid #EDEBEB;
-		}
+	// @media (min-width: 768px) {
+	// 	&>.row:nth-child(2), &>.row:nth-child(3) {
+	// 		background: #FFFFFF;
+	// 		border-radius: 3px 3px 3px 3px;
+	// 		border-left: 1px solid #EDEBEB;
+	// 		border-right: 1px solid #EDEBEB;
+	// 	}
+	// }
+	.facetwp-filter-title {
+		background: #FFFFFF;
+		border-radius: 0;
+		padding: 20px 12px;
+		margin-bottom: 3px;
+		text-align: left;
 	}
 
 	&>.container-search {
-		.row {
+		.facetwp-form {
 			margin-bottom: 25px;
 		}
 	}
-	&>.row:nth-child(2) {
-		border-top: 1px solid #EDEBEB;
-	}
+	// &>.row:nth-child(2) {
+	// 	border-top: 1px solid #EDEBEB;
+	// }
 
-	&>.row:last-child {
-		border-bottom: 1px solid #EDEBEB;
-		padding-bottom: 25px;
-	}
+	// &>.row:last-child {
+	// 	border-bottom: 1px solid #EDEBEB;
+	// 	padding-bottom: 25px;
+	// }
 
 	.facetwp-item {
 		&.facetwp-form {
@@ -528,7 +557,7 @@
 			.search-form {
 				.input-group {
 					.field:first-child	{
-						width: 90%;
+						width: 88%;
 					}
 					.field:nth-child(2) {
 						width:10%;
@@ -560,12 +589,12 @@
 
 body:not(.search-no-results) {
 	#facetwp-top, #facetwp-bottom>.row {
-		background-color: #ffffff;
-		border: 1px solid #E4E4E4;
+		background-color: transparent;
+		border: none;
 	}
 	.lsx-to-search-title.lsx-to-search-title-results {
-		border-bottom: 1px solid #dddddd;
-		padding-bottom: 15px;
+		display: flex;
+    	margin-bottom: 0;
 	}
 	.facetwp-sidebar {
 		background-color: transparent;
@@ -577,9 +606,10 @@ body:not(.search-no-results) {
 	}
 
 	#facetwp-top, #facetwp-bottom>.row {
-		padding: 9px;
+		padding: 0;
 		margin-left: 0;
 		margin-right: 0;
+		min-height: 40px;
 		@media (max-width: 767px) {
 			margin-left: 0;
 			margin-right: 0;
@@ -588,16 +618,53 @@ body:not(.search-no-results) {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			.container-results {
+				flex-grow: 2;
+			}
+			.facetwp-sort,
+			.nav.nav-tabs {
+				flex-grow: 1;
+				display: flex;
+				justify-content: flex-end;
+			}
 			.nav.nav-tabs {
 				margin: -9px;
-				height: 60px;
+				height: 50px;
 				border: none;
 				> li {
 					> a {
-						height: 60px;
+						height: 50px;
+						width: 50px;
+						border-radius: 2px;
 						border: none;
-						border-radius: 0;
 						padding: 15px;
+						background-color: #374750;
+						color: white;
+						font-size: 0;
+						&:before {
+							content: "";
+							font-family: 'FontAwesome';
+							font-size: 15px;
+						}
+					}
+					&.active, &:hover {
+						> a {
+							background-color: rgba(106,131,144,0.64);
+						}
+					}
+					&.to-list-toggle {
+						a {
+							&:before {
+								content: '\f03a';
+							}
+						}
+					}
+					&.to-map-toggle {
+						a {
+							&:before {
+								content: '\f0ac';
+							}
+						}
 					}
 				}
 			}
