@@ -621,11 +621,27 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$continent_class = 'no-continent-visible';
 		}
 		?>
+		<?php
+		global $lsx_to_search;
+		$show_collapse = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'];
+
+		?>
 		<div class="col-xs-12 facetwp-item <?php echo esc_attr( $continent_class ); ?>">
-			<?php if ( true === $display_title ) { ?>
+			<?php if ( ( true === $display_title ) && ( ! $show_collapse ) ) { ?>
+				<div class="facetwp-collapsed">
+					<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+					<button class="facetwp-collapse" type="button" data-toggle="collapse" data-target="#collapse-<?php echo esc_html( $facet ); ?>" aria-expanded="false" aria-controls="collapse-<?php echo esc_html( $facet ); ?>"></button>
+				</div>
+				<div id="collapse-<?php echo esc_html( $facet ); ?>" class="collapse">
+					<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
+				</div>
+			<?php } elseif ( true === $display_title ) { ?>
 				<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+				<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
+			<?php } else { ?>
+				<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+				<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 			<?php } ?>
-			<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 		</div>
 		<?php
 	}

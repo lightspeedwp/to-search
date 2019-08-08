@@ -33,4 +33,25 @@
 		background-color: white;
 		text-align-last: center;
 	}
+
+	.archive.archive-tour-operator,
+	.search-results.archive-tour-operator,
+	.search-no-results.archive-tour-operator {
+		.facetwp-sidebar.widget-area {
+			.facetwp-item {
+				.facetwp-collapsed {
+					button.facetwp-collapse {
+						&:before {
+							color: $link;
+						}
+						&:hover {
+							&:before {
+								color: $hover;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
