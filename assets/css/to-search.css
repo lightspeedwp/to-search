@@ -258,7 +258,9 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 #secondary.facetwp-sidebar .facetwp-item.no-continent-visible .facetwp-type-search { margin: 0 -15px; }
 
-#secondary.facetwp-sidebar .facetwp-item.no-continent-visible .facetwp-type-search .input-group.facetwp-search-wrap { width: 90%; display: -ms-flexbox; display: flex; }
+#secondary.facetwp-sidebar .facetwp-item.no-continent-visible .facetwp-type-search .input-group.facetwp-search-wrap { width: 90%; display: -ms-flexbox; display: flex; margin: 0 auto; }
+
+#secondary.facetwp-sidebar .facetwp-item.no-continent-visible .facetwp-type-search .input-group .field:first-child { width: 78%; }
 
 body:not(.search-no-results) #facetwp-top, body:not(.search-no-results) #facetwp-bottom > .row { background-color: transparent; border: none; }
 

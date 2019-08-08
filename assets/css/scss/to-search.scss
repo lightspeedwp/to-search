@@ -626,6 +626,12 @@
 				.input-group.facetwp-search-wrap {
 					width: 90%;
 					display: flex;
+					margin: 0 auto;
+				}
+				.input-group {
+					.field:first-child {
+						width: 78%;
+					}
 				}
 			}
 			// @media (max-width:767px) {
