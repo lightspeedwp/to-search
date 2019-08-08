@@ -639,7 +639,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
 				<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 			<?php } else { ?>
-				<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
 				<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 			<?php } ?>
 		</div>
