@@ -278,7 +278,7 @@ body:not(.search-no-results) #facetwp-top .row > .col-xs-12, body:not(.search-no
 
 body:not(.search-no-results) #facetwp-top .row > .col-xs-12 .facetwp-sort, body:not(.search-no-results) #facetwp-bottom > .row .row > .col-xs-12 .facetwp-sort { position: relative; left: 18px; }
 
-body:not(.search-no-results) #facetwp-top .row > .col-xs-12 .container-results, body:not(.search-no-results) #facetwp-bottom > .row .row > .col-xs-12 .container-results { -ms-flex-positive: 6; flex-grow: 6; }
+body:not(.search-no-results) #facetwp-top .row > .col-xs-12 .container-results, body:not(.search-no-results) #facetwp-bottom > .row .row > .col-xs-12 .container-results { -ms-flex-positive: 12; flex-grow: 12; }
 
 body:not(.search-no-results) #facetwp-top .row > .col-xs-12 .container-results + .facetwp-sort, body:not(.search-no-results) #facetwp-bottom > .row .row > .col-xs-12 .container-results + .facetwp-sort { -ms-flex-positive: 1; flex-grow: 1; left: 0; }
 
