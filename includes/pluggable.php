@@ -62,7 +62,7 @@ function lsx_to_search_top() {
 						</div>
 					<?php } ?>
 
-					<?php if ( $show_sort_combo) { ?>
+					<?php if ( $show_sort_combo ) { ?>
 						<?php echo do_shortcode( '[facetwp sort="true"]' ); ?>
 					<?php } ?>
 
