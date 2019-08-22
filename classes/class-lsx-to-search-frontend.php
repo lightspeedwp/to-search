@@ -55,6 +55,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
 		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
 		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
+		add_filter( 'body_class', array( $this, 'to_add_search_url_class' ), 20 );
 	}
 
 	/**
@@ -1004,6 +1005,26 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		}
 		return $output;
 	}
+
+	/**
+	 * Add an additional class to body if is tours, destinations or accommodation search.
+	 *
+	 * @param [type] $classes
+	 * @return $classes
+	 */
+	public function to_add_search_url_class( $classes ) {
+		global $wp;
+		$url_search_path = add_query_arg( $wp->query_vars );
+		if ( strpos( $url_search_path, '/search/tours/' ) !== false ) {
+			$classes[] = 'tours-search-page';
+		} elseif ( strpos( $url_search_path, '/search/accommodation/' ) !== false ) {
+			$classes[] = 'accommodation-search-page';
+		} elseif ( strpos( $url_search_path, '/search/destinations/' ) !== false ) {
+			$classes[] = 'destinations-search-page';
+		}
+		return $classes;
+	}
+
 }
 
 global $lsx_to_search;
