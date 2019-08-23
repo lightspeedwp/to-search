@@ -66,7 +66,7 @@ function lsx_to_search_top() {
 						<?php echo do_shortcode( '[facetwp sort="true"]' ); ?>
 					<?php } ?>
 
-					<?php if ( true === $show_map ) { ?>
+					<?php if ( ( true === $show_map ) && is_archive() ) { ?>
 						<ul class="nav nav-tabs">
 							<li class="active to-list-toggle"><a data-toggle="tab" href="#to-search-list"><?php echo esc_html__( 'List', 'to-search' ); ?></a></li>
 							<li class="to-map-toggle"><a data-toggle="tab" href="#to-search-map"><?php echo esc_html__( 'Map', 'to-search' ); ?></a></li>
