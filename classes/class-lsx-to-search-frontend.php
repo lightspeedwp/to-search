@@ -55,6 +55,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_shortcode( 'lsx_search_form', array( $this, 'search_form' ) );
 		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
 		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
+		add_filter( 'body_class', array( $this, 'to_add_search_url_class' ), 20 );
 	}
 
 	/**
@@ -540,22 +541,14 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 						<?php do_action( 'lsx_search_sidebar_top' ); ?>
 					</div>
 
-					<?php if ( isset( $this->options[ $this->search_slug ]['display_result_count'] ) && 'on' === $this->options[ $this->search_slug ]['display_result_count'] ) { ?>
-						<div class="row hidden-xs container-results">
-							<div class="col-xs-12 facetwp-item facetwp-results">
-								<h3 class="lsx-to-search-title lsx-to-search-title-results"><?php esc_html_e( 'Results', 'to-search' ); ?> (<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>)</h3>
-								<!--<button class="btn btn-md facetwp-results-clear-btn hidden" type="button" onclick="FWP.reset()"><?php esc_html_e( 'Clear', 'to-search' ); ?></button>-->
-							</div>
-						</div>
-					<?php } ?>
-
 					<?php if ( isset( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) && is_array( $this->options[ $this->search_slug ][ $option_slug . 'facets' ] ) ) { ?>
-						<div class="row container-facets">
+						<div class="row container-facets facetwp-row to-search-filer-area">
+							<h3 class="facetwp-filter-title"><?php echo esc_html_e( 'Refine by', 'lsx-search' ); ?></h3>
 							<div class="col-xs-12 facetwp-item facetwp-filters-button hidden-sm hidden-md hidden-lg">
 								<button class="ssm-toggle-nav btn btn-block filter-mobile" rel="to-search-filters"><?php esc_html_e( 'Filter (', 'to-search' ); ?><?php echo do_shortcode( '[facetwp counts="true"]' ); ?><?php esc_html_e( ') results', 'to-search' ); ?> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
 							</div>
 							<div class="ssm-overlay ssm-toggle-nav" rel="to-search-filters"></div>
-							<div class="col-xs-12 facetwp-item facetwp-filters-wrap" rel="to-search-filters">
+							<div class="col-xs-12 facetwp-item-wrap facetwp-filters-wrap" rel="to-search-filters">
 								<div class="row hidden-sm hidden-md hidden-lg ssm-row-margin-bottom">
 									<div class="col-xs-12 facetwp-item facetwp-filters-button">
 										<button class="ssm-close-btn ssm-toggle-nav btn btn-block" rel="to-search-filters"><?php esc_html_e( 'Close Filters', 'to-search' ); ?> <i class="fa fa-times" aria-hidden="true"></i></button>
@@ -629,11 +622,26 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$continent_class = 'no-continent-visible';
 		}
 		?>
+		<?php
+		global $lsx_to_search;
+		$show_collapse = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'];
+
+		?>
 		<div class="col-xs-12 facetwp-item <?php echo esc_attr( $continent_class ); ?>">
-			<?php if ( true === $display_title ) { ?>
+			<?php if ( ( true === $display_title ) && ( ! $show_collapse ) ) { ?>
+				<div class="facetwp-collapsed">
+					<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+					<button class="facetwp-collapse" type="button" data-toggle="collapse" data-target="#collapse-<?php echo esc_html( $facet ); ?>" aria-expanded="false" aria-controls="collapse-<?php echo esc_html( $facet ); ?>"></button>
+				</div>
+				<div id="collapse-<?php echo esc_html( $facet ); ?>" class="collapse">
+					<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
+				</div>
+			<?php } elseif ( true === $display_title ) { ?>
 				<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
+				<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
+			<?php } else { ?>
+				<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 			<?php } ?>
-			<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 		</div>
 		<?php
 	}
@@ -816,14 +824,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		$pagination_visible  = false;
 
 		$show_pagination     = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'pagination' ];
-		$show_per_page_combo = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'per_page' ];
+
 		$show_sort_combo     = ! isset( $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ] ) || 'on' !== $this->options[ $this->search_slug ][ 'disable_' . $option_slug . 'all_sorting' ];
 		$az_pagination       = $this->options[ $this->search_slug ][ $option_slug . 'az_pagination' ];
 
 		$show_pagination     = apply_filters( 'lsx_to_search_bottom_show_pagination', $show_pagination );
 		$pagination_visible  = apply_filters( 'lsx_to_search_bottom_pagination_visible', $pagination_visible );
-		$show_per_page_combo = apply_filters( 'lsx_to_search_bottom_show_per_page_combo', $show_per_page_combo );
-		$show_sort_combo     = apply_filters( 'lsx_to_search_bottom_show_sort_combo', $show_sort_combo );
 
 		if ( $show_pagination || ! empty( $az_pagination ) ) {
 			?>
@@ -831,14 +837,6 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 				<div class="row facetwp-bottom-row-1">
 					<div class="col-xs-12">
 						<?php do_action( 'lsx_search_facetwp_bottom_row' ); ?>
-
-						<?php if ( $show_sort_combo ) { ?>
-							<?php echo do_shortcode( '[facetwp sort="true"]' ); ?>
-						<?php } ?>
-
-						<?php if ( ( $show_pagination && $show_per_page_combo ) || $show_per_page_combo ) { ?>
-							<?php echo do_shortcode( '[facetwp per_page="true"]' ); ?>
-						<?php } ?>
 
 						<?php if ( $show_pagination ) { ?>
 							<?php echo do_shortcode( '[facetwp pager="true"]' ); ?>
@@ -1007,6 +1005,26 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		}
 		return $output;
 	}
+
+	/**
+	 * Add an additional class to body if is tours, destinations or accommodation search.
+	 *
+	 * @param [type] $classes
+	 * @return $classes
+	 */
+	public function to_add_search_url_class( $classes ) {
+		global $wp;
+		$url_search_path = add_query_arg( $wp->query_vars );
+		if ( strpos( $url_search_path, '/search/tours/' ) !== false ) {
+			$classes[] = 'tours-search-page';
+		} elseif ( strpos( $url_search_path, '/search/accommodation/' ) !== false ) {
+			$classes[] = 'accommodation-search-page';
+		} elseif ( strpos( $url_search_path, '/search/destinations/' ) !== false ) {
+			$classes[] = 'destinations-search-page';
+		}
+		return $classes;
+	}
+
 }
 
 global $lsx_to_search;
