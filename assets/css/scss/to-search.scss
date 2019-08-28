@@ -554,6 +554,10 @@
 
 #secondary.facetwp-sidebar {
 	padding: 0px 15px 15px 15px;
+	@media (max-width: 767px) {
+		margin-top: 4.25rem;
+		margin-bottom: 2.4rem;
+	}
 	// @media (min-width: 768px) {
 	// 	&>.row:nth-child(2), &>.row:nth-child(3) {
 	// 		background: #FFFFFF;
@@ -673,7 +677,7 @@ body:not(.search-no-results) {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding: 0px 7px;
+			padding: 0 0 0 7px;
 			.facetwp-sort {
 				position: relative;
 				right: 18px;
