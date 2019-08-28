@@ -798,6 +798,9 @@ body:not(.search-no-results) {
 		.facetwp-item.facetwp-filters-wrap {
 			padding-top: 10rem;
 		}
+		.facetwp-item-wrap>.ssm-row-margin-bottom:first-child {
+			margin-top: 12.4rem;
+		}
 	}
 	.facetwp-sort, .facetwp-per-page {
 		display: flex;
