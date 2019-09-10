@@ -288,6 +288,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public function lsx_to_search_archive_layout( $archive_layout, $settings_tab ) {
 		if ( is_search() && false !== $this->options && isset( $this->options[ $settings_tab ]['enable_search'] ) && isset( $this->options[ $settings_tab ] ) ) {
 			$archive_layout = $this->options[ $settings_tab ]['search_grid_list_layout'];
+			if ( '' === $archive_layout ) {
+				$archive_layout = 'list';
+			}
 		}
 		return $archive_layout;
 	}
