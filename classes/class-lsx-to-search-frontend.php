@@ -49,6 +49,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		// Layout Filter.
 		add_filter( 'lsx_layout', array( $this, 'lsx_layout' ), 20, 1 );
 		add_filter( 'lsx_layout_selector', array( $this, 'lsx_layout_selector' ), 10, 4 );
+		add_filter( 'lsx_to_archive_layout', array( $this, 'lsx_to_search_archive_layout' ), 10, 2 );
+		
 		add_action( 'lsx_search_sidebar_top', array( $this, 'search_sidebar_top' ) );
 		add_action( 'pre_get_posts', array( $this, 'price_sorting' ), 100 );
 
@@ -277,6 +279,16 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		}
 
 		return $query;
+	}
+
+	/**
+	 * A filter to set the layout to 2 column.
+	 */
+	public function lsx_to_search_archive_layout( $archive_layout, $settings_tab ) {
+		if ( is_search() && false !== $this->options && isset( $this->options[ $settings_tab ]['enable_search'] ) && isset( $this->options[ $settings_tab ] ) ) {
+			$archive_layout = $this->options[ $settings_tab ]['search_grid_list_layout'];
+		}
+		return $archive_layout;
 	}
 
 	/**

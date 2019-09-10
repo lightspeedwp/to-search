@@ -108,6 +108,19 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 				<?php } ?>
 			</td>
 		</tr>
+		<?php if ( 'display' !== $post_type ) { ?>
+			<tr class="form-field-wrap">
+				<th scope="row">
+					<label><?php esc_html_e( 'Grid/list layout', 'tour-operator' ); ?></label>
+				</th>
+				<td>
+					<select value="{{search_grid_list_layout}}" name="search_grid_list_layout">
+						<option value="" {{#is search_grid_list_layout value=""}}selected="selected"{{/is}}><?php esc_html_e( 'List', 'tour-operator' ); ?></option>
+						<option value="grid" {{#is search_grid_list_layout value="grid"}} selected="selected"{{/is}}><?php esc_html_e( 'Grid', 'tour-operator' ); ?></option>
+					</select>
+				</td>
+			</tr>
+		<?php } ?>
 		<?php if ( 'display' === $post_type ) : ?>
 			<tr class="form-field">
 				<th scope="row">
