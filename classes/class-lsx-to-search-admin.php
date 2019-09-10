@@ -208,6 +208,14 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 		</tr>
 		<tr class="form-field-wrap">
 			<th scope="row">
+				<label for="enable_collapse"><?php esc_html_e( 'Collapse', 'to-search' ); ?></label>
+			</th>
+			<td>
+				<input type="checkbox" {{#if enable_collapse}} checked="checked" {{/if}} name="enable_collapse" /> <label for="facets"><?php esc_html_e( 'Enable collapsible Facet Results', 'to-search' ); ?></label>
+			</td>
+		</tr>
+		<tr class="form-field-wrap">
+			<th scope="row">
 				<label><?php esc_html_e( 'Sorting', 'to-search' ); ?></label>
 			</th>
 			<td>
