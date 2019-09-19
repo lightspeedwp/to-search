@@ -2,7 +2,8 @@
 
 ### 1.2.2 - In development
 * Dev - Cosmetic improvements to Search
-# Dev - Adding the .gitattributes file to remove unnecessary files from the WordPress version.
+* Dev - Adding the .gitattributes file to remove unnecessary files from the WordPress version.
+* Fix - Updating the node module versions.
 
 ### 1.2.1 
 * Dev - Fixed the wp_kses error causing the archive facets not to load.
