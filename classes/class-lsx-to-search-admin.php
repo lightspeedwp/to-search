@@ -177,12 +177,12 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 		<?php if ( 'display' === $post_type ) : ?>
 			<tr class="form-field-wrap">
 				<th scope="row">
-					<label for="grid_list_layout"><?php esc_html_e( 'Grid/list layout', 'to-search' ); ?></label>
+					<label for="search_grid_list_layout"><?php esc_html_e( 'Grid/list layout', 'to-search' ); ?></label>
 				</th>
 				<td>
-					<select value="{{grid_list_layout}}" name="grid_list_layout">
-						<option value="" {{#is grid_list_layout value=""}}selected="selected"{{/is}}><?php esc_html_e( 'List', 'to-search' ); ?></option>
-						<option value="grid" {{#is grid_list_layout value="grid"}} selected="selected"{{/is}}><?php esc_html_e( 'Grid', 'to-search' ); ?></option>
+					<select value="{{search_grid_list_layout}}" name="search_grid_list_layout">
+						<option value="" {{#is search_grid_list_layout value=""}}selected="selected"{{/is}}><?php esc_html_e( 'List', 'to-search' ); ?></option>
+						<option value="grid" {{#is search_grid_list_layout value="grid"}} selected="selected"{{/is}}><?php esc_html_e( 'Grid', 'to-search' ); ?></option>
 					</select>
 				</td>
 			</tr>

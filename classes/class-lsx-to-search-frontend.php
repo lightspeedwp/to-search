@@ -50,7 +50,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_filter( 'lsx_layout', array( $this, 'lsx_layout' ), 20, 1 );
 		add_filter( 'lsx_layout_selector', array( $this, 'lsx_layout_selector' ), 10, 4 );
 		add_filter( 'lsx_to_archive_layout', array( $this, 'lsx_to_search_archive_layout' ), 10, 2 );
-		
+
 		add_action( 'lsx_search_sidebar_top', array( $this, 'search_sidebar_top' ) );
 		add_action( 'pre_get_posts', array( $this, 'price_sorting' ), 100 );
 
@@ -646,7 +646,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			<?php if ( ( true === $display_title ) && ( ! $show_collapse ) ) { ?>
 				<div class="facetwp-collapsed">
 					<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
-					<button class="facetwp-collapse" type="button" data-toggle="collapse" data-target="#collapse-<?php echo esc_html( $facet ); ?>" aria-expanded="false" aria-controls="collapse-<?php echo esc_html( $facet ); ?>"></button>
+					<button title="<?php echo esc_html_e( 'Click to Expand', 'to-search' ); ?>" class="facetwp-collapse" type="button" data-toggle="collapse" data-target="#collapse-<?php echo esc_html( $facet ); ?>" aria-expanded="false" aria-controls="collapse-<?php echo esc_html( $facet ); ?>"></button>
 				</div>
 				<div id="collapse-<?php echo esc_html( $facet ); ?>" class="collapse">
 					<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
