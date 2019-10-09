@@ -134,14 +134,16 @@
 	}
 }
 
-#primary.content-area {
-	@include media('<phone') {
-		margin-top: 4.25rem;
-	}
-	#facetwp-top {
-		.facetwp-sort-select {
-			left: 10px;
-			position: relative;
+.search {
+	#primary.content-area {
+		@include media('<phone') {
+			margin-top: 4.25rem;
+		}
+		#facetwp-top {
+			.facetwp-sort-select {
+				left: 10px;
+				position: relative;
+			}
 		}
 	}
 }
