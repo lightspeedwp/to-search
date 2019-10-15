@@ -219,7 +219,7 @@ jQuery(function() {
 	var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 		//windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-	jQuery(document).on('load', function() {
+	//jQuery(document).on('load', function() {
 		LSX_TO_Search.initThis(windowWidth);
-	});
+	//});
 });
