@@ -34,8 +34,9 @@ var LSX_TO_Search = {
 
 	onFacetWpLoad: function() {
 		this.facetWpLoadFirstTime = false;
+		console.log('sdfg');
 
-		jQuery(document).on('facetwp-loaded', function() {
+		jQuery(window).on('facetwp-loaded', function() {
 			jQuery('body').removeClass('facetwp-loading-body');
 
 			jQuery('#secondary, #primary').css({
@@ -61,10 +62,14 @@ var LSX_TO_Search = {
 				(0 === val) ? $parent.addClass('hidden') : $parent.removeClass('hidden');
 			});
 
-			if (! LSX_TO_Search.facetWpLoadFirstTime) {
-				LSX_TO_Search.facetWpLoadFirstTime = true;
+			console.log(LSX_TO_Search.facetWpLoadFirstTime);
+
+			if (true === LSX_TO_Search.facetWpLoadFirstTime) {
 				return;
 			}
+			LSX_TO_Search.facetWpLoadFirstTime = true;
+
+			FWP.fetch_data();
 
 			var scrollTop = jQuery('.facetwp-facet').length > 0 ? jQuery('.facetwp-facet').offset().top : jQuery('.facetwp-template').offset().top;
 			scrollTop -= 250;
@@ -77,7 +82,7 @@ var LSX_TO_Search = {
 			}
 		});
 
-		jQuery(document).on('facetwp-refresh', function() {
+		jQuery(window).on('facetwp-refresh', function() {
 			jQuery('body').addClass('facetwp-loading-body');
 
 			jQuery('#secondary, #primary').css({
@@ -214,5 +219,7 @@ jQuery(function() {
 	var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 		//windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-	LSX_TO_Search.initThis(windowWidth);
+	jQuery(document).on('load', function() {
+		LSX_TO_Search.initThis(windowWidth);
+	});
 });

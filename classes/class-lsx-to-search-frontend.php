@@ -177,16 +177,21 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 * Enques the assets.
 	 */
 	public function assets() {
+		$prefix = '.min';
+		$src = '';
+		if ( defined( 'SCRIPT_DEBUG' ) ) {
+			$prefix = '';
+			$src = 'src/';
+		}
 		wp_enqueue_script( 'touchSwipe', LSX_TO_SEARCH_URL . 'assets/js/vendor/jquery.touchSwipe.min.js', array( 'jquery' ), LSX_TO_SEARCH_VER, true );
 		wp_enqueue_script( 'slideandswipe', LSX_TO_SEARCH_URL . 'assets/js/vendor/jquery.slideandswipe.min.js', array( 'jquery', 'touchSwipe' ), LSX_TO_SEARCH_VER, true );
-		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/to-search.min.js', array( 'jquery', 'touchSwipe', 'slideandswipe' ), LSX_TO_SEARCH_VER, true );
+		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/' . $src . 'to-search' . $prefix . '.js', array( 'jquery', 'touchSwipe', 'slideandswipe' ), LSX_TO_SEARCH_VER, true );
 
 		$params = apply_filters( 'lsx_to_search_js_params', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 		));
 
 		wp_localize_script( 'lsx_to_search', 'lsx_to_search_params', $params );
-
 		wp_enqueue_style( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/css/to-search.css', array(), LSX_TO_SEARCH_VER );
 	}
 
@@ -572,6 +577,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 								<div class="container-search-mobile hidden-sm hidden-md hidden-lg ssm-row-margin-bottom">
 									<?php do_action( 'lsx_search_sidebar_top' ); ?>
 								</div>
+								
 								<div class="row">
 									<?php
 										// Slider
