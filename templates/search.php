@@ -24,26 +24,34 @@ get_header(); ?>
 			?>
 
 			<?php if ( have_posts() ) : ?>
-
-			<?php
+				<?php
 				$hidden_class = '';
+				$show_loader  = false;
 				if ( function_exists( 'FWP' ) ) {
 					if ( isset( FWP()->ajax->is_preload ) && ( 1 === FWP()->ajax->is_preload || '1' === FWP()->ajax->is_preload || true === FWP()->ajax->is_preload ) ) {
-						$hidden_class = 'hidden';
+						$show_loader = true;
 					}
 				}
-			?>
+				?>
 
 				<div class="row lsx-to-archive-items lsx-to-archive-template-<?php echo esc_attr( tour_operator()->archive_layout ); ?> lsx-to-archive-template-image-<?php echo esc_attr( tour_operator()->archive_list_layout_image_style ); ?> <?php echo esc_attr( $hidden_class ); ?>">
 
-					<?php while ( have_posts() ) : the_post(); ?>
-
-						<div class="<?php echo esc_attr( lsx_to_archive_class( 'lsx-to-archive-item' ) ); ?>">
-							<?php lsx_to_content( 'content', get_post_type() ); ?>
-						</div>
-
-					<?php endwhile; ?>
-
+					<?php
+					if ( true === $show_loader ) {
+						?>
+						<div class="facetwp-loading-wrapper"><div class="facetwp-loading"></div></div>
+						<?php
+					} else {
+						while ( have_posts() ) :
+							the_post();
+							?>
+							<div class="<?php echo esc_attr( lsx_to_archive_class( 'lsx-to-archive-item' ) ); ?>">
+								<?php lsx_to_content( 'content', get_post_type() ); ?>
+							</div>
+							<?php
+						endwhile;
+					}
+					?>
 				</div>
 
 			<?php else : ?>

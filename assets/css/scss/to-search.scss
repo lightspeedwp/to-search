@@ -341,6 +341,18 @@
 	.row {
 		margin-top: 0 !important;
 
+		.facetwp-loading-wrapper {
+			width: 100%;
+			text-align: center;
+			padding: 24px;
+
+			.facetwp-loading {
+				&:before {
+					font-size: 35px;
+				}
+			}
+		}
+
 		.lsx-to-archive-item {
 			&:first-child {
 				margin-top: 0 !important;

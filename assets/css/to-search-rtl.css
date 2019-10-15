@@ -125,6 +125,10 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 .facetwp-template .row { margin-top: 0 !important; }
 
+.facetwp-template .row .facetwp-loading-wrapper { width: 100%; text-align: center; padding: 24px; }
+
+.facetwp-template .row .facetwp-loading-wrapper .facetwp-loading:before { font-size: 35px; }
+
 .facetwp-template .row .lsx-to-archive-item:first-child { margin-top: 0 !important; }
 
 @media (max-width: 767px) { .facetwp-template .row .lsx-to-archive-item { margin-bottom: 25px; } }
