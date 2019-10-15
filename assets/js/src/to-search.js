@@ -62,8 +62,6 @@ var LSX_TO_Search = {
 				(0 === val) ? $parent.addClass('hidden') : $parent.removeClass('hidden');
 			});
 
-			console.log(LSX_TO_Search.facetWpLoadFirstTime);
-
 			if (true === LSX_TO_Search.facetWpLoadFirstTime) {
 				return;
 			}
@@ -217,9 +215,5 @@ var LSX_TO_Search = {
 
 jQuery(function() {
 	var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-		//windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-	//jQuery(document).on('load', function() {
-		LSX_TO_Search.initThis(windowWidth);
-	//});
+	LSX_TO_Search.initThis(windowWidth);
 });

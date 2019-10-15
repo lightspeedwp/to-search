@@ -25,7 +25,16 @@ get_header(); ?>
 
 			<?php if ( have_posts() ) : ?>
 
-				<div class="row lsx-to-archive-items lsx-to-archive-template-<?php echo esc_attr( tour_operator()->archive_layout ); ?> lsx-to-archive-template-image-<?php echo esc_attr( tour_operator()->archive_list_layout_image_style ); ?>">
+			<?php
+				$hidden_class = '';
+				if ( function_exists( 'FWP' ) ) {
+					if ( isset( FWP()->ajax->is_preload ) && ( 1 === FWP()->ajax->is_preload || '1' === FWP()->ajax->is_preload || true === FWP()->ajax->is_preload ) ) {
+						$hidden_class = 'hidden';
+					}
+				}
+			?>
+
+				<div class="row lsx-to-archive-items lsx-to-archive-template-<?php echo esc_attr( tour_operator()->archive_layout ); ?> lsx-to-archive-template-image-<?php echo esc_attr( tour_operator()->archive_list_layout_image_style ); ?> <?php echo esc_attr( $hidden_class ); ?>">
 
 					<?php while ( have_posts() ) : the_post(); ?>
 
