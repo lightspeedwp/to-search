@@ -44,9 +44,9 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 @media (max-width: 768px) { .wp-block-to-search-to-search-block .input-group .field { width: 100%; }
   .wp-block-to-search-to-search-block .input-group .field input, .wp-block-to-search-to-search-block .input-group .field button { width: 100%; min-width: 100%; } }
 
-@media (max-width: 767px) { #primary.content-area { margin-top: 4.25rem; } }
+@media (max-width: 767px) { .search #primary.content-area { margin-top: 4.25rem; } }
 
-#primary.content-area #facetwp-top .facetwp-sort-select { right: 10px; position: relative; }
+.search #primary.content-area #facetwp-top .facetwp-sort-select { right: 10px; position: relative; }
 
 .archive.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-item, .search-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-item, .search-no-results.archive-tour-operator .facetwp-sidebar.widget-area .facetwp-item { background: #FFFFFF; border-radius: 0; padding: 20px 12px; margin-bottom: 3px; }
 
