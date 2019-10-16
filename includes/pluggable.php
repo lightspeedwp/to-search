@@ -35,11 +35,11 @@ function lsx_to_search_top() {
 		return '';
 	}
 
-	$show_results        = isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['display_result_count'] ) || 'on' === $lsx_to_search->options[ $lsx_to_search->search_slug ]['display_result_count'];
+	$show_results = isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['display_result_count'] ) || 'on' === $lsx_to_search->options[ $lsx_to_search->search_slug ]['display_result_count'];
 
 	$show_sort_combo = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['disable_all_sorting'] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ]['disable_all_sorting'];
 
-	$az_pagination       = $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'az_pagination' ];
+	$az_pagination = $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'az_pagination' ];
 
 	$show_map = false;
 	if ( isset( $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'layout_map' ] ) && ! empty( $lsx_to_search->options[ $lsx_to_search->search_slug ][ $option_slug . 'layout_map' ] ) ) {
@@ -66,7 +66,7 @@ function lsx_to_search_top() {
 						<?php echo do_shortcode( '[facetwp sort="true"]' ); ?>
 					<?php } ?>
 
-					<?php if ( ( true === $show_map ) && is_archive( 'accommodation' ) ) { ?>
+					<?php if ( ( true === $show_map ) && ( is_archive( 'accommodation' ) || is_search() ) ) { ?>
 						<ul class="nav nav-tabs">
 							<li class="active to-list-toggle"><a data-toggle="tab" href="#to-search-list"><?php echo esc_html__( 'List', 'to-search' ); ?></a></li>
 							<li class="to-map-toggle"><a data-toggle="tab" href="#to-search-map"><?php echo esc_html__( 'Map', 'to-search' ); ?></a></li>
