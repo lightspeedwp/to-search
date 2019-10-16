@@ -61,19 +61,22 @@ var LSX_TO_Search = {
 				(0 === val) ? $parent.addClass('hidden') : $parent.removeClass('hidden');
 			});
 
-			console.log(FWP);
-			if ( undefined !== FWP && undefined !== FWP.settings && undefined !== FWP.settings.pager && undefined !== FWP.settings.pager.total_rows ) {
-				if ( 0 === FWP.settings.pager.total_rows ) {
-					jQuery('body').addClass('search-no-results');
-				}
-			}
-
 			if (true === LSX_TO_Search.facetWpLoadFirstTime) {
+				if ( undefined !== FWP && undefined !== FWP.settings && undefined !== FWP.settings.pager && undefined !== FWP.settings.pager.total_rows ) {
+					if ( 0 === FWP.settings.pager.total_rows ) {
+						jQuery('body').addClass('search-no-results');
+					}
+				}
 				return;
 			}
 			LSX_TO_Search.facetWpLoadFirstTime = true;
 
 			FWP.fetch_data();
+			if ( undefined !== FWP && undefined !== FWP.settings && undefined !== FWP.settings.pager && undefined !== FWP.settings.pager.total_rows ) {
+				if ( 0 === FWP.settings.pager.total_rows ) {
+					jQuery('body').addClass('search-no-results');
+				}
+			}
 
 			var scrollTop = jQuery('.facetwp-facet').length > 0 ? jQuery('.facetwp-facet').offset().top : jQuery('.facetwp-template').offset().top;
 			scrollTop -= 250;

@@ -21,10 +21,7 @@ get_header(); ?>
 			<?php
 				global $lsx_to_archive;
 				$lsx_to_archive = 1;
-			?>
 
-			<?php if ( have_posts() ) : ?>
-				<?php
 				$hidden_class = '';
 				$show_loader  = false;
 				if ( function_exists( 'FWP' ) ) {
@@ -32,10 +29,11 @@ get_header(); ?>
 						$show_loader = true;
 					}
 				}
-				?>
+			?>
+
+			<?php if ( have_posts() ) : ?>
 
 				<div class="row lsx-to-archive-items lsx-to-archive-template-<?php echo esc_attr( tour_operator()->archive_layout ); ?> lsx-to-archive-template-image-<?php echo esc_attr( tour_operator()->archive_list_layout_image_style ); ?> <?php echo esc_attr( $hidden_class ); ?>">
-
 					<?php
 					if ( true === $show_loader ) {
 						?>
@@ -55,8 +53,18 @@ get_header(); ?>
 				</div>
 
 			<?php else : ?>
+				<?php
+				if ( true === $show_loader ) {
+					?>
+					<div class="row lsx-to-archive-items lsx-to-archive-template-<?php echo esc_attr( tour_operator()->archive_layout ); ?> lsx-to-archive-template-image-<?php echo esc_attr( tour_operator()->archive_list_layout_image_style ); ?> <?php echo esc_attr( $hidden_class ); ?>">
+						<div class="facetwp-loading-wrapper"><div class="facetwp-loading"></div></div>
+					</div>
+					<?php
 
-				<?php get_template_part( 'partials/content', 'none' ); ?>
+				} else {
+					get_template_part( 'partials/content', 'none' );
+				}
+				?>
 
 			<?php endif; ?>
 
