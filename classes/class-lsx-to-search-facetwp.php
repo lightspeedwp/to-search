@@ -317,13 +317,25 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 		return $output;
 	}
 
+	/**
+	 * Checks the facet source value and outputs the destination facet HTML if needed.
+	 *
+	 * @param  string  $output
+	 * @param  array   $params
+	 * @return string
+	 */
 	public function destination_facet_html( $output, $params ) {
-		$possible_keys = array( 'destination_to_accommodation', 'destination_to_tour', 'destination_to_special', 'destination_to_activity', 'destination', 'destinations', 'destination_to_review', 'destination_to_vehicle' );
-
-		if ( in_array( $params['facet']['name'],$possible_keys ) ) {
+		$possible_keys = array(
+			'cf/destination_to_accommodation',
+			'cf/destination_to_tour',
+			'cf/destination_to_special',
+			'cf/destination_to_activity',
+			'cf/destination_to_review',
+			'cf/destination_to_vehicle',
+		);
+		if ( in_array( $params['facet']['source'], $possible_keys ) ) {
 			$output = $this->destination_facet_render( $params );
 		}
-
 		return $output;
 	}
 
