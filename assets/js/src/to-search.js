@@ -34,7 +34,6 @@ var LSX_TO_Search = {
 
 	onFacetWpLoad: function() {
 		this.facetWpLoadFirstTime = false;
-		console.log('sdfg');
 
 		jQuery(window).on('facetwp-loaded', function() {
 			jQuery('body').removeClass('facetwp-loading-body');
@@ -43,6 +42,8 @@ var LSX_TO_Search = {
 				'opacity': '',
 				'pointer-events': ''
 			});
+
+			console.log('Loaded');
 
 			if (FWP.build_query_string() == '') {
 				jQuery('.facetwp-results-clear-btn').addClass('hidden');

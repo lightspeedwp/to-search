@@ -1061,6 +1061,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		} elseif ( strpos( $url_search_path, '/search/destinations/' ) !== false ) {
 			$classes[] = 'destinations-search-page';
 		}
+		if ( is_search() ) {
+			$key = array_search( 'search-no-results', $classes );
+			if ( $key !== false ) {
+				unset( $classes[ $key ] );
+			}
+		}
 		return $classes;
 	}
 
