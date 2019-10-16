@@ -58,6 +58,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_filter( 'searchwp_short_circuit', array( $this, 'searchwp_short_circuit' ), 10, 2 );
 		add_filter( 'get_search_query', array( $this, 'get_search_query' ) );
 		add_filter( 'body_class', array( $this, 'to_add_search_url_class' ), 20 );
+
+		add_filter( 'facetwp_preload_url_vars', array( $this, 'preload_url_vars' ), 10, 1 );
 	}
 
 	/**
@@ -1062,12 +1064,30 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			$classes[] = 'destinations-search-page';
 		}
 		if ( is_search() ) {
+			$classes[] = 'search-results';
 			$key = array_search( 'search-no-results', $classes );
 			if ( $key !== false ) {
 				unset( $classes[ $key ] );
 			}
 		}
 		return $classes;
+	}
+
+	/**
+	 * Checks for a preselcted facet and preselects them.
+	 * @param $url_vars
+	 *
+	 * @return mixed
+	 */
+	public function preload_url_vars( $url_vars ) {
+
+		if ( strpos( FWP()->helper->get_uri(), 'search/' ) !== false ) {
+			/*$url_vars['fwp_types'] = array( 'lodge' );
+			if ( empty( $url_vars['fwp_content_type'] ) && ! isset( $_GET['fwp_content_type'] ) ) {
+				$url_vars['content_type'] = array( 'post' );
+			}*/
+		}
+		return $url_vars;
 	}
 
 }

@@ -43,8 +43,6 @@ var LSX_TO_Search = {
 				'pointer-events': ''
 			});
 
-			console.log('Loaded');
-
 			if (FWP.build_query_string() == '') {
 				jQuery('.facetwp-results-clear-btn').addClass('hidden');
 			} else {
@@ -62,6 +60,13 @@ var LSX_TO_Search = {
 				var $parent = jQuery('.facetwp-facet-' + key).closest('.facetwp-item');
 				(0 === val) ? $parent.addClass('hidden') : $parent.removeClass('hidden');
 			});
+
+			console.log(FWP);
+			if ( undefined !== FWP && undefined !== FWP.settings && undefined !== FWP.settings.pager && undefined !== FWP.settings.pager.total_rows ) {
+				if ( 0 === FWP.settings.pager.total_rows ) {
+					jQuery('body').addClass('search-no-results');
+				}
+			}
 
 			if (true === LSX_TO_Search.facetWpLoadFirstTime) {
 				return;
