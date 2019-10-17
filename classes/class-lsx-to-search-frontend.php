@@ -191,12 +191,29 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		wp_enqueue_script( 'slideandswipe', LSX_TO_SEARCH_URL . 'assets/js/vendor/jquery.slideandswipe.min.js', array( 'jquery', 'touchSwipe' ), LSX_TO_SEARCH_VER, true );
 		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/' . $src . 'to-search' . $prefix . '.js', array( 'jquery', 'touchSwipe', 'slideandswipe' ), LSX_TO_SEARCH_VER, true );
 
+		$facet_found = $this->check_for_matching_facets();
 		$params = apply_filters( 'lsx_to_search_js_params', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'facets'   => $facet_found,
 		));
-
 		wp_localize_script( 'lsx_to_search', 'lsx_to_search_params', $params );
 		wp_enqueue_style( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/css/to-search.css', array(), LSX_TO_SEARCH_VER );
+	}
+
+	public function check_for_matching_facets() {
+		$return = '';
+		if ( is_search() ) {
+			global $wpdb;
+			$search_query = get_search_query();
+			if ( '' !== $search_query && false !== $search_query ) {
+				$facet_name = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$search_query}'" );
+				if ( '' !== $facet_name ) {
+					$return                = array();
+					$return[ $facet_name ] = array( $search_query );
+				}
+			}
+		}
+		return $return;
 	}
 
 	/**

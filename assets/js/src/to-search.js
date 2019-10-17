@@ -71,6 +71,8 @@ var LSX_TO_Search = {
 			}
 			LSX_TO_Search.facetWpLoadFirstTime = true;
 
+			LSX_TO_Search.checkForFacets();
+
 			FWP.fetch_data();
 			if ( undefined !== FWP && undefined !== FWP.settings && undefined !== FWP.settings.pager && undefined !== FWP.settings.pager.total_rows ) {
 				if ( 0 === FWP.settings.pager.total_rows ) {
@@ -97,6 +99,18 @@ var LSX_TO_Search = {
 				'pointer-events': 'none'
 			});
 		});
+	},
+
+	checkForFacets: function() {
+		if ( undefined !== lsx_to_search_params && false !== lsx_to_search_params.facets && '' !== lsx_to_search_params.facets ) {
+			for (var key in lsx_to_search_params.facets) {
+				if (lsx_to_search_params.facets.hasOwnProperty(key)) {
+					if ( undefined !== FWP.facets[key] ) {
+						FWP.facets[key] = lsx_to_search_params.facets[key];
+					}
+				}
+			}
+		}
 	},
 
 	mobileFilters: function() {
