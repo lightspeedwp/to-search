@@ -26,6 +26,13 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public $search_prefix = false;
 
 	/**
+	 * If the search keyword matches a term then it will be stored here - 
+	 *
+	 * @var boolean
+	 */
+	public $preselected_facet = false;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -191,28 +198,17 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		wp_enqueue_script( 'slideandswipe', LSX_TO_SEARCH_URL . 'assets/js/vendor/jquery.slideandswipe.min.js', array( 'jquery', 'touchSwipe' ), LSX_TO_SEARCH_VER, true );
 		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/' . $src . 'to-search' . $prefix . '.js', array( 'jquery', 'touchSwipe', 'slideandswipe' ), LSX_TO_SEARCH_VER, true );
 
-		$facet_found = $this->check_for_matching_facets();
 		$params = apply_filters( 'lsx_to_search_js_params', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'facets'   => $facet_found,
+			'facets'   => $this->preselected_facet,
 		));
 		wp_localize_script( 'lsx_to_search', 'lsx_to_search_params', $params );
 		wp_enqueue_style( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/css/to-search.css', array(), LSX_TO_SEARCH_VER );
 	}
 
-	public function check_for_matching_facets() {
-		$return = '';
-		if ( is_search() ) {
-			global $wpdb;
-			$search_query = get_search_query();
-			if ( '' !== $search_query && false !== $search_query ) {
-				$facet_name = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$search_query}'" );
-				if ( '' !== $facet_name ) {
-					$return                = array();
-					$return[ $facet_name ] = array( $search_query );
-				}
-			}
-		}
+	public function get_facet_name_by_value( $value = '' ) {
+		global $wpdb;
+		$return = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$value}'" );
 		return $return;
 	}
 
@@ -305,12 +301,36 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			if ( isset( $this->post_type_slugs[ $keyword_test[0] ] ) ) {
 				$engine = $this->post_type_slugs[ $keyword_test[0] ];
 
+				// check if our search preselects a facet.
+				$s_query = $search_query;
+				if ( isset( $keyword_test[1] ) ) {
+					$s_query = $keyword_test[1];
+				}
+				$has_matching_facet = false;
+				$s_query            = str_replace( ' ', '-', $s_query );
+				$s_query            = str_replace( '+', '-', $s_query );
+				$matching_facet     = $this->get_facet_name_by_value( $s_query );
+
+				if ( isset( $this->options[ $engine ]['facets'] ) && ! empty( $this->options[ $engine ]['facets'] ) ) {
+					$option_slug = 'search_';
+					// Check if the matching term has an active facet displaying
+					if ( array_key_exists( $matching_facet, $this->options[ $engine ]['facets'] ) ) {
+						$has_matching_facet = true;
+						$this->preselected_facet = array();
+						$this->preselected_facet[ $matching_facet ] = array( $s_query );
+					}
+				}
+
 				$query->set( 'post_type', $engine );
 				$query->set( 'engine', $engine );
 
-				if ( count( $keyword_test ) > 1 ) {
-					$query->set( 's', $keyword_test[1] );
-				} elseif ( post_type_exists( $engine ) ) {
+				if ( false === $has_matching_facet ) {
+					if ( count( $keyword_test ) > 1 ) {
+						$query->set( 's', $keyword_test[1] );
+					} elseif ( post_type_exists( $engine ) ) {
+						$query->set( 's', '' );
+					}
+				} else {
 					$query->set( 's', '' );
 				}
 			} else {

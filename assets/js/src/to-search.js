@@ -102,15 +102,18 @@ var LSX_TO_Search = {
 	},
 
 	checkForFacets: function() {
+		console.log(lsx_to_search_params);
 		if ( undefined !== lsx_to_search_params && false !== lsx_to_search_params.facets && '' !== lsx_to_search_params.facets ) {
 			for (var key in lsx_to_search_params.facets) {
 				if (lsx_to_search_params.facets.hasOwnProperty(key)) {
 					if ( undefined !== FWP.facets[key] ) {
+						console.log(lsx_to_search_params.facets[key]);
 						FWP.facets[key] = lsx_to_search_params.facets[key];
 					}
 				}
 			}
 		}
+		console.log(FWP);
 	},
 
 	mobileFilters: function() {
