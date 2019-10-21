@@ -583,7 +583,7 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 						</div>
 
 						<div class="field submit-button">
-							<button class="search-submit btn facetwp-btn" type="submit"><?php esc_html_e( 'Search2', 'lsx-search' ); ?></button>
+							<button class="search-submit btn facetwp-btn" type="submit"><?php esc_html_e( 'Search', 'lsx-search' ); ?></button>
 						</div>
 					</div>
 				</div>

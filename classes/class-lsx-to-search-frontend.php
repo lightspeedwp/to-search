@@ -25,6 +25,8 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 	public $search_prefix = false;
 
+	public $facet_counter = 0;
+
 	/**
 	 * If the search keyword matches a term then it will be stored here - 
 	 *
@@ -702,16 +704,21 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		?>
 		<?php
 		global $lsx_to_search;
-		$show_collapse = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'];
-
+		$show_collapse        = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ]['enable_collapse'];
+		$collapse_class       = '';
+		$expanded_title       = 'false';
+		if ( 0 === $this->facet_counter || false === $this->facet_counter ) {
+			$collapse_class = 'in';
+			$expanded_title = 'true';
+		}
 		?>
 		<div class="col-xs-12 facetwp-item <?php echo esc_attr( $continent_class ); ?>">
 			<?php if ( ( true === $display_title ) && ( ! $show_collapse ) ) { ?>
 				<div class="facetwp-collapsed">
 					<h3 class="lsx-to-search-title"><?php echo wp_kses_post( $this->facet_data[ $facet ]['label'] ); ?></h3>
-					<button title="<?php echo esc_html_e( 'Click to Expand', 'to-search' ); ?>" class="facetwp-collapse" type="button" data-toggle="collapse" data-target="#collapse-<?php echo esc_html( $facet ); ?>" aria-expanded="false" aria-controls="collapse-<?php echo esc_html( $facet ); ?>"></button>
+					<button title="<?php echo esc_html_e( 'Click to Expand', 'to-search' ); ?>" class="facetwp-collapse" type="button" data-toggle="collapse" data-target="#collapse-<?php echo esc_html( $facet ); ?>" aria-expanded="<?php echo esc_attr( $expanded_title ); ?>" aria-controls="collapse-<?php echo esc_html( $facet ); ?>"></button>
 				</div>
-				<div id="collapse-<?php echo esc_html( $facet ); ?>" class="collapse">
+				<div id="collapse-<?php echo esc_html( $facet ); ?>" class="collapse <?php echo esc_attr( $collapse_class ); ?>">
 					<?php echo do_shortcode( '[facetwp facet="' . $facet . '"]' ); ?>
 				</div>
 			<?php } elseif ( true === $display_title ) { ?>
@@ -722,6 +729,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 			<?php } ?>
 		</div>
 		<?php
+		$this->facet_counter++;
 	}
 
 	/**

@@ -61,6 +61,20 @@ var LSX_TO_Search = {
 				(0 === val) ? $parent.addClass('hidden') : $parent.removeClass('hidden');
 			});
 
+			if ( 0 < jQuery( '.facetwp-filters-wrap .row .facetwp-item').not('.hidden').length ) {
+				if ( 0 < jQuery( '.facetwp-filters-wrap .row .facetwp-item').not('.hidden').first().length ) {
+					jQuery( '.facetwp-filters-wrap .row .facetwp-item').not('.hidden').find('button.facetwp-collapse').first().attr('aria-expanded','true');
+					jQuery( '.facetwp-filters-wrap .row .facetwp-item').not('.hidden').find('.collapse').first().addClass('in');
+				}
+			}
+
+			jQuery('.facetwp-checkbox.checked').each(function() {
+				var parent = jQuery(this).parents('.facetwp-item');
+				parent.find('button.facetwp-collapse').attr('aria-expanded','true');
+				parent.find('.collapse').addClass('in');
+			});
+			
+
 			if (true === LSX_TO_Search.facetWpLoadFirstTime) {
 				if ( undefined !== FWP && undefined !== FWP.settings && undefined !== FWP.settings.pager && undefined !== FWP.settings.pager.total_rows ) {
 					if ( 0 === FWP.settings.pager.total_rows ) {
@@ -102,7 +116,6 @@ var LSX_TO_Search = {
 	},
 
 	checkForFacets: function() {
-		console.log(lsx_to_search_params);
 		if ( undefined !== lsx_to_search_params && false !== lsx_to_search_params.facets && '' !== lsx_to_search_params.facets ) {
 			for (var key in lsx_to_search_params.facets) {
 				if (lsx_to_search_params.facets.hasOwnProperty(key)) {
@@ -113,7 +126,6 @@ var LSX_TO_Search = {
 				}
 			}
 		}
-		console.log(FWP);
 	},
 
 	mobileFilters: function() {
