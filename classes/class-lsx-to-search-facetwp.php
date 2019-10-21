@@ -545,7 +545,8 @@ class LSX_TO_Search_FacetWP extends LSX_TO_Search {
 			if ( ! empty( tour_operator()->options['general'] ) && is_array( tour_operator()->options['general'] ) ) {
 				if ( ! empty( tour_operator()->options['general']['currency'] ) ) {
 					$currency = tour_operator()->options['general']['currency'];
-					$currency = '<span class="currency-icon ' . mb_strtolower( $currency ) . '">' . $currency . '</span>';
+					$currency_symbol = apply_filters( 'lsx_to_search_slider_currency', $currency );
+					$currency = '<span class="currency-icon ' . mb_strtolower( $currency ) . '">' . $currency_symbol . '</span>';
 				}
 			}
 
