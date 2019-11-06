@@ -603,7 +603,7 @@
 		.facetwp-form {
 			margin-bottom: 25px;
 		}
-		@media (max-width: 768px) {
+		@include media('<phone') {
 			display: none;
 		}
 	}

@@ -252,7 +252,7 @@ body.home .page-banner .to-search-form .input-group { margin: 0 auto; }
 
 #secondary.facetwp-sidebar > .container-search .facetwp-form { margin-bottom: 25px; }
 
-@media (max-width: 768px) { #secondary.facetwp-sidebar > .container-search { display: none; } }
+@media (max-width: 767px) { #secondary.facetwp-sidebar > .container-search { display: none; } }
 
 @media (min-width: 768px) { #secondary.facetwp-sidebar .facetwp-item.facetwp-form { padding: 0px; } }
 
