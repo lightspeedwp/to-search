@@ -201,8 +201,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		wp_enqueue_script( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/js/' . $src . 'to-search' . $prefix . '.js', array( 'jquery', 'touchSwipe', 'slideandswipe' ), LSX_TO_SEARCH_VER, true );
 
 		$params = apply_filters( 'lsx_to_search_js_params', array(
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'facets'   => $this->preselected_facet,
+			'ajax_url'     => admin_url( 'admin-ajax.php' ),
+			'facets'       => $this->preselected_facet,
+			'scrollOnLoad' => true,
 		));
 		wp_localize_script( 'lsx_to_search', 'lsx_to_search_params', $params );
 		wp_enqueue_style( 'lsx_to_search', LSX_TO_SEARCH_URL . 'assets/css/to-search.css', array(), LSX_TO_SEARCH_VER );

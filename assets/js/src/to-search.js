@@ -94,9 +94,11 @@ var LSX_TO_Search = {
 				}
 			}
 
-			var scrollTop = jQuery('.facetwp-facet').length > 0 ? jQuery('.facetwp-facet').offset().top : jQuery('.facetwp-template').offset().top;
-			scrollTop -= 250;
-			jQuery('html, body').animate({scrollTop: scrollTop}, 400);
+			if ( undefined !== lsx_to_search_params && true === lsx_to_search_params.scrollOnLoad ) {
+				var scrollTop = jQuery('.facetwp-facet').length > 0 ? jQuery('.facetwp-facet').offset().top : jQuery('.facetwp-template').offset().top;
+				scrollTop -= 250;
+				jQuery('html, body').animate({scrollTop: scrollTop}, 400);
+			}
 
 			LSX_TO_Search.onChangeTab_Map();
 
