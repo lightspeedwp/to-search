@@ -33,7 +33,7 @@ function to_search_block_assets() {
 	wp_register_style(
 		'my_block-to-style-css', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-		array( 'wp-editor' ), // Dependency to include the CSS after it.
+		array( ), // Dependency to include the CSS after it.
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
 	);
 
