@@ -3,9 +3,9 @@ Contributors: feedmymedia
 Donate link: https://donate.lsdev.biz/
 Tags: tour operator, facetwp, search, search widget, gutenberg
 Requires at least: 4.9
-Tested up to: 5.2.2
+Tested up to: 5.3
 Requires PHP: 7.0
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv3 or later 
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -21,13 +21,13 @@ Remember that in order to use this, the FacetWP plugin installed. The [Tour Oper
 
 == Works with the LSX Theme == 
 
-The [Tour Operator Plugin](https://tour-operator.lsdev.biz) and [Extensions](https://tour-operator.lsdev.biz/extensions/) are designed to work seamlessly with the LSX theme. 
+The [Tour Operator Plugin](https://tour-operator.lsdev.biz/) and [Extensions](https://tour-operator.lsdev.biz/extensions/) are designed to work seamlessly with the LSX theme. 
 
 We are always updating our software to add functionality, and maintain latest security protocols. 
 
 == Gutenberg Compatible Plugin == 
 
-Have you updated to the new WordPress Gutenberg editor? We've got you covered! The Tour Operator Search Plugin has been optimised for the Gutenberg update. 
+Have you updated to the new WordPress Gutenberg editor? We've got you covered! The Tour Operator Search Plugin has been optimized for the Gutenberg update. 
 
 Check out our [Tour Operator dedicated website](https://tour-operator.lsdev.biz/) to check out all our available extensions and features.
 
