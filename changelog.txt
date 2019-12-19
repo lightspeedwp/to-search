@@ -1,6 +1,6 @@
 ## Change log
 
-### 1.4
+### 1.4 - 19 December 2019
 * Dev - Updating the node module versions.
 * Dev - Added in a filter to skip the to-search.js and to-search.min.js files from being deferred.
 * Dev - Added in the Fontawesome spinner that FacetWP uses to show page loading.
