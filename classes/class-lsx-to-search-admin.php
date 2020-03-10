@@ -23,14 +23,12 @@ class LSX_TO_Search_Admin extends LSX_TO_Search {
 	 *
 	 */
 	public function admin_init() {
-		if ( class_exists( 'FacetWP' ) ) {
-			add_action( 'lsx_to_framework_dashboard_tab_content', array( $this, 'general_settings' ), 50, 1 );
-			add_action( 'lsx_to_framework_display_tab_content', array( $this, 'display_settings' ), 50, 1 );
+		add_action( 'lsx_to_framework_dashboard_tab_content', array( $this, 'general_settings' ), 50, 1 );
+		add_action( 'lsx_to_framework_display_tab_content', array( $this, 'display_settings' ), 50, 1 );
 
-			foreach ( $this->post_types as $pt => $pv ) {
-				add_action( 'lsx_to_framework_' . $pt . '_tab_content', array( $this, 'display_settings' ), 50, 2 );
-				add_action( 'lsx_to_framework_' . $pt . '_tab_archive_settings_bottom', array( $this, 'archive_settings' ), 10, 1 );
-			}
+		foreach ( $this->post_types as $pt => $pv ) {
+			add_action( 'lsx_to_framework_' . $pt . '_tab_content', array( $this, 'display_settings' ), 50, 2 );
+			add_action( 'lsx_to_framework_' . $pt . '_tab_archive_settings_bottom', array( $this, 'archive_settings' ), 10, 1 );
 		}
 	}
 
