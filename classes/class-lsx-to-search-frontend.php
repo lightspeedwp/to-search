@@ -212,7 +212,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 	public function get_facet_name_by_value( $value = '' ) {
 		global $wpdb;
-		$return = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$value}'" ); // @codeCoverageIgnore
+		// @codingStandardsIgnoreStart
+		$return = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$value}'" );
+		// @codingStandardsIgnoreEnd
 		return $return;
 	}
 
