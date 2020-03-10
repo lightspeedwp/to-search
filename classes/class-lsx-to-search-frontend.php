@@ -212,7 +212,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 	public function get_facet_name_by_value( $value = '' ) {
 		global $wpdb;
-		$return = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$value}'" );
+		$return = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$value}'" ); // @codeCoverageIgnore
 		return $return;
 	}
 
@@ -1136,13 +1136,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 * @return mixed
 	 */
 	public function preload_url_vars( $url_vars ) {
-
-		if ( strpos( FWP()->helper->get_uri(), 'search/' ) !== false ) {
-			/*$url_vars['fwp_types'] = array( 'lodge' );
+		/*if ( strpos( FWP()->helper->get_uri(), 'search/' ) !== false ) {
+			$url_vars['fwp_types'] = array( 'lodge' );
 			if ( empty( $url_vars['fwp_content_type'] ) && ! isset( $_GET['fwp_content_type'] ) ) {
 				$url_vars['content_type'] = array( 'post' );
-			}*/
-		}
+			}
+		}*/
 		return $url_vars;
 	}
 
