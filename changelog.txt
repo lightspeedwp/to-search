@@ -1,5 +1,8 @@
 ## Change log
 
+### 1.4.1 - (unreleased)
+* Fixed - Changed the search slug to /search/ for the JSON+LD output in Yoast SEO
+
 ### 1.4 - 19 December 2019
 * Dev - Updating the node module versions.
 * Dev - Added in a filter to skip the to-search.js and to-search.min.js files from being deferred.
