@@ -28,7 +28,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	public $facet_counter = 0;
 
 	/**
-	 * If the search keyword matches a term then it will be stored here - 
+	 * If the search keyword matches a term then it will be stored here.
 	 *
 	 * @var boolean
 	 */
@@ -69,6 +69,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		add_filter( 'body_class', array( $this, 'to_add_search_url_class' ), 20 );
 
 		add_filter( 'facetwp_preload_url_vars', array( $this, 'preload_url_vars' ), 10, 1 );
+		add_filter( 'wpseo_json_ld_search_url', array( $this, 'change_json_ld_search_url' ), 10, 1 );
 	}
 
 	/**
@@ -211,7 +212,9 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 
 	public function get_facet_name_by_value( $value = '' ) {
 		global $wpdb;
+		// @codingStandardsIgnoreStart
 		$return = $wpdb->get_var( "SELECT `facet_name`, `id` FROM `{$wpdb->prefix}facetwp_index` WHERE `facet_value` = '{$value}'" );
+		// @codingStandardsIgnoreEnd
 		return $return;
 	}
 
@@ -345,6 +348,15 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		}
 
 		return $query;
+	}
+
+	/**
+	 * Change the search slug to /search/ for the JSON+LD output in Yoast SEO
+	 *
+	 * @return url
+	 */
+	public function change_json_ld_search_url() {
+		return trailingslashit( home_url() ) . 'search/{search_term_string}';
 	}
 
 	/**
@@ -1112,7 +1124,7 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 		if ( is_search() ) {
 			$classes[] = 'search-results';
 			$key = array_search( 'search-no-results', $classes );
-			if ( $key !== false ) {
+			if ( false !== $key ) {
 				unset( $classes[ $key ] );
 			}
 		}
@@ -1126,13 +1138,12 @@ class LSX_TO_Search_Frontend extends LSX_TO_Search {
 	 * @return mixed
 	 */
 	public function preload_url_vars( $url_vars ) {
-
-		if ( strpos( FWP()->helper->get_uri(), 'search/' ) !== false ) {
-			/*$url_vars['fwp_types'] = array( 'lodge' );
+		/*if ( strpos( FWP()->helper->get_uri(), 'search/' ) !== false ) {
+			$url_vars['fwp_types'] = array( 'lodge' );
 			if ( empty( $url_vars['fwp_content_type'] ) && ! isset( $_GET['fwp_content_type'] ) ) {
 				$url_vars['content_type'] = array( 'post' );
-			}*/
-		}
+			}
+		}*/
 		return $url_vars;
 	}
 
