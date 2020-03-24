@@ -1,95 +1,156 @@
-## Change log
+# Change log
 
-### 1.4.1 - (unreleased)
-* Fixed - Changed the search slug to /search/ for the JSON+LD output in Yoast SEO
 
-### 1.4 - 19 December 2019
-* Dev - Updating the node module versions.
-* Dev - Added in a filter to skip the to-search.js and to-search.min.js files from being deferred.
-* Dev - Added in the Fontawesome spinner that FacetWP uses to show page loading.
-* Dev - Changed the destination facet HTML function to check the Facet Source, and not the Name.
-* Dev - Added in a function to pre select a facet if its value is found in the DB.
-* Dev - Added in a filter `lsx_to_search_slider_currency`, allowing you to overwrite the prefix symbol.
-* Dev - Added in a `scrollOnLoad` to the `lsx_to_search_js_params` to allow you to disable the scroll on `facetwp-load`.
-* Fix - Moved the no search results class around, and added divs for the search.php
-* Dev - Added in the FWP fetch data to trigger the search on page load.
-* Fix - Allowing the first facet to be open when using collapsible filters.
-* Fix - Fixing the media query to make sure the search form displays on tablets.
-* Dev - Removing the `wp-editor` clause from the blocks CSS dependencies.
-* Dev - Margins and paddings on search pages improved.
-* Dev - General testing to ensure compatibility with latest WordPress version (5.3).
-* Dev - Checking compatibility with LSX 2.6 release.
+## [Unreleased] - Minor version 1.4.1
 
-### 1.3 - 13 September 2019
-* Dev - Cosmetic improvements to Search
-* Dev - Adding the .gitattributes file to remove unnecessary files from the WordPress version.
-* Dev - Making the layout for search independent from the archive layouts.
-* Dev - Adding collapsible facets option. 
+### Fixed
+- Changed the search slug to /search/ for the JSON+LD output in Yoast SEO.
+- Undefined index: `display_result_count`.
 
-### 1.2.1 
-* Dev - Fixed the wp_kses error causing the archive facets not to load.
-* Fix - Adding the correct class to the search facet.
-* Dev - Improving search styles.
-* Dev - Adding filter number to search results on mobile.
-* Dev - Adding search bar to mobile.
-* Fix - Restricted the post type labels to the global search only.
-* Dev - Updating the FacetWP Queries.
-* Fix - Fixing footer bar.
+### Security
+- Sanitizing widget fields.
+- Updating dependencies to prevent vulnerabilities.
+- General testing to ensure compatibility with latest WordPress version (5.4).
+- General testing to ensure compatibility with latest LSX Theme version (2.7).
 
-### 1.2.0 - 21 June 2019
-* Dev - Adding rel="noopener noreferrer" tags to target="_blank" links
-* Dev - Travis fixes and readme file update
-* Fix - Adding the search bar above the sidebar
-* Fix - Added in the facet search HTML
-* Fix - Fixed the facetwp output
-* Fix - Fixed the accommodation selector
-* Dev - Added in the function to set the facetwp cars
-* Fix - Fixed the debug error 
-* Fix - Moved the map option into the top bar
-* Dev - Styling search
-* Fix - Fixing the tour layout selector
-* Fix - Fixing the archive facets
-* Fix - Fixing the facet selections
-* Fix - Security fixes
-* Dev - Adding in the "general" option
-* Dev - adding the shortcode functionality
-* Dev - Started adding the basics to enable a search block
 
-### 1.1.1
-* Dev - Added in CSS classes to allow the Destinations Facet to work when "widening" and "narrowing"
-* Dev - Added an option to disable the continents filter (FacetWP)
-* Fix - TO Maps undefined function removed
-* Fix - Fixed missing column in alpha pagination
+## [[1.4.0]](https://github.com/lightspeeddevelopment/to-search/releases/tag/1.4) - 2019-12-19
 
-### 1.1.0
-* Dev - Support LSX Theme 2.0 new designs
-* Added compatibility with LSX 2.0
-* Added compatibility with Tour Operator 1.1
-* Dev - New project structure
-* Fix - Fixed scripts/styles loading order
-* Fix - Fixed small issues
+### Added
+- Added in a filter to skip the to-search.js and to-search.min.js files from being deferred.
+- Added in the Fontawesome spinner that FacetWP uses to show page loading.
+- Changed the destination facet HTML function to check the Facet Source, and not the Name.
+- Added in a function to pre select a facet if its value is found in the DB.
+- Added in a filter `lsx_to_search_slider_currency`, allowing you to overwrite the prefix symbol.
+- Added in a `scrollOnLoad` to the `lsx_to_search_js_params` to allow you to disable the scroll on `facetwp-load`.
+- Added in the FWP fetch data to trigger the search on page load.
+- Removing the `wp-editor` clause from the blocks CSS dependencies.
+- Margins and paddings on search pages improved.
 
-### 1.0.3
-* Fix - Make the addon compatible with the latest version from TO plugin
-* Fix - Added TO Search as subtab on LSX TO settings page
-* Fix - Styles from TO Search addon moved to it (removed from TO plugin)
-* Dev - New option on FacetWP results: map
-* Dev - New option for sorting: Date (ASC and DESC)
-* Dev - Enabled integration with Snazzy Maps plugin
-* Dev - Added in the ability to call a facet on your search form, as a drop down.
-* Dev - Added in Javascript form validation so you can never submit an empty keyword
-* Dev - Styled the form so it can handle the drop downs, and a more fluid layout.
-* Dev - Made the facets shortcode attribute able to handle multiple faces
-* Dev - Added in a combination box option
-* Fix - Fixed the default pagination from LSX
-* Dev - Added in options to disable the title, price, and date FacetWP sort options
+### Fixed
+- Moved the no search results class around, and added divs for the search.php.
+- Allowing the first facet to be open when using collapsible filters.
+- Fixing the media query to make sure the search form displays on tablets.
 
-### 1.0.2
-* Fix - Fixed all prefixes replaces (to_ > lsx_to_, TO_ > LSX_TO_)
+### Security
+- Updating the node module versions.
+- Checking compatibility with LSX 2.6 release.
+- General testing to ensure compatibility with latest WordPress version (5.3).
 
-### 1.0.1
-* Fix - Reduced the access to server (check API key status) using transients
-* Fix - Made the API URLs dev/live dynamic using a prefix "dev-" in the API KEY
 
-### 1.0.0
-* First Version
+## [[1.3.0]](https://github.com/lightspeeddevelopment/to-search/releases/tag/1.3) - 2019-09-13
+
+### Added
+- Cosmetic improvements to Search.
+- Adding the .gitattributes file to remove unnecessary files from the WordPress version.
+- Making the layout for search independent from the archive layouts.
+- Adding collapsible facets option. 
+
+
+## [[1.2.1]](https://github.com/lightspeeddevelopment/to-search/releases/tag/1.2.1) - 2019-08-06
+
+### Added
+- Adding the correct class to the search facet.
+- Improving search styles.
+- Adding filter number to search results on mobile.
+- Adding search bar to mobile.
+
+### Changed
+- Updating the FacetWP Queries.
+
+### Fixes
+- Fixed the wp_kses error causing the archive facets not to load.
+- Restricted the post type labels to the global search only.
+- Fixing footer bar.
+
+
+## [[1.2.0]](https://github.com/lightspeeddevelopment/to-search/releases/tag/v1.2.0) - 2019-06-21
+
+### Added
+- Adding rel="noopener noreferrer" tags to target="_blank" links.
+- Added in the function to set the facetwp cars.
+- Styling search.
+- Adding in the "general" option.
+- adding the shortcode functionality.
+- Started adding the basics to enable a search block.
+- Adding the search bar above the sidebar.
+- Added in the facet search HTML.
+
+### Fixed
+- Travis fixes and readme file update.
+- Fixed the facetwp output.
+- Fixed the accommodation selector.
+- Fixed the debug error.
+- Fixing the tour layout selector.
+- Fixing the archive facets.
+- Fixing the facet selections.
+
+### Changed
+- Moved the map option into the top bar.
+
+### Security
+- Security fixes.
+
+
+## [[1.1.1]]()
+
+### Added
+- Added in CSS classes to allow the Destinations Facet to work when "widening" and "narrowing".
+- Added an option to disable the continents filter (FacetWP).
+
+### Fixed
+- TO Maps undefined function removed
+- Fixed missing column in alpha pagination
+
+
+## [[1.1.0]](https://github.com/lightspeeddevelopment/to-search/releases/tag/v1.1.0) - 2017-10-10
+
+### Added
+- Support LSX Theme 2.0 new designs.
+- Added compatibility with LSX 2.0.
+- Added compatibility with Tour Operator 1.1.
+- New project structure.
+
+### Fixed
+- Fixed scripts/styles loading order.
+- Fixed small issues.
+
+
+## [[1.0.3]]()
+
+### Added
+- New option on FacetWP results: map.
+- New option for sorting: Date (ASC and DESC).
+- Enabled integration with Snazzy Maps plugin.
+- Added in the ability to call a facet on your search form, as a drop down.
+- Added in Javascript form validation so you can never submit an empty keyword.
+- Styled the form so it can handle the drop downs, and a more fluid layout.
+- Made the facets shortcode attribute able to handle multiple faces.
+- Added in a combination box option.
+- Added in options to disable the title, price, and date FacetWP sort options.
+
+
+### Fixed
+- Fixed the default pagination from LSX.
+- Make the addon compatible with the latest version from TO plugin.
+- Added TO Search as subtab on LSX TO settings page.
+- Styles from TO Search addon moved to it (removed from TO plugin).
+
+
+## [[1.0.2]]()
+
+### Fixed
+- Fixed all prefixes replaces (to_ > lsx_to_, TO_ > LSX_TO_).
+
+
+## [[1.0.1]]()
+
+### Fixed
+- Reduced the access to server (check API key status) using transients
+- Made the API URLs dev/live dynamic using a prefix "dev-" in the API KEY
+
+
+## [[1.0.0]]()
+
+### Added
+- First Version

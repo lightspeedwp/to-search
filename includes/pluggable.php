@@ -35,7 +35,7 @@ function lsx_to_search_top() {
 		return '';
 	}
 
-	$show_results = isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['display_result_count'] ) || 'on' === $lsx_to_search->options[ $lsx_to_search->search_slug ]['display_result_count'];
+	$show_results = isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['display_result_count'] );
 
 	$show_sort_combo = ! isset( $lsx_to_search->options[ $lsx_to_search->search_slug ]['disable_all_sorting'] ) || 'on' !== $lsx_to_search->options[ $lsx_to_search->search_slug ]['disable_all_sorting'];
 
