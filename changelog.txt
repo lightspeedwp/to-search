@@ -1,7 +1,7 @@
 # Change log
 
 
-## [Unreleased] - Minor version 1.4.1
+## [[1.4.1]](https://github.com/lightspeeddevelopment/to-search/releases/tag/1.4.1) - 2020-03-30
 
 ### Fixed
 - Changed the search slug to /search/ for the JSON+LD output in Yoast SEO.
