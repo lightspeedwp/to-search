@@ -45,7 +45,7 @@
     "braces": ">=2.3.1",
     "cgb-scripts": "^1.23.1",
     "classnames": "^2.2.6",
-    "debug": ">=2.6.9",
+    "debug": ">=4.2.0",
     "extend": "^3.0.2",
     "fstream": ">=1.0.12",
     "hoek": "^6.1.3",
