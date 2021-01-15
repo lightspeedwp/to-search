@@ -3,9 +3,9 @@ Contributors: feedmymedia
 Donate link: https://donate.lsdev.biz/
 Tags: tour operator, facetwp, search, search widget, gutenberg
 Requires at least: 5.3
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 7.2
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv3 or later 
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 

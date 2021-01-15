@@ -1,5 +1,12 @@
 # Change log
 
+## [[1.4.2]](https://github.com/lightspeeddevelopment/to-search/releases/tag/1.4.2) - 2021-01-15
+
+### Updated
+- Documentation and support links
+
+### Security
+- General testing to ensure compatibility with latest WordPress version (5.6).
 
 ## [[1.4.1]](https://github.com/lightspeeddevelopment/to-search/releases/tag/1.4.1) - 2020-03-30
 
