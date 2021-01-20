@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: Tour Operator Search
+ * Plugin Name: LSX Tour Operator Search
  * Plugin URI:  https://www.lsdev.biz/product/tour-operator-search/
  * Description: The Tour Operator Search extension adds robust search functionality to sites, allowing filterable search by post type, category and more.
  * Version:     1.4.2
