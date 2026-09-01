@@ -49,11 +49,31 @@
     "extend": "^3.0.2",
     "fstream": ">=1.0.12",
     "hoek": "^6.1.3",
-    "lodash": "^4.17.20",
-    "minimatch": ">=3.0.2",
+    "lodash": "^4.18.0",
+    "minimatch": "^3.1.4",
     "minimist": "^1.2.5",
     "natives": "^1.1.6",
     "randomatic": ">=3.0.0",
-    "tar": ">=6.0.5"
+    "tar": "^7.5.21"
+  },
+  "overrides": {
+    "decode-uri-component": "^0.5.0",
+    "postcss": "^8.5.23",
+    "form-data": "^2.5.6",
+    "tmp": "^0.2.6",
+    "uuid": "^11.1.1",
+    "qs": "^6.14.1",
+    "ajv": "^6.14.0",
+    "semver": "^5.7.2",
+    "node-gyp": {
+      "tar": "^7.5.21"
+    },
+    "jshint": {
+      "lodash": "^4.18.0",
+      "minimatch": "^3.1.4"
+    },
+    "globule": {
+      "minimatch": "^3.1.4"
+    }
   }
 }
