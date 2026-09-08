@@ -1,164 +1,93 @@
+// Theme assets (assets/css, assets/js). The Gutenberg block in src/ is built
+// by @wordpress/scripts - see `npm run build`.
 const gulp         = require('gulp');
-const autoprefixer = require('gulp-autoprefixer');
-const gettext      = require('gulp-gettext');
-const jshint       = require('gulp-jshint');
-const plumber      = require('gulp-plumber');
-const rename       = require('gulp-rename');
+const sass         = require('gulp-sass')(require('sass'));
+const postcss      = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
 const rtlcss       = require('gulp-rtlcss');
-const sass         = require('gulp-sass');
+const rename       = require('gulp-rename');
+const terser       = require('gulp-terser');
+const plumber      = require('gulp-plumber');
 const sort         = require('gulp-sort');
-const sourcemaps   = require('gulp-sourcemaps');
-const uglify       = require('gulp-uglify');
-const gutil        = require('gulp-util');
 const wppot        = require('gulp-wp-pot');
 
-const browserlist  = ['last 2 version', '> 1%'];
+const onError = function (err) {
+	console.error(err.toString());
+	this.emit('end');
+};
 
-gulp.task('default', function() {
-	console.log('Use the following commands');
-	console.log('--------------------------');
-	console.log('gulp compile-css               to compile the scss to css');
-	console.log('gulp compile-js                to compile the js to min.js');
-	console.log('gulp watch                     to continue watching the files for changes');
-	console.log('gulp wordpress-lang            to compile the to-search.pot, to-search-en_EN.po and to-search-en_EN.mo');
-	console.log('gulp reload-node-flag-icon-css to copy the scss and svg files for the flag-icon-css');
-});
+const sassOptions = {
+	style: 'compressed',
+	loadPaths: ['assets/css/scss']
+};
 
-gulp.task('styles', function (done) {
+const potOptions = {
+	domain: 'to-search',
+	package: 'to-search',
+	bugReport: 'https://github.com/lightspeedwp/to-search/issues',
+	team: 'LightSpeed <webmaster@lsdev.biz>'
+};
+
+// Sourcemaps come from gulp 5's built-in support rather than gulp-sourcemaps,
+// which is unmaintained.
+function styles() {
+	return gulp.src('assets/css/scss/*.scss', { sourcemaps: true })
+		.pipe(plumber({ errorHandler: onError }))
+		.pipe(sass.sync(sassOptions).on('error', sass.logError))
+		.pipe(postcss([autoprefixer()]))
+		.pipe(gulp.dest('assets/css', { sourcemaps: 'maps' }));
+}
+
+function stylesRtl() {
 	return gulp.src('assets/css/scss/*.scss')
-		.pipe(plumber({
-			errorHandler: function(err) {
-				console.log(err);
-				this.emit('end');
-			}
-		}))
-		.pipe(sourcemaps.init())
-		.pipe(sass({
-			outputStyle: 'compact',
-			includePaths: ['assets/css/scss']
-		}).on('error', gutil.log))
-		.pipe(autoprefixer({
-			browsers: browserlist,
-			casacade: true
-		}))
-		.pipe(sourcemaps.write('maps'))
-		.pipe(gulp.dest('assets/css')),
-		done();
-});
-
-gulp.task('styles-rtl', function (done) {
-	return gulp.src('assets/css/scss/*.scss')
-		.pipe(plumber({
-			errorHandler: function(err) {
-				console.log(err);
-				this.emit('end');
-			}
-		}))
-		.pipe(sass({
-			outputStyle: 'compact',
-			includePaths: ['assets/css/scss']
-		}).on('error', gutil.log))
-		.pipe(autoprefixer({
-			browsers: browserlist,
-			casacade: true
-		}))
+		.pipe(plumber({ errorHandler: onError }))
+		.pipe(sass.sync(sassOptions).on('error', sass.logError))
+		.pipe(postcss([autoprefixer()]))
 		.pipe(rtlcss())
-		.pipe(rename({
-			suffix: '-rtl'
-		}))
-		.pipe(gulp.dest('assets/css')),
-		done();
-});
+		.pipe(rename({ suffix: '-rtl' }))
+		.pipe(gulp.dest('assets/css'));
+}
 
-gulp.task('compile-css',  gulp.series( ['styles', 'styles-rtl'] , function(done) {
-	done();
-}));
-
-gulp.task('js', function(done) {
+function js() {
 	return gulp.src('assets/js/src/**/*.js')
-		.pipe(plumber({
-			errorHandler: function(err) {
-				console.log(err);
-				this.emit('end');
-			}
-		}))
-		.pipe(jshint())
-		.pipe(uglify())
-		.pipe(rename({
-			suffix: '.min'
-		}))
-		.pipe(gulp.dest('assets/js')),
-		done();
-});
+		.pipe(plumber({ errorHandler: onError }))
+		.pipe(terser())
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest('assets/js'));
+}
 
-gulp.task('js-vendor', function(done) {
-	return gulp.src('assets/js/vendor/src/**/*.js')
-		.pipe(plumber({
-			errorHandler: function(err) {
-				console.log(err);
-				this.emit('end');
-			}
-		}))
-		.pipe(jshint())
-		.pipe(uglify())
-		.pipe(rename({
-			suffix: '.min'
-		}))
-		.pipe(gulp.dest('assets/js/vendor')),
-		done();
-});
-
-gulp.task('compile-js', gulp.series( ['js', 'js-vendor'] , function(done) {
-	done();
-}));
-
-gulp.task('watch-css', function (done) {
-	done();
-	return gulp.watch('assets/css/**/*.scss', gulp.series('compile-css'));
-});
-
-gulp.task('watch-js', function (done) {
-	done();
-	return gulp.watch('assets/js/src/**/*.js', gulp.series('compile-js'));
-});
-
-gulp.task('watch', gulp.series( ['watch-css', 'watch-js'] , function(done) {
-	done();
-}));
-
-gulp.task('wordpress-pot', function(done) {
+function wordpressPot() {
 	return gulp.src('**/*.php')
 		.pipe(sort())
-		.pipe(wppot({
-			domain: 'to-search',
-			package: 'to-search',
-			bugReport: 'https://www.lsdev.biz/product/tour-operator-search/issues',
-			team: 'LightSpeed <webmaster@lsdev.biz>'
-		}))
-		.pipe(gulp.dest('languages/to-search.pot')),
-		done();
-});
+		.pipe(wppot(potOptions))
+		.pipe(gulp.dest('languages/to-search.pot'));
+}
 
-gulp.task('wordpress-po', function(done) {
-	return gulp.src('**/*.php')
-		.pipe(sort())
-		.pipe(wppot({
-			domain: 'to-search',
-			package: 'to-search',
-			bugReport: 'https://www.lsdev.biz/product/tour-operator-search/issues',
-			team: 'LightSpeed <webmaster@lsdev.biz>'
-		}))
-		.pipe(gulp.dest('languages/to-search-en_EN.po')),
-		done();
-});
+const compileCss = gulp.parallel(styles, stylesRtl);
+const buildAll = gulp.parallel(compileCss, js);
 
-gulp.task('wordpress-po-mo', gulp.series( ['wordpress-po'], function(done) {
-	return gulp.src('languages/to-search-en_EN.po')
-		.pipe(gettext())
-		.pipe(gulp.dest('languages')),
-		done();
-}));
+function watchFiles() {
+	gulp.watch('assets/css/**/*.scss', compileCss);
+	gulp.watch('assets/js/src/**/*.js', js);
+}
 
-gulp.task('wordpress-lang', gulp.series( ['wordpress-pot', 'wordpress-po-mo'], function(done) {
-	done();
-}));
+function help(cb) {
+	console.log('Theme asset tasks (the block is built with `npm run build`)');
+	console.log('----------------------------------------------------------');
+	console.log('gulp compile-css    to compile the scss to css');
+	console.log('gulp compile-js     to compile the js to min.js');
+	console.log('gulp build          to compile both');
+	console.log('gulp watch          to keep watching the files for changes');
+	console.log('gulp wordpress-pot  to regenerate languages/to-search.pot');
+	cb();
+}
+
+exports.styles = styles;
+exports['styles-rtl'] = stylesRtl;
+exports['compile-css'] = compileCss;
+exports['compile-js'] = js;
+exports.js = js;
+exports.build = buildAll;
+exports.watch = watchFiles;
+exports['wordpress-pot'] = wordpressPot;
+exports.default = help;

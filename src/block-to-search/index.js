@@ -5,25 +5,24 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
-// Import block dependencies and components
-import classnames from 'classnames';
-
 //  Import CSS.
 import './styles/style.scss';
 import './styles/editor.scss';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-
-const {
-	InspectorControls,
-} = wp.editor;
-const {
+// These are imports rather than reads off the `wp` globals so that
+// @wordpress/scripts' dependency extraction can see them and emit a correct
+// dependency array into build/index.asset.php. Reading the globals produced an
+// asset file listing only react-jsx-runtime, which would let this script load
+// before wp-blocks and wp-i18n existed.
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
+// InspectorControls moved here from wp.editor, deprecated since WordPress 5.3.
+import { InspectorControls } from '@wordpress/block-editor';
+import {
 	PanelBody,
-	RangeControl,
 	TextControl,
 	SelectControl,
-} = wp.components;
+} from '@wordpress/components';
 
 /**
  * Register: aa Gutenberg Block.

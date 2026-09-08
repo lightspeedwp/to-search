@@ -16,42 +16,54 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Enqueue Gutenberg block assets for both frontend + backend.
  *
- * Assets enqueued:
- * 1. blocks.style.build.css - Frontend + Backend.
- * 2. blocks.build.js - Backend.
- * 3. blocks.editor.build.css - Backend.
+ * Assets are built by @wordpress/scripts into build/:
  *
- * @uses {wp-blocks} for block type registration & related functions.
- * @uses {wp-element} for WP Element abstraction — structure of blocks.
- * @uses {wp-i18n} to internationalize the block's text.
- * @uses {wp-editor} for WP editor styles.
+ * 1. style-index.css - frontend + backend.
+ * 2. index.js        - editor only.
+ * 3. index.css       - editor only.
+ *
+ * Script dependencies and a content-hash version come from the generated
+ * build/index.asset.php rather than being hardcoded, so the dependency list
+ * stays correct as the block's imports change and the cache bust follows the
+ * built file. The previous registration passed null as the version, which
+ * left WordPress with nothing to bust on.
+ *
  * @since 1.0.0
  */
 function to_search_block_assets() {
-	// phpcs:ignore
+	$build_dir  = plugin_dir_path( dirname( __FILE__ ) ) . 'build/';
+	$build_url  = plugins_url( 'build/', dirname( __FILE__ ) );
+	$asset_file = $build_dir . 'index.asset.php';
+
+	if ( ! file_exists( $asset_file ) ) {
+		return;
+	}
+
+	$asset = require $asset_file;
+
 	// Register block styles for both frontend + backend.
 	wp_register_style(
-		'my_block-to-style-css', // Handle.
-		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-		array(), // Dependency to include the CSS after it.
-		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
+		'to-search-block-style',
+		$build_url . 'style-index.css',
+		array(),
+		$asset['version']
 	);
 
 	// Register block editor script for backend.
 	wp_register_script(
-		'my_block-to-block-js', // Handle.
-		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
-		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
-		true // Enqueue the script in the footer.
+		'to-search-block-editor',
+		$build_url . 'index.js',
+		$asset['dependencies'],
+		$asset['version'],
+		true
 	);
 
 	// Register block editor styles for backend.
 	wp_register_style(
-		'my_block-to-block-editor-css', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
-		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
-		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
+		'to-search-block-editor-style',
+		$build_url . 'index.css',
+		array( 'wp-edit-blocks' ),
+		$asset['version']
 	);
 
 	/**
@@ -61,17 +73,14 @@ function to_search_block_assets() {
 	 * scripts and styles for both frontend and backend are
 	 * enqueued when the editor loads.
 	 *
-	 * @link https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type#enqueuing-block-scripts
 	 * @since 1.16.0
 	 */
 	register_block_type(
-		'to-search/to-search-block', array(
-			// Enqueue blocks.style.build.css on both frontend & backend.
-			'style'         => 'my_block-to-style-css',
-			// Enqueue blocks.build.js in the editor only.
-			'editor_script' => 'my_block-to-block-js',
-			// Enqueue blocks.editor.build.css in the editor only.
-			'editor_style'  => 'my_block-to-block-editor-css',
+		'to-search/to-search-block',
+		array(
+			'style'         => 'to-search-block-style',
+			'editor_script' => 'to-search-block-editor',
+			'editor_style'  => 'to-search-block-editor-style',
 		)
 	);
 }

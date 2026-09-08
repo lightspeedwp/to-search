@@ -1,6 +1,24 @@
 # Change log
 
-## [[1.4.2]](https://github.com/lightspeeddevelopment/to-search/releases/tag/1.4.2) - 2021-01-15
+## [[1.4.3]](https://github.com/lightspeedwp/to-search/releases/tag/1.4.3) - Unreleased
+
+### Security
+- Cleared all 20 Dependabot alerts, including a critical `babel-traverse` advisory and eight highs. Every one came from `cgb-scripts`, abandoned upstream since 2020, or from packages pinned as fake direct dependencies.
+
+### Changed
+- Migrated the block build from `cgb-scripts` to `@wordpress/scripts`. Build output moves from `dist/blocks.*.build.*` to `build/`, and the entry point from `src/blocks.js` to `src/index.js`.
+- The block script now imports from `@wordpress/blocks`, `@wordpress/i18n`, `@wordpress/block-editor` and `@wordpress/components` instead of reading the `wp` globals, so the generated dependency array is correct.
+- `InspectorControls` now comes from `@wordpress/block-editor` rather than `wp.editor`, deprecated since WordPress 5.3.
+- Block assets are registered from the generated `build/index.asset.php`, so dependencies and the cache-busting version follow the built file. The previous registration passed `null` as the version and hardcoded its dependency list.
+- Rebuilt the theme asset gulpfile on gulp 5; the previous one used gulp 3 task syntax and could not run.
+- Node pinned to 24.20.0, the current LTS line.
+
+### Removed
+- The `dependencies` block. acorn, atob, braces, debug, extend, fstream, hoek, lodash, minimatch, minimist, natives, randomatic and tar were never imported by any source file - they were leftover `npm audit fix` pins.
+- The committed `dist/` directory, replaced by `build/`.
+
+### Fixed
+- The block's saved markup is unchanged, so existing content does not trigger block validation errors.(https://github.com/lightspeeddevelopment/to-search/releases/tag/1.4.2) - 2021-01-15
 
 ### Updated
 - Documentation and support links
