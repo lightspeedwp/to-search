@@ -68,6 +68,7 @@
     },
     "postcss-modules-scope": {
       "postcss-selector-parser": "^7.1.3"
-    }
+    },
+    "lighthouse": "^13.4.1"
   }
 }
