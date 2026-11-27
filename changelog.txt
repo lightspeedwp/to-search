@@ -18,6 +18,7 @@
 - The committed `dist/` directory, replaced by `build/`.
 
 ### Fixed
+- The committed `build/index.js` and `build/index.asset.php` are rebuilt with the current `@wordpress/scripts`, so the "Built assets are current" CI check passes again. The minifier renamed some short variable names; the block's code and its dependency list are unchanged.
 - The block's saved markup is unchanged, so existing content does not trigger block validation errors.(https://github.com/lightspeeddevelopment/to-search/releases/tag/1.4.2) - 2021-01-15
 
 ### Updated
