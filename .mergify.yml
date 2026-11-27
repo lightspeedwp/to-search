@@ -8,6 +8,14 @@ pull_request_rules:
   - name: automatic merge for Renovate pull requests
     conditions:
       - author=renovate[bot]
+      - -draft
+      - check-success=Built assets are current
+      - check-success=PHP 7.2
+      - check-success=PHP 7.4
+      - check-success=PHP 8.0
+      - check-success=PHP 8.2
+      - check-success=PHP 8.3
+      - check-success=PHP 8.4
     actions:
       merge:
         method: merge
